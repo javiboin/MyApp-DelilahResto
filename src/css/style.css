@@ -1,0 +1,81 @@
+:root{
+  /*------ Colores */
+  --main-green: #247C91;
+  --entregado: #719195;
+  --cancelado: #97C2C7;
+  --enviando: #2FFE96;
+  --preparando: #FEC02F;
+  --confirmado: #FE7D2F;
+  --nuevo: #FE522F;
+  --white: #F3ECEA;
+  --black: #080D1C;
+  --dark-brown: #1C0C08;
+  --main-blue: #3F5EAB;
+
+  /*------ Tipografía */
+  --normal:12px;
+  /*------ Espaciado */
+  --space:10px;
+  --space-2:20px;
+  /* ------- Sombras */
+  --box: 0px 0 2px 1px #e6e5e9;
+}
+
+*{
+  -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+  -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+a {
+  text-decoration: none;
+}
+
+header {
+  width: 100vw;
+  height: 15vh;
+  background-color: var(--main-green);
+  text-align: center;
+}
+
+section{
+  width: 60vw;
+  height: 20vh;
+  border: 1px solid var(--black);
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+section h2 {
+  margin: 0 auto;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+#enviar {
+  width: 72%;
+  height: 4rem;
+  border-radius: 15px;
+  background-color: var(--main-blue);
+  color: var(--white);
+  border: 0;
+}
+
+input {
+  margin: 0 auto;
+  display: block;
+  width: 72%;
+  height: 4rem;
+  border-radius: 15px;
+}

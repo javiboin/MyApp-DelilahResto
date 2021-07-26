@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delilah Resto - Login</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!--  HEADER -->
+  <header>
+    <h1>Delilah Resto</h1>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <section id="loginBox">
+      <h2>Login</h2>
+      <form action="enviar">
+        <label for="Usuario">
+          <span>Usuario o correo electrónico</span>
+          <input type="text" id="Usuario" name="Usuario" required>
+        </label>
+        <br>
+        <label for="Contrasennia">
+          <span>Contraseña</span>
+          <input type="password" id="Contrasennia" name="Contrasennia" required>
+        </label>
+        <br>
+        <input type="button" name="enviar" id="enviar" value="Enviar">
+        <br>
+        <span>¿No tienes cuenta?, <a href="#">Crea un Usuario</a></span>
+      </form>
+    </section>
+  </main>
+
+  <script type="text/javascript" src="./scriptLogin.js"></script>
+</body>
+</html>
