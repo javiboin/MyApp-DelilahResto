@@ -32,6 +32,7 @@ juanita.pass = "1233";
 const btnResultados = document.getElementById("enviar");
 let db = [["javier", "123"],["federico", "123"]];
 
+/* --------------------- VALIDAR USUARIO */
     btnResultados.addEventListener('click', function () {
       let user = document.getElementById("Usuario").value;
       let pass = document.getElementById("Contrasennia").value;
