@@ -1,0 +1,28 @@
+{
+  "name": "myapp-delilahresto",
+  "version": "1.0.0",
+  "description": "App para la gestion de pedidos de comidas en Delilah Resto",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javiboin/MyApp-DelilahResto.git"
+  },
+  "keywords": [
+    "Delivery",
+    "compras",
+    "ventas",
+    "comidas"
+  ],
+  "author": "Javier Alejandro Oyarzo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/javiboin/MyApp-DelilahResto/issues"
+  },
+  "homepage": "https://github.com/javiboin/MyApp-DelilahResto#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
