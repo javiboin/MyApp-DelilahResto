@@ -2,7 +2,7 @@
   "name": "myapp-delilahresto",
   "version": "1.0.0",
   "description": "App para la gestion de pedidos de comidas en Delilah Resto",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/javiboin/MyApp-DelilahResto#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "moment": "^2.29.1"
   }
 }
