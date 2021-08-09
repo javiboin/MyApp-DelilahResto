@@ -33,61 +33,67 @@ router.get('/filterUsers', function (req, res){
 /* ---------------- USUARIOS ---------------- */
 
 router.get('/users', function (req, res){
-  res.send(data.listUsers());
+  res.json(data.listUsers());
 });
 
 router.post('/users', function (req, res){
-  res.send(data.crearUser());
+  res.json(data.crearUser());
 });
 
 router.put('/users', function (req, res){
-  res.send(data.modificarUser(2, "JAVIBOIN", "Javier de los Angeles","javi3000@gmail.com", 542964123256, "Garibaldi 203",null,1234));
+  res.json(data.modificarUser(2, "JAVIBOIN", "Javier de los Angeles","javi3000@gmail.com", 542964123256, "Garibaldi 203",null,1234));
 });
 
 router.delete('/users', function (req, res){
-  res.send(data.borrarUser());
+  res.json(data.borrarUser());
 });
 
 /* ---------------- PEDIDOS ---------------- */
 
 router.get('/orders', function (req, res){
-  res.send(data.listOrders());
+  res.json(data.listOrders());
 });
 
 router.post('/orders', function (req, res){
-  res.send(data.crearOrder());
+  res.json(data.crearOrder());
 });
 
 router.put('/orders', function (req, res){
-  res.send(data.modificarOrder(1,"Confirmado",[2,3],400));
+  res.json(data.modificarOrder(1,"Confirmado",[2,3],400));
 });
 
 router.delete('/orders', function (req, res){
-  res.send(data.borrarOrder());
+  res.json(data.borrarOrder());
 });
 
 /* ---------------- PRODUCTOS ---------------- */
 
 router.get('/products', function (req, res){
-  res.send(data.listProducts());
+  res.json(data.listProducts());
 });
 
 router.post('/products', function (req, res){
-  res.send(data.crearProduct());
+  res.json(data.crearProduct());
 });
 
 router.put('/products', function (req, res){
-  res.send(data.modificarProduct(1,"Bife con Cebolla", 250, "pic"));
+  res.json(data.modificarProduct(1,"Bife con Cebolla", 250, "pic"));
 });
 
 router.delete('/products', function (req, res){
-  res.send(data.borrarProduct());
+  res.json(data.borrarProduct());
 });
 
-router.use('/', function(req, res){
+/* router.use('/', function(req, res){
   res.send(moment().format('DD/MM/YYYY, hh:mm:ss a')); 
-  /*  usar para log y usar para pedidos */ 
+  /*  usar para log y usar para pedidos 
   console.log(`la hora en unix es: ${Date.now()}`);
+  }); 
+*/
+
+router.use(function(req, res, next) {
+  res.json("Rio Grande, Tierra del Fuego, " + moment().format('DD-MM-YYYY, hh:mm:ss a'));
+  next();
 });
 
 app.listen(port, () => console.log("http://localhost:" + port));
