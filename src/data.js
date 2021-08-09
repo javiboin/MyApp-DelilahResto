@@ -36,6 +36,11 @@ const products = [];
 /* ------------------ FUNCIONES DATOS ------------------ */
 /* ----------------------------------------------------- */
 
+function filterUsers(id){
+  const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
+  return datosFiltrados;
+}
+
 /* ---------------- FUNCIONES USUARIOS ----------------- */
 function listUsers(){
   return(users);
@@ -136,6 +141,8 @@ function borrarProduct(id){
 };
 
 /* ------------------ EXPORTS ------------------ */
+exports.filterUsers = filterUsers;
+
 exports.listUsers = listUsers;
 exports.crearUser = crearUser;
 exports.modificarUser = modificarUser;

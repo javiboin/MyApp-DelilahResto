@@ -22,23 +22,23 @@ const btnResultados = document.getElementById("enviar");
 let db = [["javier", "123"],["federico", "123"]];
 
 /* --------------------- VALIDAR USUARIO */
-    btnResultados.addEventListener('click', function () {
-      let user = document.getElementById("Usuario").value;
-      let pass = document.getElementById("Contrasennia").value;
+btnResultados.addEventListener('click', function () {
+  let user = document.getElementById("Usuario").value;
+  let pass = document.getElementById("Contrasennia").value;
 
-      i = 0;
-      j= 0;
-      while (i < db.length){
-        if (db[i][0] === user) {
-          if (db[i][1] === pass){
-            console.log("es exitoso"); 
-            window.location.href = "./index.html";     
-          }else{
-            alert('El usuario y/o la contraseña no son correcto Acceso Denegado');
-          };}else{
-            alert('El usuario y/o la contraseña no son correcto Acceso Denegado');
-          };
-        i++;
+  i = 0;
+  j= 0;
+  while (i < db.length){
+    if (db[i][0] === user) {
+      if (db[i][1] === pass){
+        console.log("es exitoso"); 
+        window.location.href = "./index.html";     
+      }else{
+        alert('El usuario y/o la contraseña no son correcto Acceso Denegado');
+      };}else{
+        alert('El usuario y/o la contraseña no son correcto Acceso Denegado');
       };
+    i++;
+  };
 
-    }); 
+}); 

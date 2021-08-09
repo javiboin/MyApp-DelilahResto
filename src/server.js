@@ -26,6 +26,10 @@ const data = require('./data');
 /* ---------------- ENDPOINTS ---------------- */
 /* ------------------------------------------- */
 
+router.get('/filterUsers', function (req, res){
+  res.send(data.filterUsers(1));
+});
+
 /* ---------------- USUARIOS ---------------- */
 
 router.get('/users', function (req, res){
@@ -37,7 +41,7 @@ router.post('/users', function (req, res){
 });
 
 router.put('/users', function (req, res){
-  res.send(data.modificarUser(1, "JAVIBOIN", "Javier de los Angeles","javi3000@gmail.com", 542964123256, "Garibaldi 203",null,1234));
+  res.send(data.modificarUser(2, "JAVIBOIN", "Javier de los Angeles","javi3000@gmail.com", 542964123256, "Garibaldi 203",null,1234));
 });
 
 router.delete('/users', function (req, res){
