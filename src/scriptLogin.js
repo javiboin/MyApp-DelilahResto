@@ -1,18 +1,7 @@
 /* PROTOTIPO BASE */
-function Users() {
-  this.user = 'usuario';
-  this.completeName = "Nombre Completo";
-  this.email = "usuario@usuario.com";
-  this.phone = 542964123456;
-  this.address = "San Martin 1000";
-  this.pass = "123";
-};
+function Users() {};
 
-function Products(){
-  this.name = "Nombre del Plato";
-  this.price = 100;
-  this.foto = "foto_del_Producto";
-};
+function Products(){};
 
 // Objeto Instanciado de Products
 const bagelSalmon = new Products();
