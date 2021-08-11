@@ -19,6 +19,23 @@ router.use(express.json());
 /* -------------- SWAGGER ------------ */
 /* ------------------------------------------- */
 
+const swaggerUI = require('swagger-ui-express');
+const swaggerJsDoc = require('swagger-jsdoc');
+
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'Delilah Restó API',
+      version: '0.1.0'
+    }
+  },
+  apis: ['./server.js']
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
+router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
 /* ------------------------------------------- */
 /* -------------- FUNCIONALIDADES ------------ */
 /* ------------------------------------------- */
@@ -94,19 +111,13 @@ router.delete('/products', function (req, res){
   res.json(data.borrarProduct());
 });
 
-/* router.use('/', function(req, res){
-  res.send(moment().format('DD/MM/YYYY, hh:mm:ss a')); 
-  /*  usar para log y usar para pedidos 
-  console.log(`la hora en unix es: ${Date.now()}`);
-  }); 
-*/
 
 router.use(function(req, res, next) {
   const respuesta = `404 Not Found ${moment().format('DD-MM-YYYY, hh:mm:ss a')} ${req.method} ${req.url} path: ${req.path} ${req.statusCode} ${req.statusMessage}}`;
   
   res.json(respuesta);
   console.log(respuesta);
-  
+
   next();
 });
 
