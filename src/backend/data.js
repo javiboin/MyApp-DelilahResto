@@ -1,3 +1,7 @@
+const users = require('./usuarios');
+const users = require('./pedidos');
+const users = require('./productos');
+
 /* ------------------ CONSTRUCTORES ------------------ */
 
 function User(id, user, completeName, email, phone, mainAddress, altAddress, password) {
@@ -24,13 +28,6 @@ function Product(id, name, price, pic){
   this.price = Number(price);
   this.pic = String(pic);
 };
-
-/* CARGAR LAS COMIDAS */
-
-/* ------------------- BASE DE DATOS ------------------- */
-const users = [];
-const orders = [];
-const products = [];
 
 /* ----------------------------------------------------- */
 /* ------------------ FUNCIONES DATOS ------------------ */

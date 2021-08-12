@@ -3,9 +3,9 @@ const moment = require('moment');
 const express = require('express');
 const app = express();
 const router = express.Router();
-const port = 3001;
+const PORT = 3001;
 const host = 'http://localhost'
-const url = `${host}:${port}`;
+const url = `${host}:${PORT}`;
 
 app.use(router);
 
