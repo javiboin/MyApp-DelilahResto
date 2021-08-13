@@ -10,6 +10,7 @@ const url = `${host}:${PORT}`;
 app.use(router);
 
 const functions = require('./functions');
+const usuarios = require('./models/usuarios');
 const { json } = require('express');
 
 router.use(express.urlencoded({ extended: true }));
@@ -21,6 +22,7 @@ router.use(express.json());
 
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+const users = require('./models/usuarios');
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -52,6 +54,16 @@ router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 router.get('/filterUsers', function (req, res){
   res.send(functions.filterUsers(1));
+});
+
+const login = (username, password) => users.find(user => user.username === username && user.password === password);
+
+router.post('/login', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  console.log(login(username, password));
+  res.json({msg: 'ok'});
+
 });
 
 /* ---------------- USUARIOS ---------------- */

@@ -12,7 +12,7 @@ function User(id, user, completeName, email, phone, mainAddress, altAddress, pas
   this.phone = Number(phone);
   this.mainAddress = String(mainAddress);
   this.altAddress = String(altAddress);
-  this.pass = String(password);
+  this.password = String(password);
 };
 
 function Order(id, state, products, formaPago, price){
@@ -70,7 +70,7 @@ function modificarUser(id, user, completeName, email, phone, mainAddress, altAdd
   users[0].phone = Number(phone);
   users[0].mainAddress = String(mainAddress);
   users[0].altAddress = String(altAddress);
-  users[0].pass = String(password);
+  users[0].password = String(password);
 
   return(users);
 };
