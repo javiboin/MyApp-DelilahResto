@@ -9,7 +9,7 @@ const url = `${host}:${PORT}`;
 
 app.use(router);
 
-const data = require('./data');
+const functions = require('./functions');
 const { json } = require('express');
 
 router.use(express.urlencoded({ extended: true }));
@@ -36,9 +36,6 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
-/* ------------------------------------------- */
-/* -------------- FUNCIONALIDADES ------------ */
-/* ------------------------------------------- */
 
 /* CUENTA NUEVA ALTA DE USUARIO */
 /* INGRESAR CON USUARIO Y CONTRASEÑA */
@@ -54,61 +51,61 @@ router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 /* ------------------------------------------- */
 
 router.get('/filterUsers', function (req, res){
-  res.send(data.filterUsers(1));
+  res.send(functions.filterUsers(1));
 });
 
 /* ---------------- USUARIOS ---------------- */
 
 router.get('/users', function (req, res){
-  res.json(data.listUsers());
+  res.json(functions.listUsers());
 });
 
 router.post('/users', function (req, res){
-  res.json(data.crearUser());
+  res.json(functions.crearUser());
 });
 
 router.put('/users', function (req, res){
-  res.json(data.modificarUser(2, "JAVIBOIN", "Javier de los Angeles","javi3000@gmail.com", 542964123256, "Garibaldi 203",null,1234));
+  res.json(functions.modificarUser(2, "JAVIBOIN", "Javier de los Angeles","javi3000@gmail.com", 542964123256, "Garibaldi 203",null,1234));
 });
 
 router.delete('/users', function (req, res){
-  res.json(data.borrarUser());
+  res.json(functions.borrarUser());
 });
 
 /* ---------------- PEDIDOS ---------------- */
 
 router.get('/orders', function (req, res){
-  res.json(data.listOrders());
+  res.json(functions.listOrders());
 });
 
 router.post('/orders', function (req, res){
-  res.json(data.crearOrder());
+  res.json(functions.crearOrder());
 });
 
 router.put('/orders', function (req, res){
-  res.json(data.modificarOrder(1,"Confirmado",[2,3],400));
+  res.json(functions.modificarOrder(1,"Confirmado",[2,3],"Efectivo",400));
 });
 
 router.delete('/orders', function (req, res){
-  res.json(data.borrarOrder());
+  res.json(functions.borrarOrder());
 });
 
 /* ---------------- PRODUCTOS ---------------- */
 
 router.get('/products', function (req, res){
-  res.json(data.listProducts());
+  res.json(functions.listProducts());
 });
 
 router.post('/products', function (req, res){
-  res.json(data.crearProduct());
+  res.json(functions.crearProduct());
 });
 
 router.put('/products', function (req, res){
-  res.json(data.modificarProduct(1,"Bife con Cebolla", 250, "pic"));
+  res.json(functions.modificarProduct(1,"Bife con Cebolla", 250, "pic"));
 });
 
 router.delete('/products', function (req, res){
-  res.json(data.borrarProduct());
+  res.json(functions.borrarProduct());
 });
 
 
@@ -121,5 +118,5 @@ router.use(function(req, res, next) {
   next();
 });
 
-app.listen(port, () => console.log(`Listen on ${url}`));
+app.listen(PORT, () => console.log(`Listen on ${url}`));
 
