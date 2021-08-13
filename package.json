@@ -2,7 +2,7 @@
   "name": "myapp-delilahresto",
   "version": "1.0.0",
   "description": "App para la gestion de pedidos de comidas en Delilah Resto",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
