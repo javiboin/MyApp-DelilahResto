@@ -41,11 +41,6 @@ function filterUsers(id){
   return datosFiltrados;
 };
 
-function Test (id){
-  console.log(id);
-  console.log("tarea terminada");
-};
-
 function userID(id) {
   return users.filter(user => user.id == id);
 };
@@ -139,7 +134,7 @@ function modificarOrder(idOrder, orderObject){
 
   orders[searchIndexOrder(idOrder)] = orderObject;
 
-  return 'User updated';
+  return 'Order updated';
 };
 
 function borrarOrder(id){
@@ -172,13 +167,21 @@ function crearProduct(productObject){
   return 'Order created';
 };
 
-function modificarProduct(id, name, price, pic){
-  products[0].id = Number(id);
-  products[0].name = String(name),
-  products[0].price = Number(price);
-  products[0].pic = String(pic);
+const searchIndexProduct = (idProduct) => {
+  return products.findIndex(x => x.id == idProduct);
+};
 
-  return(products);
+function modificarProduct(idProduct, productObject){
+  productObject = {
+    id: parseInt(idProduct),
+    name: productObject.name,
+    price: productObject.price,
+    pic: productObject.pic
+  };
+
+  products[searchIndexProduct(idProduct)] = productObject;
+
+  return 'Product updated';
 };
 
 function borrarProduct(id){
@@ -209,6 +212,3 @@ exports.listProducts = listProducts;
 exports.crearProduct = crearProduct;
 exports.modificarProduct = modificarProduct;
 exports.borrarProduct = borrarProduct;
-
-
-exports.Test = Test;
