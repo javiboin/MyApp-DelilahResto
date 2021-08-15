@@ -35,6 +35,7 @@ function Product(id, name, price, pic){
 /* ------------------ FUNCIONES DATOS ------------------ */
 /* ----------------------------------------------------- */
 
+
 function filterUsers(id){
   const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
   return datosFiltrados;
@@ -68,21 +69,27 @@ function crearUser(userObject) {
     password: userObject.password
   });
   return 'User created';
-}
+};
 
-function modificarUser(id, user, completeName, email, phone, mainAddress, altAddress, password){
-  /* let usuarioEncontrado = users.filter(usuario => usuario.id == id); */
+const searchIndexUser = (idUser) => {
+  return users.findIndex(x => x.id == idUser);
+};
 
-  users[0].id = Number(id);
-  users[0].nickname = String(user);
-  users[0].completeName = String(completeName);
-  users[0].email = String(email);
-  users[0].phone = Number(phone);
-  users[0].mainAddress = String(mainAddress);
-  users[0].altAddress = String(altAddress);
-  users[0].password = String(password);
+function modificarUser(idUser, userObject){
+  userObject = {
+    id: parseInt(idUser),
+    nickname: userObject.nickname,
+    completeName: userObject.completeName,
+    email: userObject.email,
+    phone: userObject.phone,
+    mainAddress: userObject.mainAddress,
+    altAddress: userObject.altAddress,
+    password: userObject.password
+  };
 
-  return(users);
+  users[searchIndexUser(idUser)] = userObject;
+
+  return 'User updated';
 };
 
 function borrarUser(idr){
@@ -117,14 +124,22 @@ function crearOrder(orderObject){
   return 'Order created';
 };
 
-function modificarOrder(id, state, products, formaPago, price){
-  orders[0].id = Number(id);
-  orders[0].state = String(state);
-  orders[0].products = products;
-  orders[0].formaPago = String(formaPago);
-  orders[0].price = Number(price);
+const searchIndexOrder = (idOrder) => {
+  return orders.findIndex(x => x.id == idOrder);
+};
 
-  return(orders);
+function modificarOrder(idOrder, orderObject){
+  orderObject = {
+    id: parseInt(idOrder),
+    state: orderObject.state,
+    products: orderObject.products,
+    formaPago: orderObject.formaPago,
+    price: orderObject.price
+  };
+
+  orders[searchIndexOrder(idOrder)] = orderObject;
+
+  return 'User updated';
 };
 
 function borrarOrder(id){

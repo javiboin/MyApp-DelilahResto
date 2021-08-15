@@ -82,7 +82,7 @@ router.put('/users/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterUsers(idUser) ? 
-  functions.modificarUser(req.body) : `ese autor no existe, puede ver todos los autores en ${url}/autores`;
+  functions.modificarUser(idUser,req.body) : `ese autor no existe, puede ver todos los autores en ${url}/autores`;
   res.json(respuesta);
 });
 
@@ -117,7 +117,7 @@ router.post('/orders', function (req, res){
 router.put('/orders/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
-  respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(req.body) : "no es correcto";
+  respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "no es correcto";
   res.json(respuesta);
 });
 
@@ -152,7 +152,7 @@ router.post('/products', function (req, res){
 router.put('/products/:id', function (req, res){
   const idProduct = req.params.id;
   const respuesta = {};
-  respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(req.body) : "no es permitido";
+  respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(idProduct, req.body) : "no es permitido";
   res.json(respuesta);
 });
 
