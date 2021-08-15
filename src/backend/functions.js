@@ -1,6 +1,7 @@
 const users = require('./models/usuarios');
 const orders = require('./models/pedidos');
 const products = require('./models/productos');
+const IDs = require('./models/usuarios');
 
 /* ------------------ CONSTRUCTORES ------------------ */
 
@@ -53,24 +54,9 @@ function listUsers(){
   return(users);
 };
 
-/* function crearUser(){
-  users.push(new User(
-  1,
-  "javiboin",
-  "Javier Alejandro Oyarzo", 
-  "javi_14_228@hotmail.com",
-  542964444000,
-  "Rivadavia 123",
-  null,
-  "123"
-  ));
-
-  /* console.log(users); 
-  return(users);
-}; */
-
 function crearUser(userObject) {
-  const id = 200;
+  const id = users[users.length -1].id +1;
+
   users.push({
     id: id,
     nickname: userObject.nickname,
@@ -81,7 +67,7 @@ function crearUser(userObject) {
     altAddress: userObject.altAddress,
     password: userObject.password
   });
-  return 'author created';
+  return 'User created';
 }
 
 function modificarUser(id, user, completeName, email, phone, mainAddress, altAddress, password){
@@ -99,7 +85,8 @@ function modificarUser(id, user, completeName, email, phone, mainAddress, altAdd
   return(users);
 };
 
-function borrarUser(id){
+function borrarUser(idr){
+  const id = idr;
   return(users); /* provisional */
 };
 
@@ -117,16 +104,17 @@ function listOrders(){
   return(orders);
 };
 
-function crearOrder(){
-  orders.push(new Order(
-  1,
-  "En Proceso",
-  [1,2,3],
-  "Efectivo",
-  500
-  ));
+function crearOrder(orderObject){
+  const id = orders[orders.length -1].id +1;
 
-  return(orders);
+  orders.push({
+    id: id,
+    state: orderObject.state,
+    products: orderObject.products,
+    formaPago: orderObject.formaPago,
+    price: orderObject.price
+  });
+  return 'Order created';
 };
 
 function modificarOrder(id, state, products, formaPago, price){
