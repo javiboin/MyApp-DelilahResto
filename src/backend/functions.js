@@ -53,7 +53,7 @@ function listUsers(){
   return(users);
 };
 
-function crearUser(){
+/* function crearUser(){
   users.push(new User(
   1,
   "javiboin",
@@ -65,15 +65,15 @@ function crearUser(){
   "123"
   ));
 
-  /* console.log(users); */
+  /* console.log(users); 
   return(users);
-};
+}; */
 
-function crearUser1(userObject) {
-  const id = 1;
+function crearUser(userObject) {
+  const id = 200;
   users.push({
     id: id,
-    user: userObject.nickname,
+    nickname: userObject.nickname,
     completeName: userObject.completeName,
     email: userObject.email,
     phone: userObject.phone,
