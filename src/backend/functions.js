@@ -145,16 +145,16 @@ function listProducts(){
   return(products);
 };
 
-function crearProduct(){
-  products.push(new Product(
-    1,
-    "Hamburguesa Clasica",
-    500, 
-    "IMAGEN"
-  ));
+function crearProduct(productObject){
+  const id = products[products.length -1].id +1;
 
-  /* console.log(users); */
-  return(products);
+  products.push({
+    id: id,
+    name: productObject.name,
+    price: productObject.price,
+    pic: productObject.pic,
+  });
+  return 'Order created';
 };
 
 function modificarProduct(id, name, price, pic){
