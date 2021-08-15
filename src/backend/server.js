@@ -2,8 +2,8 @@
 const moment = require('moment');
 const express = require('express');
 const app = express();
-const router = express.Router();
 
+const router = express.Router();
 
 app.use(router);
 
@@ -190,6 +190,54 @@ router.put('/users/:id', function (req, res){
   res.json(respuesta);
 });
 
+/**
+ * @swagger
+ * /users/{id}:
+ *  get:
+ *    description: Modifica un Usuario
+ *    parameters:
+ *    - name: id
+ *      description: Id de Usuario
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: nickname
+ *      description: Nombre de Usuario 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: completeName
+ *      description: Nombre del propietario de la cuenta 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: email
+ *      description: Correo electronico de Usuario 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: phone
+ *      description: Numero de telefono de Usuario 
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: mainAddress
+ *      description: Domicilio de Usuario 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: altAddress
+ *      description: Domicilio alternativo o transitorio 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: password
+ *      description: Contraseña de Usuario 
+ *      in: formData
+ *      required: true
+ *      type: string
+ */
+
 router.get('/users/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
@@ -222,32 +270,32 @@ router.get('/orders', function (req, res){
 
 /**
  * @swagger
- * /users:
+ * /orders:
  *  post:
- *    description: Crea un Usuario
+ *    description: Crea un pedido
  *    parameters:
  *    - name: id
- *      description: Id de Usuario
+ *      description: Id de pedido
  *      in: formData
  *      required: false
  *      type: integer
- *    - name: nickname
- *      description: Nombre de Usuario 
+ *    - name: state
+ *      description: Estado del pedido 
  *      in: formData
  *      required: true
  *      type: string
- *    - name: completeName
- *      description: Nombre del propietario de la cuenta 
+ *    - name: products
+ *      description: Listado de productos en el pedido 
+ *      in: formData
+ *      required: true
+ *      type: array
+ *    - name: formaPago
+ *      description: Metodos de pago 
  *      in: formData
  *      required: true
  *      type: string
- *    - name: email
- *      description: Correo electronico de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: phone
- *      description: Numero de telefono de Usuario 
+ *    - name: price
+ *      description: Precio del pedido 
  *      in: formData
  *      required: true
  *      type: integer
@@ -258,12 +306,78 @@ router.post('/orders', function (req, res){
   res.json(respuesta);
 });
 
+/**
+ * @swagger
+ * /orders:
+ *  put:
+ *    description: Crea un pedido
+ *    parameters:
+ *    - name: id
+ *      description: Id de pedido
+ *      in: formData
+ *      required: false
+ *      type: integer
+ *    - name: state
+ *      description: Estado del pedido 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: products
+ *      description: Listado de productos en el pedido 
+ *      in: formData
+ *      required: true
+ *      type: array
+ *    - name: formaPago
+ *      description: Metodos de pago 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: price
+ *      description: Precio del pedido 
+ *      in: formData
+ *      required: true
+ *      type: integer
+ */
+
 router.put('/orders/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "no es correcto";
   res.json(respuesta);
 });
+
+/**
+ * @swagger
+ * /orders/{id}:
+ *  get:
+ *    description: Crea un pedido
+ *    parameters:
+ *    - name: id
+ *      description: Id de pedido
+ *      in: formData
+ *      required: false
+ *      type: integer
+ *    - name: state
+ *      description: Estado del pedido 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: products
+ *      description: Listado de productos en el pedido 
+ *      in: formData
+ *      required: true
+ *      type: array
+ *    - name: formaPago
+ *      description: Metodos de pago 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: price
+ *      description: Precio del pedido 
+ *      in: formData
+ *      required: true
+ *      type: integer
+ */
 
 router.get('/orders/:id', function (req, res){
   const idOrders = req.params.id;
@@ -280,25 +394,115 @@ router.delete('/orders/:id', function (req, res){
 });
 
 /* ---------------- PRODUCTOS ---------------- */
-
+/**
+ * @swagger
+ * /products:
+ *  get:
+ *    description: Listado de todos los productos
+ *    responses:
+ *      200:
+ *        description: Success
+ */
 router.get('/products', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.listProducts();
   res.json(respuesta);
 });
 
+/**
+ * @swagger
+ * /products:
+ *  post:
+ *    description: Agrega un producto
+ *    parameters:
+ *    - name: id
+ *      description: Id de producto
+ *      in: fromData
+ *      required: true
+ *      type: integer
+ *    - name: name
+ *      description: Nombre del producto
+ *      in: fromData
+ *      required: true
+ *      type: string
+ *    - name: price
+ *      description: Precio del producto
+ *      in: fromData
+ *      required: true
+ *      type: integer
+ *    - name: pic
+ *      description: Imagen de referencia
+ *      in: fromData
+ *      required: true
+ *      type: string
+ */
 router.post('/products', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.crearProduct(req.body);
   res.json(respuesta);
 });
 
+/**
+ * @swagger
+ * /products/{id}:
+ *  put:
+ *    description: Agrega un producto
+ *    parameters:
+ *    - name: id
+ *      description: Id de producto
+ *      in: fromData
+ *      required: true
+ *      type: integer
+ *    - name: name
+ *      description: Nombre del producto
+ *      in: fromData
+ *      required: true
+ *      type: string
+ *    - name: price
+ *      description: Precio del producto
+ *      in: fromData
+ *      required: true
+ *      type: integer
+ *    - name: pic
+ *      description: Imagen de referencia
+ *      in: fromData
+ *      required: true
+ *      type: string
+ */
 router.put('/products/:id', function (req, res){
   const idProduct = req.params.id;
   const respuesta = {};
   respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(idProduct, req.body) : "no es permitido";
   res.json(respuesta);
 });
+
+/**
+ * @swagger
+ * /products/{id}:
+ *  get:
+ *    description: Agrega un producto
+ *    parameters:
+ *    - name: id
+ *      description: Id de producto
+ *      in: fromData
+ *      required: true
+ *      type: integer
+ *    - name: name
+ *      description: Nombre del producto
+ *      in: fromData
+ *      required: true
+ *      type: string
+ *    - name: price
+ *      description: Precio del producto
+ *      in: fromData
+ *      required: true
+ *      type: integer
+ *    - name: pic
+ *      description: Imagen de referencia
+ *      in: fromData
+ *      required: true
+ *      type: string
+ */
 
 router.get('/products/:id', function (req, res){
   const idProduct = req.params.id;

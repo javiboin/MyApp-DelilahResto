@@ -87,9 +87,15 @@ function modificarUser(idUser, userObject){
   return 'User updated';
 };
 
-function borrarUser(idr){
-  const id = idr;
-  return(users); /* provisional */
+function borrarUser(idUser){
+  const id = idUser;
+
+  const objetoBuscado = users[searchIndexUser(idUser)];
+
+  const userPosition = users.indexOf(objetoBuscado);
+
+  users.splice(userPosition, 1);
+  return 'User deleted'; 
 };
 
 /* ------------------ FUNCIONES PEDIDOS ------------------ */
