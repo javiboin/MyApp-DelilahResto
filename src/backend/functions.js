@@ -69,11 +69,26 @@ function crearUser(){
   return(users);
 };
 
+function crearUser1(userObject) {
+  const id = 1;
+  users.push({
+    id: id,
+    user: userObject.nickname,
+    completeName: userObject.completeName,
+    email: userObject.email,
+    phone: userObject.phone,
+    mainAddress: userObject.mainAddress,
+    altAddress: userObject.altAddress,
+    password: userObject.password
+  });
+  return 'author created';
+}
+
 function modificarUser(id, user, completeName, email, phone, mainAddress, altAddress, password){
   /* let usuarioEncontrado = users.filter(usuario => usuario.id == id); */
 
   users[0].id = Number(id);
-  users[0].user = String(user);
+  users[0].nickname = String(user);
   users[0].completeName = String(completeName);
   users[0].email = String(email);
   users[0].phone = Number(phone);

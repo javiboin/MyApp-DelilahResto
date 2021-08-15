@@ -96,7 +96,7 @@ router.get('/users/:id', function (req, res){
 router.delete('/users/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
-  respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser() : "no es correcto";
+  respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "no es correcto";
   res.json(respuesta);
 });
 
