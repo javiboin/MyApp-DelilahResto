@@ -37,7 +37,16 @@ function Product(id, name, price, pic){
 function filterUsers(id){
   const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
   return datosFiltrados;
-}
+};
+
+function Test (id){
+  console.log(id);
+  console.log("tarea terminada");
+};
+
+function userID(id) {
+  return users.filter(user => user.id == id);
+};
 
 /* ---------------- FUNCIONES USUARIOS ----------------- */
 function listUsers(){
@@ -80,6 +89,15 @@ function borrarUser(id){
 };
 
 /* ------------------ FUNCIONES PEDIDOS ------------------ */
+function filterOrders(id){
+  const datosFiltrados = orders.filter(order => order.id == Number(id));
+  return datosFiltrados;
+};
+
+function orderID(id) {
+  return orders.filter(order => order.id == id);
+};
+
 function listOrders(){
   return(orders);
 };
@@ -111,6 +129,15 @@ function borrarOrder(id){
 };
 
 /* ------------------ FUNCIONES PRODUCTOS ------------------ */
+function filterProducts(id){
+  const datosFiltrados = products.filter(product => product.id == Number(id));
+  return datosFiltrados;
+};
+
+function productID(id) {
+  return products.filter(product => product.id == id);
+};
+
 function listProducts(){
   return(products);
 };
@@ -142,18 +169,28 @@ function borrarProduct(id){
 
 /* ------------------ EXPORTS ------------------ */
 exports.filterUsers = filterUsers;
+exports.userID = userID;
 
 exports.listUsers = listUsers;
 exports.crearUser = crearUser;
 exports.modificarUser = modificarUser;
 exports.borrarUser = borrarUser;
 
+exports.filterOrders = filterOrders;
+exports.orderID = orderID;
+
 exports.listOrders = listOrders;
 exports.crearOrder = crearOrder;
 exports.modificarOrder = modificarOrder;
 exports.borrarOrder = borrarOrder;
 
+exports.filterProducts = filterProducts;
+exports.productID = productID;
+
 exports.listProducts = listProducts;
 exports.crearProduct = crearProduct;
 exports.modificarProduct = modificarProduct;
 exports.borrarProduct = borrarProduct;
+
+
+exports.Test = Test;

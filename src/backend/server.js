@@ -67,55 +67,107 @@ router.post('/login', (req, res) => {
 /* ---------------- USUARIOS ---------------- */
 
 router.get('/users', function (req, res){
-  res.json(functions.listUsers());
+  let respuesta = {};
+  respuesta.msg = functions.listUsers();
+  res.json(respuesta);
 });
 
 router.post('/users', function (req, res){
-  res.json(functions.crearUser());
+  let respuesta = {};
+  respuesta.msg = functions.crearUser(req.body);
+  res.json(respuesta);
 });
 
-router.put('/users', function (req, res){
-  res.json(functions.modificarUser(2, "JAVIBOIN", "Javier de los Angeles","javi3000@gmail.com", 542964123256, "Garibaldi 203",null,1234));
+router.put('/users/:id', function (req, res){
+  const idUser = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functions.filterUsers(idUser) ? 
+  functions.modificarUser(req.body) : `ese autor no existe, puede ver todos los autores en ${url}/autores`;
+  res.json(respuesta);
 });
 
-router.delete('/users', function (req, res){
-  res.json(functions.borrarUser());
+router.get('/users/:id', function (req, res){
+  const idUser = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functions.filterUsers(idUser) ? functions.userID(idUser) : "no es correcto";
+  res.json(respuesta); 
+});
+
+router.delete('/users/:id', function (req, res){
+  const idUser = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser() : "no es correcto";
+  res.json(respuesta);
 });
 
 /* ---------------- PEDIDOS ---------------- */
 
 router.get('/orders', function (req, res){
-  res.json(functions.listOrders());
+  let respuesta = {};
+  respuesta.msg = functions.listOrders();
+  res.json(respuesta);
 });
 
 router.post('/orders', function (req, res){
-  res.json(functions.crearOrder());
+  let respuesta = {};
+  respuesta.msg = functions.crearOrder(req.body);
+  res.json(respuesta);
 });
 
-router.put('/orders', function (req, res){
-  res.json(functions.modificarOrder(1,"Confirmado",[2,3],"Efectivo",400));
+router.put('/orders/:id', function (req, res){
+  const idOrders = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(req.body) : "no es correcto";
+  res.json(respuesta);
 });
 
-router.delete('/orders', function (req, res){
-  res.json(functions.borrarOrder());
+router.get('/orders/:id', function (req, res){
+  const idOrders = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functions.filterOrders ? functions.orderID(idOrders) : "no es correcto";
+  res.json(respuesta);
+});
+
+router.delete('/orders/:id', function (req, res){
+  const idOrders = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functions.filterOrders ? functions.borrarOrder() : "no es correcto";
+  res.json(respuesta);
 });
 
 /* ---------------- PRODUCTOS ---------------- */
 
 router.get('/products', function (req, res){
-  res.json(functions.listProducts());
+  let respuesta = {};
+  respuesta.msg = functions.listProducts();
+  res.json(respuesta);
 });
 
 router.post('/products', function (req, res){
-  res.json(functions.crearProduct());
+  let respuesta = {};
+  respuesta.msg = functions.crearProduct(req.body);
+  res.json(respuesta);
 });
 
-router.put('/products', function (req, res){
-  res.json(functions.modificarProduct(1,"Bife con Cebolla", 250, "pic"));
+router.put('/products/:id', function (req, res){
+  const idProduct = req.params.id;
+  const respuesta = {};
+  respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(req.body) : "no es permitido";
+  res.json(respuesta);
 });
 
-router.delete('/products', function (req, res){
-  res.json(functions.borrarProduct());
+router.get('/products/:id', function (req, res){
+  const idProduct = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functions.filterProducts(idProduct) ? functions.productID(idProduct) : "no es correcto";
+  res.json(respuesta);
+});
+
+router.delete('/products/:id', function (req, res){
+  const idProduct = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functions.filterProducts(idProduct) ? functions.borrarProduct() : "no esta permitido";
+  res.json(respuesta);
 });
 
 
