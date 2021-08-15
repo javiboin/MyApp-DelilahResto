@@ -88,13 +88,12 @@ function modificarUser(idUser, userObject){
 };
 
 function borrarUser(idUser){
-  const id = idUser;
-
   const objetoBuscado = users[searchIndexUser(idUser)];
 
   const userPosition = users.indexOf(objetoBuscado);
 
   users.splice(userPosition, 1);
+
   return 'User deleted'; 
 };
 
@@ -143,8 +142,14 @@ function modificarOrder(idOrder, orderObject){
   return 'Order updated';
 };
 
-function borrarOrder(id){
-  return(orders);
+function borrarOrder(idOrder){
+  const objetoBuscado = orders[searchIndexOrder(idOrder)];
+
+  const orderPosition = orders.indexOf(objetoBuscado);
+
+  orders.splice(orderPosition, 1);
+  
+  return 'Order deleted'; 
 };
 
 /* ------------------ FUNCIONES PRODUCTOS ------------------ */
@@ -190,8 +195,14 @@ function modificarProduct(idProduct, productObject){
   return 'Product updated';
 };
 
-function borrarProduct(id){
-  return(products);
+function borrarProduct(idProduct){
+  const objetoBuscado = products[searchIndexProduct(idProduct)];
+
+  const productPosition = products.indexOf(objetoBuscado);
+
+  products.splice(productPosition, 1);
+  
+  return 'Product deleted'; 
 };
 
 /* ------------------ EXPORTS ------------------ */
