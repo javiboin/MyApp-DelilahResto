@@ -4,7 +4,7 @@ const app = express();
 
 const router = express.Router();
 
-app.use(router);
+/* app.use(router); */
 
 const usuarios = require('./routes/usuarios');
 app.use('/users', usuarios);
@@ -28,9 +28,7 @@ router.use(express.json());
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 /* const users = require('./models/usuarios'); */
-const users = require('./routes/usuarios');
 
-app.use('/users', users);
 
 const swaggerOptions = {
   swaggerDefinition: {

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const functions = require('../functions');
 
 router.get('/filterUsers', function (req, res){
   res.send(functions.filterUsers(1));
