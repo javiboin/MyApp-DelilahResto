@@ -32,11 +32,6 @@ router.get('/', function (req, res){
  *    summary: "Agrega Pedido"
  *    description: Guarda un nuevo pedido de comida en nuestra app
  *    parameters:
- *    - name: id
- *      description: Id de pedido
- *      in: formData
- *      required: false
- *      type: integer
  *    - name: state
  *      description: Estado del pedido 
  *      in: formData

@@ -32,24 +32,19 @@ router.get('/', function (req, res){
  *    summary: "Agrega Producto"
  *    description: Guarda un nuevo producto en nuestra app
  *    parameters:
- *    - name: id
- *      description: Id de producto
- *      in: fromData
- *      required: true
- *      type: integer
  *    - name: name
  *      description: Nombre del producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: string
  *    - name: price
  *      description: Precio del producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: pic
  *      description: Imagen de referencia
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: string
  */
@@ -70,22 +65,22 @@ router.post('/', function (req, res){
  *    parameters:
  *    - name: id
  *      description: Id de producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: name
  *      description: Nombre del producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: string
  *    - name: price
  *      description: Precio del producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: pic
  *      description: Imagen de referencia
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: string
  */
@@ -107,22 +102,22 @@ router.put('/:id', function (req, res){
  *    parameters:
  *    - name: id
  *      description: Id de producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: name
  *      description: Nombre del producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: string
  *    - name: price
  *      description: Precio del producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: pic
  *      description: Imagen de referencia
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: string
  */
@@ -145,22 +140,22 @@ router.get('/:id', function (req, res){
  *    parameters:
  *    - name: id
  *      description: Id de producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: name
  *      description: Nombre del producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: string
  *    - name: price
  *      description: Precio del producto
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: pic
  *      description: Imagen de referencia
- *      in: fromData
+ *      in: formData
  *      required: true
  *      type: string
  */
