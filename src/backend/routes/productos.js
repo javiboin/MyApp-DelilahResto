@@ -1,3 +1,6 @@
+const express = require('express');
+const router = express.Router();
+
 /**
  * @swagger
  * /products:
@@ -7,7 +10,7 @@
  *      200:
  *        description: Success
  */
-router.get('/products', function (req, res){
+router.get('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.listProducts();
   res.json(respuesta);
@@ -40,7 +43,7 @@ router.get('/products', function (req, res){
  *      required: true
  *      type: string
  */
-router.post('/products', function (req, res){
+router.post('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.crearProduct(req.body);
   res.json(respuesta);
@@ -73,7 +76,7 @@ router.post('/products', function (req, res){
  *      required: true
  *      type: string
  */
-router.put('/products/:id', function (req, res){
+router.put('/:id', function (req, res){
   const idProduct = req.params.id;
   const respuesta = {};
   respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(idProduct, req.body) : "no es permitido";
@@ -108,7 +111,7 @@ router.put('/products/:id', function (req, res){
  *      type: string
  */
 
-router.get('/products/:id', function (req, res){
+router.get('/:id', function (req, res){
   const idProduct = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterProducts(idProduct) ? functions.productID(idProduct) : "no es correcto";
@@ -143,9 +146,11 @@ router.get('/products/:id', function (req, res){
  *      type: string
  */
 
-router.delete('/products/:id', function (req, res){
+router.delete('/:id', function (req, res){
   const idProduct = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterProducts(idProduct) ? functions.borrarProduct(idProduct) : "no esta permitido";
   res.json(respuesta);
 });
+
+module.exports = router;

@@ -16,6 +16,7 @@ router.get('/filterUsers', function (req, res){
  */
 router.get('/', function (req, res){
   let respuesta = {};
+  console.log("BREAKPOINT router get");
   respuesta.msg = functions.listUsers();
   res.json(respuesta);
 });
@@ -67,7 +68,7 @@ router.get('/', function (req, res){
  *      type: string
  */
 
-router.post('/users', function (req, res){
+router.post('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.crearUser(req.body);
   res.json(respuesta);
@@ -123,7 +124,7 @@ router.post('/users', function (req, res){
  *      type: string
  */
 
- router.put('/users/:id', function (req, res){
+ router.put('/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterUsers(idUser) ? 
@@ -179,7 +180,7 @@ router.post('/users', function (req, res){
  *      type: string
  */
 
-router.get('/users/:id', function (req, res){
+router.get('/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterUsers(idUser) ? functions.userID(idUser) : "no es correcto";
@@ -233,9 +234,11 @@ router.get('/users/:id', function (req, res){
  *      required: true
  *      type: string
  */
-router.delete('/users/:id', function (req, res){
+router.delete('/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "no es correcto";
   res.json(respuesta);
 });
+
+module.exports = router;

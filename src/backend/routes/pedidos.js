@@ -1,4 +1,5 @@
-
+const express = require('express');
+const router = express.Router();
 
 /**
  * @swagger
@@ -9,7 +10,7 @@
  *      200:
  *        description: Success
  */
-router.get('/orders', function (req, res){
+router.get('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.listOrders();
   res.json(respuesta);
@@ -47,7 +48,7 @@ router.get('/orders', function (req, res){
  *      required: true
  *      type: integer
  */
-router.post('/orders', function (req, res){
+router.post('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.crearOrder(req.body);
   res.json(respuesta);
@@ -86,7 +87,7 @@ router.post('/orders', function (req, res){
  *      type: integer
  */
 
-router.put('/orders/:id', function (req, res){
+router.put('/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "no es correcto";
@@ -126,7 +127,7 @@ router.put('/orders/:id', function (req, res){
  *      type: integer
  */
 
-router.get('/orders/:id', function (req, res){
+router.get('/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterOrders ? functions.orderID(idOrders) : "no es correcto";
@@ -166,9 +167,11 @@ router.get('/orders/:id', function (req, res){
  *      type: integer
  */
 
-router.delete('/orders/:id', function (req, res){
+router.delete('/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterOrders ? functions.borrarOrder(idOrders) : "no es correcto";
   res.json(respuesta);
 });
+
+module.exports = router;

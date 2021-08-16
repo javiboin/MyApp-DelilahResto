@@ -1,7 +1,6 @@
 const users = require('./models/usuarios');
 const orders = require('./models/pedidos');
 const products = require('./models/productos');
-const IDs = require('./models/usuarios');
 
 function filterUsers(id){
   const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
