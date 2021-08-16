@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const functions = require('../functions');
 
+router.use(express.urlencoded({ extended: true }));
+router.use(express.json());
+
 router.get('/filterUsers', function (req, res){
   res.send(functions.filterUsers(1));
 });
@@ -32,11 +35,6 @@ router.get('/', function (req, res){
  *    summary: "Agrega Usuario"
  *    description: Guarda un nuevo usuario en nuestra app
  *    parameters:
- *    - name: id
- *      description: Id de Usuario
- *      in: formData
- *      required: false
- *      type: integer
  *    - name: nickname
  *      description: Nombre de Usuario 
  *      in: formData
@@ -72,10 +70,14 @@ router.get('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.post('/', function (req, res){
   let respuesta = {};
+  console.log(req.body);
   respuesta.msg = functions.crearUser(req.body);
   res.json(respuesta);
 });

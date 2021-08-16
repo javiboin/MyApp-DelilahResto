@@ -18,7 +18,7 @@ function listUsers(){
 
 function crearUser(userObject) {
   const id = users[users.length -1].id +1;
-
+  console.log(userObject);
   users.push({
     id: id,
     nickname: userObject.nickname,
