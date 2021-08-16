@@ -2,6 +2,8 @@ const moment = require('moment');
 const express = require('express');
 const app = express();
 
+app.use(express.json());
+
 const router = express.Router();
 
 /* app.use(router); */
@@ -15,9 +17,6 @@ app.use('/orders', pedidos);
 const productos = require('./routes/productos');
 app.use('/products', productos);
 
-
-/* const { json } = require('express'); */
-
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
@@ -27,8 +26,6 @@ router.use(express.json());
 
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
-/* const users = require('./models/usuarios'); */
-
 
 const swaggerOptions = {
   swaggerDefinition: {

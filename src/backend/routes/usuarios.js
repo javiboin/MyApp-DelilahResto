@@ -17,7 +17,6 @@ router.get('/filterUsers', function (req, res){
  */
 router.get('/', function (req, res){
   let respuesta = {};
-  console.log("BREAKPOINT router get");
   respuesta.msg = functions.listUsers();
   res.json(respuesta);
 });
@@ -73,7 +72,6 @@ router.post('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.crearUser(req.body);
   res.json(respuesta);
-  console.log(req.body);
   res.status(201).send({error: '', body: 'Creado Correctamente'});
 });
 
@@ -125,7 +123,7 @@ router.post('/', function (req, res){
  *      type: string
  */
 
- router.put('/:id', function (req, res){
+router.put('/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterUsers(idUser) ? 
