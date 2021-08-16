@@ -6,7 +6,10 @@ const functions = require('../functions');
  * @swagger
  * /products:
  *  get:
- *    description: Listado de todos los productos
+ *    tags:
+ *    - "Productos"
+ *    summary: "Listado de todos los productos"
+ *    description: Devuelve todos los productos en nuestra app
  *    responses:
  *      200:
  *        description: Success
@@ -21,7 +24,10 @@ router.get('/', function (req, res){
  * @swagger
  * /products:
  *  post:
- *    description: Agrega un producto
+ *    tags:
+ *    - "Productos"
+ *    summary: "Agrega Producto"
+ *    description: Guarda un nuevo producto en nuestra app
  *    parameters:
  *    - name: id
  *      description: Id de producto
@@ -54,7 +60,10 @@ router.post('/', function (req, res){
  * @swagger
  * /products/{id}:
  *  put:
- *    description: Agrega un producto
+ *    tags:
+ *    - "Productos"
+ *    summary: "Modifica por ID"
+ *    description: "Se realiza la modificacón en uno o más campos de un producto"
  *    parameters:
  *    - name: id
  *      description: Id de producto
@@ -88,7 +97,10 @@ router.put('/:id', function (req, res){
  * @swagger
  * /products/{id}:
  *  get:
- *    description: Agrega un producto
+ *    tags:
+ *    - Productos
+ *    summary: "Ver info por ID"
+ *    description: Todos los datos de un producto
  *    parameters:
  *    - name: id
  *      description: Id de producto
@@ -123,7 +135,10 @@ router.get('/:id', function (req, res){
  * @swagger
  * /products/{id}:
  *  delete:
- *    description: Agrega un producto
+ *    tags:
+ *    - "Productos"
+ *    summary: "Elimina por ID"
+ *    description: "Se elimina un producto en nuestra base de datos"
  *    parameters:
  *    - name: id
  *      description: Id de producto

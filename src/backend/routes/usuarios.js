@@ -10,7 +10,10 @@ router.get('/filterUsers', function (req, res){
  * @swagger
  * /users:
  *  get:
- *    description: Listado de todos los usuarios
+ *    tags:
+ *    - "Usuarios" 
+ *    summary: "Listado de todos los usuarios"
+ *    description: Devuelve todos los usuarios dados de alta en nuestra app
  *    responses:
  *      200:
  *        description: Success
@@ -24,7 +27,10 @@ router.get('/', function (req, res){
  * @swagger
  * /users:
  *  post:
- *    description: Crea un Usuario
+ *    tags:
+ *    - "Usuarios"
+ *    summary: "Agrega Usuario"
+ *    description: Guarda un nuevo usuario en nuestra app
  *    parameters:
  *    - name: id
  *      description: Id de Usuario
@@ -79,7 +85,10 @@ router.post('/', function (req, res){
  * @swagger
  * /users/{id}:
  *  put:
- *    description: Modifica un Usuario
+ *    tags:
+ *    - "Usuarios"
+ *    summary: "Modifica por ID"
+ *    description: "Se realiza la modificacón en uno o mas campos de un usuario"
  *    parameters:
  *    - name: id
  *      description: Id de Usuario
@@ -135,6 +144,10 @@ router.put('/:id', function (req, res){
  * @swagger
  * /users/{id}:
  *  get:
+ *    tags:
+ *    - "Usuarios"
+ *    summary: "Ver info por ID"
+ *    description: Todos los datos de un usuario
  *    description: Modifica un Usuario
  *    parameters:
  *    - name: id
@@ -190,7 +203,10 @@ router.get('/:id', function (req, res){
  * @swagger
  * /users/{id}:
  *  delete:
- *    description: Modifica un Usuario
+ *    tags:
+ *    - "Usuarios"
+ *    summary: "Elimina por ID"
+ *    description: "Se elimina un usuario en nuestra base de datos"
  *    parameters:
  *    - name: id
  *      description: Id de Usuario

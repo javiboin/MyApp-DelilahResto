@@ -6,8 +6,6 @@ app.use(express.json());
 
 const router = express.Router();
 
-/* app.use(router); */
-
 const usuarios = require('./routes/usuarios');
 app.use('/users', usuarios);
 
@@ -41,17 +39,6 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
-
-/* const login = (username, password) => users.find(user => user.username === username && user.password === password);
-
-router.post('/login', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  console.log(login(username, password));
-  res.json({msg: 'ok'});
-
-}); */
-
 router.use(function(req, res, next) {
   const respuesta = `404 Not Found ${moment().format('DD-MM-YYYY, hh:mm:ss a')} ${req.method} ${req.url} path: ${req.path} ${req.statusCode} ${req.statusMessage}}`;
   
@@ -62,3 +49,13 @@ router.use(function(req, res, next) {
 });
 
 module.exports = app;
+
+/* const login = (username, password) => users.find(user => user.username === username && user.password === password);
+
+router.post('/login', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  console.log(login(username, password));
+  res.json({msg: 'ok'});
+
+}); */

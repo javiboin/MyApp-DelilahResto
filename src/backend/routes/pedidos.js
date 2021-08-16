@@ -6,7 +6,10 @@ const functions = require('../functions');
  * @swagger
  * /orders:
  *  get:
- *    description: Listado de todos los pedidos
+ *    tags:
+ *    - "Pedidos"
+ *    summary: "Listado de todos los pedidos"
+ *    description: Devuelve todos los pedidos realizados en nuestra app
  *    responses:
  *      200:
  *        description: Success
@@ -21,7 +24,10 @@ router.get('/', function (req, res){
  * @swagger
  * /orders:
  *  post:
- *    description: Crea un pedido
+ *    tags:
+ *    - "Pedidos"
+ *    summary: "Agrega Pedido"
+ *    description: Guarda un nuevo pedido de comida en nuestra app
  *    parameters:
  *    - name: id
  *      description: Id de pedido
@@ -58,9 +64,12 @@ router.post('/', function (req, res){
 
 /**
  * @swagger
- * /orders:
+ * /orders/{id}:
  *  put:
- *    description: Crea un pedido
+ *    tags:
+ *    - "Pedidos"
+ *    summary: "Modifica por ID"
+ *    description: "Se realiza la modificacón en uno o mas campos de un pedido"
  *    parameters:
  *    - name: id
  *      description: Id de pedido
@@ -100,7 +109,10 @@ router.put('/:id', function (req, res){
  * @swagger
  * /orders/{id}:
  *  get:
- *    description: Crea un pedido
+ *    tags:
+ *    - "Pedidos"
+ *    summary: "Ver info por ID"
+ *    description: Todos los datos de un pedido
  *    parameters:
  *    - name: id
  *      description: Id de pedido
@@ -140,7 +152,10 @@ router.get('/:id', function (req, res){
  * @swagger
  * /orders/{id}:
  *  delete:
- *    description: Crea un pedido
+ *    tags:
+ *    - "Pedidos"
+ *    summary: "Elimina por ID"
+ *    description: "Se elimina un pedido en nuestra base de datos"
  *    parameters:
  *    - name: id
  *      description: Id de pedido
