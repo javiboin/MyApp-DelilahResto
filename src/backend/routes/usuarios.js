@@ -78,7 +78,6 @@ router.post('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.crearUser(req.body);
   res.json(respuesta);
-  res.status(201).send({error: '', body: 'Creado Correctamente'});
 });
 
 /**
@@ -148,7 +147,6 @@ router.put('/:id', function (req, res){
  *    - "Usuarios"
  *    summary: "Ver info por ID"
  *    description: Todos los datos de un usuario
- *    description: Modifica un Usuario
  *    parameters:
  *    - name: id
  *      description: Id de Usuario
