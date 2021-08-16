@@ -34,12 +34,12 @@ const swaggerOptions = {
       version: '0.1.0'
     }
   },
-  apis: ['./routes/usuarios.js', './routes/pedidos.js', './routes/productos.js']
+  apis: ['./server.js','./routes/usuarios.js', './routes/pedidos.js', './routes/productos.js']
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 
 /* const login = (username, password) => users.find(user => user.username === username && user.password === password);
