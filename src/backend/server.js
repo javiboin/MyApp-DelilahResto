@@ -1,4 +1,3 @@
-/* ---------------- AJUSTES SERVIDOR ---------------- */
 const moment = require('moment');
 const express = require('express');
 const app = express();
@@ -7,15 +6,13 @@ const router = express.Router();
 
 app.use(router);
 
-const functions = require('./functions');
-const usuarios = require('./models/usuarios');
 const { json } = require('express');
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 /* ------------------------------------------- */
-/* -------------- SWAGGER ------------ */
+/* -------------- SWAGGER -------------------- */
 /* ------------------------------------------- */
 
 const swaggerUI = require('swagger-ui-express');
@@ -29,26 +26,13 @@ const swaggerOptions = {
       version: '0.1.0'
     }
   },
-  apis: ['./server.js']
+  apis: ['./routes/usuarios.js', './routes/pedidos.js', './routes/productos.js']
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
-
-/* CUENTA NUEVA ALTA DE USUARIO */
-/* INGRESAR CON USUARIO Y CONTRASEÑA */
-/* GENERAR UN CARRITO DE COMPRAS CON EL USUARIO REGISTRADO */
-/* INSTANCIAR OBJETO PEDIDO */
-/* EDITAR ESTADO DEL OBJETO PEDIDO DESDE EL ADMIN */
-/* LISTAR OBJETOS POR ESTADO */
-
-
-
-/* ------------------------------------------- */
-/* ---------------- ENDPOINTS ---------------- */
-/* ------------------------------------------- */
 
 const login = (username, password) => users.find(user => user.username === username && user.password === password);
 

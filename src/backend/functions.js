@@ -3,39 +3,6 @@ const orders = require('./models/pedidos');
 const products = require('./models/productos');
 const IDs = require('./models/usuarios');
 
-/* ------------------ CONSTRUCTORES ------------------ */
-
-function User(id, user, completeName, email, phone, mainAddress, altAddress, password) {
-  this.id = Number(id);
-  this.user = String(user);
-  this.completeName = String(completeName);
-  this.email = String(email);
-  this.phone = Number(phone);
-  this.mainAddress = String(mainAddress);
-  this.altAddress = String(altAddress);
-  this.password = String(password);
-};
-
-function Order(id, state, products, formaPago, price){
-  this.id = Number(id);
-  this.state = String(state),
-  this.products = products,
-  this.formaPago = String(formaPago)
-  this.price = Number(price);
-};
-
-function Product(id, name, price, pic){
-  this.id = Number(id);
-  this.name = String(name),
-  this.price = Number(price);
-  this.pic = String(pic);
-};
-
-/* ----------------------------------------------------- */
-/* ------------------ FUNCIONES DATOS ------------------ */
-/* ----------------------------------------------------- */
-
-
 function filterUsers(id){
   const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
   return datosFiltrados;

@@ -1,4 +1,5 @@
-
+const express = require('express');
+const router = express.Router();
 
 router.get('/filterUsers', function (req, res){
   res.send(functions.filterUsers(1));
@@ -13,7 +14,7 @@ router.get('/filterUsers', function (req, res){
  *      200:
  *        description: Success
  */
-router.get('/users', function (req, res){
+router.get('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.listUsers();
   res.json(respuesta);
