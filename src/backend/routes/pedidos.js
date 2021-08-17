@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const functions = require('../functions');
+const functions = require('../controllers/pedidos');
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
