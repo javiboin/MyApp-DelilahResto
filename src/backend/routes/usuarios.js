@@ -180,7 +180,7 @@ router.put('/:id', function (req, res){
  *    parameters:
  *    - name: id
  *      description: Id de Usuario
- *      in: formData
+ *      in: path
  *      required: true
  *      type: integer
  *    - name: nickname
