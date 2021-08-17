@@ -1,18 +1,17 @@
-const users = require('./models/usuarios');
+/* const users = require('./models/usuarios'); */
 const orders = require('./models/pedidos');
 const products = require('./models/productos');
 
-function filterUsers(id){
+/* function filterUsers(id){
   const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
   return datosFiltrados;
-};
+}; */
 
-function userID(id) {
+/* function userID(id) {
   return users.filter(user => user.id == id);
-};
+}; */
 
-/* ---------------- FUNCIONES USUARIOS ----------------- */
-function login(userObject) {
+/* function login(userObject) {
   const username = userObject.nickname;
   const password = userObject.password;
   
@@ -26,9 +25,9 @@ function login(userObject) {
 
 function listUsers(){
   return(users);
-};
+}; */
 
-function crearUser(userObject) {
+/* function crearUser(userObject) {
   const id = users[users.length -1].id +1;
   users.push({
     id: id,
@@ -72,7 +71,7 @@ function borrarUser(idUser){
   users.splice(userPosition, 1);
 
   return 'User deleted'; 
-};
+}; */
 
 /* ------------------ FUNCIONES PEDIDOS ------------------ */
 function filterOrders(id){
@@ -183,14 +182,14 @@ function borrarProduct(idProduct){
 };
 
 /* ------------------ EXPORTS ------------------ */
-exports.filterUsers = filterUsers;
-exports.userID = userID;
+/* exports.filterUsers = filterUsers; */
+/* exports.userID = userID; */
 
-exports.login = login;
-exports.listUsers = listUsers;
-exports.crearUser = crearUser;
+/* exports.login = login;
+exports.listUsers = listUsers; */
+/* exports.crearUser = crearUser;
 exports.modificarUser = modificarUser;
-exports.borrarUser = borrarUser;
+exports.borrarUser = borrarUser; */
 
 exports.filterOrders = filterOrders;
 exports.orderID = orderID;
