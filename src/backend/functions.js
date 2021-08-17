@@ -12,13 +12,24 @@ function userID(id) {
 };
 
 /* ---------------- FUNCIONES USUARIOS ----------------- */
+function login(userObject) {
+  const username = userObject.nickname;
+  const password = userObject.password;
+  
+  const logins = users.find(user => user.nickname === username && user.password === password);
+  if (logins !== undefined){
+    return `Bienvenido a nuestra ${username}`;
+  } else {
+    return 'El usuario y/o Contraseña es incorrecta, Vuelva a intentarlo';
+  };
+};
+
 function listUsers(){
   return(users);
 };
 
 function crearUser(userObject) {
   const id = users[users.length -1].id +1;
-  console.log(userObject);
   users.push({
     id: id,
     nickname: userObject.nickname,
@@ -175,6 +186,7 @@ function borrarProduct(idProduct){
 exports.filterUsers = filterUsers;
 exports.userID = userID;
 
+exports.login = login;
 exports.listUsers = listUsers;
 exports.crearUser = crearUser;
 exports.modificarUser = modificarUser;

@@ -5,6 +5,35 @@ const functions = require('../functions');
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
+/**
+ * @swagger
+ * /users/login:
+ *  get:
+ *    tags:
+ *    - "Usuarios"
+ *    summary: "Ingresa a nuestra app"
+ *    description: Autentica el ingreso a la app
+ *    parameters:
+ *    - name: nickname
+ *      description: Nombre de Usuario 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    - name: password
+ *      description: Contraseña de usuario
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
+ */
+router.get('/login', function (req, res){
+  let respuesta = {};
+  respuesta.msg = functions.login(req.body);
+  res.json(respuesta);
+});
+
 router.get('/filterUsers', function (req, res){
   res.send(functions.filterUsers(1));
 });
@@ -77,7 +106,6 @@ router.get('/', function (req, res){
 
 router.post('/', function (req, res){
   let respuesta = {};
-  console.log(req.body);
   respuesta.msg = functions.crearUser(req.body);
   res.json(respuesta);
 });
