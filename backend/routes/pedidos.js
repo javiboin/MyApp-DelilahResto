@@ -1,9 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const functions = require('../controllers/pedidos');
+const functionsUser = require('../controllers/usuarios');
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
+
+router.get('/:idUser', function (req, res){
+  const idUser = req.params.id;
+  let respuesta = {};
+  respuesta.msg = functionsUser.filterUsers(idUser) ? functionsUser.verEstados(idUser ,req.body) : "no es correcto";
+  res.json(respuesta);
+});
 
 /**
  * @swagger
