@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const functions = require('../controllers/productos');
+const administradores = require('../controllers/administradores');
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -52,9 +53,13 @@ router.get('/', function (req, res){
  *        description: Success
  */
 router.post('/', function (req, res){
-  let respuesta = {};
-  respuesta.msg = functions.crearProduct(req.body);
-  res.json(respuesta);
+  if (administradores.isAdmin(req.body.idUser)){
+    let respuesta = {};
+    respuesta.msg = functions.crearProduct(req.body);
+    res.json(respuesta); 
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
 });
 
 /**
@@ -90,11 +95,16 @@ router.post('/', function (req, res){
  *      200:
  *        description: Success
  */
-router.put('/:id', function (req, res){
-  const idProduct = req.params.id;
-  const respuesta = {};
-  respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(idProduct, req.body) : "no es permitido";
-  res.json(respuesta);
+
+router.put('/:id', function (req, res){ 
+  if (administradores.isAdmin(req.body.idUser)){
+    const idProduct = req.params.id;
+    const respuesta = {};
+    respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(idProduct, req.body) : "Operación anulada. El producto no existe";
+    res.json(respuesta); 
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
 });
 
 /**
@@ -132,10 +142,10 @@ router.put('/:id', function (req, res){
  */
 
 router.get('/:id', function (req, res){
-  const idProduct = req.params.id;
-  let respuesta = {};
-  respuesta.msg = functions.filterProducts(idProduct) ? functions.productID(idProduct) : "no es correcto";
-  res.json(respuesta);
+    const idProduct = req.params.id;
+    let respuesta = {};
+    respuesta.msg = functions.filterProducts(idProduct) ? functions.productID(idProduct) : "no es correcto";
+    res.json(respuesta);
 });
 
 /**
@@ -173,10 +183,14 @@ router.get('/:id', function (req, res){
  */
 
 router.delete('/:id', function (req, res){
-  const idProduct = req.params.id;
-  let respuesta = {};
-  respuesta.msg = functions.filterProducts(idProduct) ? functions.borrarProduct(idProduct) : "no esta permitido";
-  res.json(respuesta);
+  if (administradores.isAdmin(req.body.idUser)){
+    const idProduct = req.params.id;
+    let respuesta = {};
+    respuesta.msg = functions.filterProducts(idProduct) ? functions.borrarProduct(idProduct) : "Operación anulada. El producto no existe";
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
 });
 
 module.exports = router;
