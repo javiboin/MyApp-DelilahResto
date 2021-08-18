@@ -24,7 +24,7 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: 'Delilah Restó API',
-      version: '0.1.0'
+      version: '0.9.0'
     }
   },
   apis: ['./server.js','./routes/usuarios.js', './routes/pedidos.js', './routes/productos.js']

@@ -71,32 +71,32 @@ router.get('/', function (req, res){
  *      type: string
  *    - name: completeName
  *      description: Nombre del propietario de la cuenta 
- *      in: formData
+ *      in: query
  *      required: true
  *      type: string
  *    - name: email
  *      description: Correo electronico de Usuario 
- *      in: formData
+ *      in: query
  *      required: true
  *      type: string
  *    - name: phone
  *      description: Numero de telefono de Usuario 
- *      in: formData
+ *      in: query
  *      required: true
  *      type: integer
  *    - name: mainAddress
  *      description: Domicilio de Usuario 
- *      in: formData
+ *      in: query
  *      required: true
  *      type: string
  *    - name: altAddress
  *      description: Domicilio alternativo o transitorio 
- *      in: formData
+ *      in: query
  *      required: true
  *      type: string
  *    - name: password
  *      description: Contraseña de Usuario 
- *      in: formData
+ *      in: query
  *      required: true
  *      type: string
  *    responses:
@@ -159,6 +159,9 @@ router.post('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.put('/:id', function (req, res){

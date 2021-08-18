@@ -32,6 +32,11 @@ router.get('/', function (req, res){
  *    summary: "Agrega Pedido"
  *    description: Guarda un nuevo pedido de comida en nuestra app
  *    parameters:
+ *    - name: idUser
+ *      description: ID de Usuario que realizo el pedido 
+ *      in: formData
+ *      required: true
+ *      type: integer
  *    - name: state
  *      description: Estado del pedido 
  *      in: formData
@@ -73,6 +78,11 @@ router.post('/', function (req, res){
  *      description: Id de pedido
  *      in: formData
  *      required: false
+ *      type: integer
+ *    - name: idUser
+ *      description: ID de Usuario que realizo el pedido 
+ *      in: formData
+ *      required: true
  *      type: integer
  *    - name: state
  *      description: Estado del pedido 
@@ -117,6 +127,11 @@ router.put('/:id', function (req, res){
  *      in: formData
  *      required: false
  *      type: integer
+ *    - name: idUser
+ *      description: ID de Usuario que realizo el pedido 
+ *      in: formData
+ *      required: true
+ *      type: integer
  *    - name: state
  *      description: Estado del pedido 
  *      in: formData
@@ -159,6 +174,11 @@ router.get('/:id', function (req, res){
  *      description: Id de pedido
  *      in: formData
  *      required: false
+ *      type: integer
+ *    - name: idUser
+ *      description: ID de Usuario que realizo el pedido 
+ *      in: formData
+ *      required: true
  *      type: integer
  *    - name: state
  *      description: Estado del pedido 
