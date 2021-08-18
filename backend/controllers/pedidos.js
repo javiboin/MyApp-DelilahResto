@@ -1,7 +1,9 @@
-
 const orders = require('../models/pedidos');
 
-/* ------------------ FUNCIONES PEDIDOS ------------------ */
+function verEstados(id){
+  return pedidos.filter(pedido => pedido.idUser === id);
+};
+
 function filterOrders(id){
   const datosFiltrados = orders.filter(order => order.id == Number(id));
   return datosFiltrados;
@@ -55,6 +57,8 @@ function borrarOrder(idOrder){
   
   return 'Order deleted'; 
 };
+
+exports.verEstados = verEstados;
 
 exports.filterOrders = filterOrders;
 exports.orderID = orderID;
