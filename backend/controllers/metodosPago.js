@@ -12,5 +12,21 @@ function crearMedioPago(paymentObject) {
   return 'Medio de Pago añadido';
 };
 
+const searchIndexPayment = (idPayment) => {
+  return metodosPago.findIndex(x => x.id == idPayment);
+};
+
+function modificarPayment(idPayment, paymentObject) {
+  paymentObject = {
+    id: paymentObject.idPayment,
+    name: paymentObject.name
+  };
+
+  metodosPago[searchIndexPayment(idPayment)] = paymentObject;
+
+  return "Metodo de pago actualizado";
+};
+
 exports.listPayment = listPayment;
 exports.crearMedioPago = crearMedioPago;
+exports.modificarPayment = modificarPayment;
