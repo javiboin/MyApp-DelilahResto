@@ -47,6 +47,9 @@ router.get('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 router.post('/', function (req, res){
   let respuesta = {};
@@ -83,6 +86,9 @@ router.post('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 router.put('/:id', function (req, res){
   const idProduct = req.params.id;
@@ -120,6 +126,9 @@ router.put('/:id', function (req, res){
  *      in: formData
  *      required: true
  *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.get('/:id', function (req, res){
@@ -158,6 +167,9 @@ router.get('/:id', function (req, res){
  *      in: formData
  *      required: true
  *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.delete('/:id', function (req, res){

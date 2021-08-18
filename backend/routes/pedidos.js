@@ -57,6 +57,9 @@ router.get('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.post('/', function (req, res){
@@ -104,6 +107,9 @@ router.post('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.put('/:id', function (req, res){
@@ -152,6 +158,9 @@ router.put('/:id', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.get('/:id', function (req, res){
@@ -200,6 +209,9 @@ router.get('/:id', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.delete('/:id', function (req, res){
