@@ -16,11 +16,6 @@ router.get('/byid/:idUser', function (req, res){
 router.put('/changeStateOrder/:id', function (req, res){
   const id = req.params.id;
   let respuesta = {};
-  respuesta.msg = functionsUser.filterUsers(idUser) ? functions.verEstados(idUser) : "no es correcto";
-  res.json(respuesta);
-
-  const id = req.params.id;
-  let respuesta = {};
   respuesta.msg = functions.filterOrders(id) ? functions.modificarOrder(id ,req.body) : "no es correcto";
   res.json(respuesta);
 });
