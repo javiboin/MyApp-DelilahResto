@@ -18,7 +18,7 @@ router.post('/', function (req, res){
     respuesta.msg = functions.crearMedioPago(req.body);
     res.json(respuesta);
   } else {  
-    res.json("Operación anulada. El email ingresado ya esta registrado");
+    res.json("Operación anulada. NO cuenta con los permisos para realizar esta acción");
   };
 });
 

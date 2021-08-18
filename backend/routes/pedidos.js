@@ -10,7 +10,7 @@ router.use(express.json());
 router.get('/byid/:idUser', function (req, res){
   const idUser = req.params.idUser;
   let respuesta = {};
-  respuesta.msg = functionsUser.filterUsers(idUser) ? functions.verEstados(idUser) : "no es correcto";
+  respuesta.msg = functionsUser.filterUsers(idUser) ? functions.verEstados(idUser) : "Usuario no encontrado";
   res.json(respuesta);
 });
 
@@ -18,10 +18,10 @@ router.put('/changeStateOrder/:id', function (req, res){
   if (administradores.isAdmin(req.body.idUser)){
     const id = req.params.id;
     let respuesta = {};
-    respuesta.msg = functions.filterOrders(id) ? functions.modificarOrder(id ,req.body) : "no es correcto";
+    respuesta.msg = functions.filterOrders(id) ? functions.modificarOrder(id ,req.body) : "No existe el pedido que estabas buscando";
     res.json(respuesta);
   } else {  
-    res.json("Operación anulada. El email ingresado ya esta registrado");
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
   };
 });
 
