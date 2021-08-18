@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const functions = require('../controllers/usuarios');
+const administradores = require('../controllers/administradores');
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -105,9 +106,13 @@ router.get('/', function (req, res){
  */
 
 router.post('/', function (req, res){
-  let respuesta = {};
-  respuesta.msg = functions.crearUser(req.body);
-  res.json(respuesta);
+  if (administradores.isAdmin(req.body.idUser)){
+    let respuesta = {};
+    respuesta.msg = functions.crearUser(req.body);
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. El email ingresado ya esta registrado");
+  };
 });
 
 /**
@@ -159,6 +164,9 @@ router.post('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.put('/:id', function (req, res){

@@ -1,7 +1,9 @@
-
 const orders = require('../models/pedidos');
 
-/* ------------------ FUNCIONES PEDIDOS ------------------ */
+function verEstados(idUser){
+  return pedidos.filter(pedido => pedido.idUser === idUser);
+};
+
 function filterOrders(id){
   const datosFiltrados = orders.filter(order => order.id == Number(id));
   return datosFiltrados;
@@ -20,6 +22,7 @@ function crearOrder(orderObject){
 
   orders.push({
     id: id,
+    idUser: orderObject.idUser,
     state: orderObject.state,
     products: orderObject.products,
     formaPago: orderObject.formaPago,
@@ -35,10 +38,11 @@ const searchIndexOrder = (idOrder) => {
 function modificarOrder(idOrder, orderObject){
   orderObject = {
     id: parseInt(idOrder),
-    state: orderObject.state,
+    idUser: parseInt(orderObject.idUser),
+    state: parseInt(orderObject.state), 
     products: orderObject.products,
-    formaPago: orderObject.formaPago,
-    price: orderObject.price
+    formaPago: parseInt(orderObject.formaPago),
+    price: parseInt(orderObject.price)
   };
 
   orders[searchIndexOrder(idOrder)] = orderObject;
@@ -55,6 +59,8 @@ function borrarOrder(idOrder){
   
   return 'Order deleted'; 
 };
+
+exports.verEstados = verEstados;
 
 exports.filterOrders = filterOrders;
 exports.orderID = orderID;

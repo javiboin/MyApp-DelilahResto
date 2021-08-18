@@ -1,4 +1,5 @@
 const products = require('../models/productos');
+const administradores = require('../controllers/administradores');
 
 function filterProducts(id){
   const datosFiltrados = products.filter(product => product.id == Number(id));
@@ -14,15 +15,15 @@ function listProducts(){
 };
 
 function crearProduct(productObject){
-  const id = products[products.length -1].id +1;
+    const id = products[products.length -1].id +1;
 
-  products.push({
-    id: id,
-    name: productObject.name,
-    price: productObject.price,
-    pic: productObject.pic,
-  });
-  return 'Order created';
+    products.push({
+      id: id,
+      name: productObject.name,
+      price: productObject.price,
+      pic: productObject.pic,
+    });
+    return 'Order created';
 };
 
 const searchIndexProduct = (idProduct) => {
