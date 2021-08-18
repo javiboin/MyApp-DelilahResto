@@ -16,9 +16,13 @@ app.use('/orders', pedidos);
 const productos = require('./routes/productos');
 app.use('/products', productos);
 
+const metodosDePago = require('./routes/metodosPago');
+app.use('/payment', metodosDePago);
+
 /* -------------- SWAGGER CONFIGURATION -------------------- */
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+/* const metodosPago = require('./models/metodosPago'); */
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -27,7 +31,7 @@ const swaggerOptions = {
       version: '0.9.0'
     }
   },
-  apis: ['./server.js','./routes/usuarios.js', './routes/pedidos.js', './routes/productos.js']
+  apis: ['./routes/usuarios.js', './routes/pedidos.js', './routes/productos.js','./routes/metodosPago.js']
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
