@@ -71,32 +71,32 @@ router.get('/', function (req, res){
  *      type: string
  *    - name: completeName
  *      description: Nombre del propietario de la cuenta 
- *      in: query
+ *      in: formData
  *      required: true
  *      type: string
  *    - name: email
  *      description: Correo electronico de Usuario 
- *      in: query
+ *      in: formData
  *      required: true
  *      type: string
  *    - name: phone
  *      description: Numero de telefono de Usuario 
- *      in: query
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: mainAddress
  *      description: Domicilio de Usuario 
- *      in: query
+ *      in: formData
  *      required: true
  *      type: string
  *    - name: altAddress
  *      description: Domicilio alternativo o transitorio 
- *      in: query
+ *      in: formData
  *      required: true
  *      type: string
  *    - name: password
  *      description: Contraseña de Usuario 
- *      in: query
+ *      in: formData
  *      required: true
  *      type: string
  *    responses:
