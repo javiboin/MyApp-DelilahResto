@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const functions = require('../controllers/pedidos');
 const functionsUser = require('../controllers/usuarios');
+const administradores = require('../controllers/administradores');
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -14,10 +15,14 @@ router.get('/byid/:idUser', function (req, res){
 });
 
 router.put('/changeStateOrder/:id', function (req, res){
-  const id = req.params.id;
-  let respuesta = {};
-  respuesta.msg = functions.filterOrders(id) ? functions.modificarOrder(id ,req.body) : "no es correcto";
-  res.json(respuesta);
+  if (administradores.isAdmin(req.body.idUser)){
+    const id = req.params.id;
+    let respuesta = {};
+    respuesta.msg = functions.filterOrders(id) ? functions.modificarOrder(id ,req.body) : "no es correcto";
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. El email ingresado ya esta registrado");
+  };
 });
 
 /**
@@ -33,9 +38,13 @@ router.put('/changeStateOrder/:id', function (req, res){
  *        description: Success
  */
 router.get('/', function (req, res){
-  let respuesta = {};
-  respuesta.msg = functions.listOrders();
-  res.json(respuesta);
+  if (administradores.isAdmin(req.body.idUser)){
+    let respuesta = {};
+    respuesta.msg = functions.listOrders();
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. El email ingresado ya esta registrado");
+  };
 });
 
 /**
