@@ -1,7 +1,7 @@
 const orders = require('../models/pedidos');
 
 function verEstados(idUser){
-  return pedidos.filter(pedido => pedido.idUser === idUser);
+  return orders.filter(pedido => pedido.idUser === Number(idUser));
 };
 
 function filterOrders(id){

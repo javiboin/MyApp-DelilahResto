@@ -6,10 +6,10 @@ const functionsUser = require('../controllers/usuarios');
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-router.get('/:idUser', function (req, res){
-  const idUser = req.params.id;
+router.get('/byid/:idUser', function (req, res){
+  const idUser = req.params.idUser;
   let respuesta = {};
-  respuesta.msg = functionsUser.filterUsers(idUser) ? functionsUser.verEstados(idUser ,req.body) : "no es correcto";
+  respuesta.msg = functionsUser.filterUsers(idUser) ? functions.verEstados(idUser) : "no es correcto";
   res.json(respuesta);
 });
 
