@@ -2,7 +2,7 @@ const users = require('../models/usuarios');
 
 function emailrepetido(email) {
   return users.find(user => user.email === email) ? true : false;
-}
+};
 
 function filterUsers(id){
   const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
