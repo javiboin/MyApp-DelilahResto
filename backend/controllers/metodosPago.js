@@ -1,4 +1,5 @@
 const metodosPago =  require('../models/metodosPago');
+const { borrarOrder } = require('./pedidos');
 
 function listPayment() {
   return(metodosPago);
@@ -27,6 +28,17 @@ function modificarPayment(idPayment, paymentObject) {
   return "Metodo de pago actualizado";
 };
 
+function borrarPayment(idPayment){
+  const objetoBuscado = metodosPago[searchIndexPayment(idPayment)];
+
+  const Position = metodosPago.indexOf(objetoBuscado);
+
+  metodosPago.splice(Position, 1);
+
+  return 'Payment deleted'; 
+};
+
 exports.listPayment = listPayment;
 exports.crearMedioPago = crearMedioPago;
 exports.modificarPayment = modificarPayment;
+exports.borrarPayment = borrarPayment;
