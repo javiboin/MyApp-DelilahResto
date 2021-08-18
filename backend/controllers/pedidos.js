@@ -9,6 +9,16 @@ function filterOrders(id){
   return datosFiltrados;
 };
 
+function cambiarEstadosPedidos(idOrder, orderObject){
+  orderObject = {
+    state: parseInt(orderObject.state)
+  };
+
+  orders[searchIndexOrder(idOrder)] = orderObject;
+
+  return 'Order updated';
+};
+
 function orderID(id) {
   return orders.filter(order => order.id == id);
 };
@@ -61,6 +71,7 @@ function borrarOrder(idOrder){
 };
 
 exports.verEstados = verEstados;
+exports.cambiarEstadosPedidos = cambiarEstadosPedidos;
 
 exports.filterOrders = filterOrders;
 exports.orderID = orderID;
