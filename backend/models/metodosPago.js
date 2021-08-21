@@ -1,15 +1,12 @@
 let metodosPago = [
   {
-    id: 1,
-    name: "Efectivo",
+    id: 1, name: "Efectivo",
   },
   {
-    id: 2,
-    name: "Credito",
+    id: 2, name: "Credito",
   },
   {
-    id: 3,
-    name: "Debito",
+    id: 3, name: "Debito",
   }
 ];
 
