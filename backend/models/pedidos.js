@@ -2,34 +2,46 @@ let orders = [
   {
     id: 1,
     idUser: 1,
-    state: "Preparando",
-    products: [1,2,3],
-    formaPago: "Efectivo",
-    price: 1500
+    state: 1,
+    products: [
+      {id: 1, price: 400},
+      {id: 2, price: 500},
+      {id: 3, price: 600}
+    ],
+    payment: 1
   },
   {
     id: 2,
     idUser: 1,
-    state: "Terminado",
-    products: [1,3],
-    formaPago: "Efectivo",
-    price: 1000
+    state: 1,
+    products: [
+      {id: 1, price: 400},
+      {id: 2, price: 500},
+      {id: 3, price: 600}
+    ],
+    payment: 1
   },
   {
     id: 3,
-    idUser: 2,
-    state: "Preparando",
-    products: [1,2,3,4],
-    formaPago: "Efectivo",
-    price: 1800
+    idUser: 1,
+    state: 1,
+    products: [
+      {id: 1, price: 400},
+      {id: 2, price: 500},
+      {id: 3, price: 600}
+    ],
+    payment: 1
   },
   {
     id: 4,
-    idUser: 3,
-    state: "Preparando",
-    products: [1,2,3],
-    formaPago: "Debito",
-    price: 1580
+    idUser: 1,
+    state: 1,
+    products: [
+      {id: 1, price: 400},
+      {id: 2, price: 500},
+      {id: 3, price: 600}
+    ],
+    payment: 1
   }
 ];
 
