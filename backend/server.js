@@ -22,7 +22,6 @@ app.use('/payment', metodosDePago);
 /* -------------- SWAGGER CONFIGURATION -------------------- */
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
-/* const metodosPago = require('./models/metodosPago'); */
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -49,3 +48,6 @@ router.use(function(req, res, next) {
 });
 
 module.exports = app;
+
+
+/* REVISAR EL ENPOINT GENERAL */
