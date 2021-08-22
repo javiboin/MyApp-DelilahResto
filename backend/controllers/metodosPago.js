@@ -13,27 +13,27 @@ function crearMedioPago(paymentObject) {
   return 'Medio de Pago añadido';
 };
 
-const searchIndexPayment = (idPayment) => {
-  return metodosPago.findIndex(x => x.id == idPayment);
+const searchIndexPayment = (id) => {
+  return metodosPago.findIndex(x => x.id == id);
 };
 
-function modificarPayment(idPayment, paymentObject) {
+function modificarPayment(id, paymentObject) {
   paymentObject = {
-    id: paymentObject.idPayment,
+    id: id,
     name: paymentObject.name
   };
 
-  metodosPago[searchIndexPayment(idPayment)] = paymentObject;
+  metodosPago[searchIndexPayment(id)] = paymentObject;
 
   return "Metodo de pago actualizado";
 };
 
-function borrarPayment(idPayment){
-  const objetoBuscado = metodosPago[searchIndexPayment(idPayment)];
+function borrarPayment(id){
+  const objetoBuscado = metodosPago[searchIndexPayment(id)];
 
-  const Position = metodosPago.indexOf(objetoBuscado);
+  const position = metodosPago.indexOf(objetoBuscado);
 
-  metodosPago.splice(Position, 1);
+  metodosPago.splice(position, 1);
 
   return 'Payment deleted'; 
 };
