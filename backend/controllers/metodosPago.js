@@ -1,6 +1,15 @@
 const metodosPago =  require('../models/metodosPago');
 const { borrarOrder } = require('./pedidos');
 
+const searchIndexPayment = (id) => {
+  return metodosPago.findIndex(x => x.id == id);
+};
+
+function obtenerNombre(id){
+  let nombre = metodosPago[searchIndexPayment(id)].name;
+  return nombre;
+};
+
 function listPayment() {
   return(metodosPago);
 }
@@ -11,10 +20,6 @@ function crearMedioPago(paymentObject) {
     id: id,
     nombre: paymentObject.name});
   return 'Medio de Pago añadido';
-};
-
-const searchIndexPayment = (id) => {
-  return metodosPago.findIndex(x => x.id == id);
 };
 
 function modificarPayment(id, paymentObject) {
@@ -38,6 +43,7 @@ function borrarPayment(id){
   return 'Payment deleted'; 
 };
 
+exports.obtenerNombre = obtenerNombre;
 exports.listPayment = listPayment;
 exports.crearMedioPago = crearMedioPago;
 exports.modificarPayment = modificarPayment;
