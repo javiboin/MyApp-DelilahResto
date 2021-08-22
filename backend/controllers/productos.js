@@ -1,13 +1,23 @@
 const products = require('../models/productos');
 const administradores = require('../controllers/administradores');
 
+const searchIndex = (idProduct) => {
+  return products.findIndex(x => x.id == idProduct);
+};
+
+function obtenerNombre(id){
+  let name = products[searchIndex(id)].name;
+  return name;
+};
+
+function obtenerPrecio(id){
+  let price = products[searchIndex(id)].price;
+  return price;
+};
+
 function filterProducts(id){
   const datosFiltrados = products.filter(product => product.id == Number(id));
   return datosFiltrados;
-};
-
-function productID(id) {
-  return products.filter(product => product.id == id);
 };
 
 function listProducts(){
@@ -26,10 +36,6 @@ function crearProduct(productObject){
     return 'Order created';
 };
 
-const searchIndexProduct = (idProduct) => {
-  return products.findIndex(x => x.id == idProduct);
-};
-
 function modificarProduct(idProduct, productObject){
   productObject = {
     id: parseInt(idProduct),
@@ -38,13 +44,13 @@ function modificarProduct(idProduct, productObject){
     pic: productObject.pic
   };
 
-  products[searchIndexProduct(idProduct)] = productObject;
+  products[searchIndex(idProduct)] = productObject;
 
   return 'Product updated';
 };
 
 function borrarProduct(idProduct){
-  const objetoBuscado = products[searchIndexProduct(idProduct)];
+  const objetoBuscado = products[searchIndex(idProduct)];
 
   const productPosition = products.indexOf(objetoBuscado);
 
@@ -53,10 +59,11 @@ function borrarProduct(idProduct){
   return 'Product deleted'; 
 };
 
+exports.obtenerNombre = obtenerNombre;
+exports.obtenerPrecio = obtenerPrecio;
 exports.filterProducts = filterProducts;
-exports.productID = productID;
-
 exports.listProducts = listProducts;
+
 exports.crearProduct = crearProduct;
 exports.modificarProduct = modificarProduct;
 exports.borrarProduct = borrarProduct;
