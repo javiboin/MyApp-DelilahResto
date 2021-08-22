@@ -35,7 +35,7 @@ function crearOrder(orderObject){
     idUser: orderObject.idUser,
     state: orderObject.state,
     products: orderObject.products,
-    formaPago: orderObject.formaPago,
+    formaPago: orderObject.formaPago, // mostrar medios pago en swagger list metodos de pago
     price: orderObject.price
   });
   return 'Order created';

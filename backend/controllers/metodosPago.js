@@ -10,7 +10,7 @@ function obtenerNombre(id){
   return nombre;
 };
 
-function listPayment() {
+function listPayment() {  // valido para todo
   return(metodosPago);
 }
 

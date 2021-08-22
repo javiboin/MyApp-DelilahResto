@@ -1,6 +1,6 @@
 const users = require('../models/usuarios');
 
-function emailrepetido(email) {
+function emailrepetido(email){
   return users.find(user => user.email === email) ? true : false;
 };
 
