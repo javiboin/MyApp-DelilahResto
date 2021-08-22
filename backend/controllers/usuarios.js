@@ -1,5 +1,24 @@
 const users = require('../models/usuarios');
 
+const searchIndex = (id) => {
+  return users.findIndex(x => x.id == id);
+};
+
+function obtenerNickname(id){
+  let nickname = users[searchIndex(id)].nickname;
+  return nickname;
+};
+
+function obtenerNombre(id){
+  let name = users[searchIndex(id)].completeName;
+  return name;
+};
+
+function obtenerDireccion(id){
+  let address = products[searchIndex(id)].address;
+  return address;
+};
+
 function emailrepetido(email){
   return users.find(user => user.email === email) ? true : false;
 };
@@ -7,10 +26,6 @@ function emailrepetido(email){
 function filterUsers(id){
   const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
   return datosFiltrados;
-};
-
-function userID(id) {
-  return users.filter(user => user.id == id);
 };
 
 function login(userObject) {
@@ -37,36 +52,30 @@ function crearUser(userObject) {
     completeName: userObject.completeName,
     email: userObject.email,
     phone: userObject.phone,
-    mainAddress: userObject.mainAddress,
-    altAddress: userObject.altAddress,
+    address: userObject.address,
     password: userObject.password
   });
   return 'User created';
 };
 
-const searchIndexUser = (idUser) => {
-  return users.findIndex(x => x.id == idUser);
-};
-
-function modificarUser(idUser, userObject){
+function modificarUser(id, userObject){
   userObject = {
-    id: parseInt(idUser),
+    id: parseInt(id),
     nickname: userObject.nickname,
     completeName: userObject.completeName,
     email: userObject.email,
     phone: userObject.phone,
-    mainAddress: userObject.mainAddress,
-    altAddress: userObject.altAddress,
+    address: userObject.address,
     password: userObject.password
   };
 
-  users[searchIndexUser(idUser)] = userObject;
+  users[searchIndex(idUser)] = userObject;
 
   return 'User updated';
 };
 
 function borrarUser(idUser){
-  const objetoBuscado = users[searchIndexUser(idUser)];
+  const objetoBuscado = users[searchIndex(idUser)];
 
   const userPosition = users.indexOf(objetoBuscado);
 
@@ -75,13 +84,16 @@ function borrarUser(idUser){
   return 'User deleted'; 
 };
 
+exports.obtenerNickname = obtenerNickname;
+exports.obtenerNombre = obtenerNombre;
+exports.obtenerDireccion = obtenerDireccion;
+
 exports.emailrepetido = emailrepetido;
 
 exports.filterUsers = filterUsers;
-exports.userID = userID;
-
 exports.login = login;
 exports.listUsers = listUsers;
+
 exports.crearUser = crearUser;
 exports.modificarUser = modificarUser;
 exports.borrarUser = borrarUser;
