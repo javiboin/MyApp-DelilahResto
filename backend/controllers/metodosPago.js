@@ -1,12 +1,11 @@
 const metodosPago =  require('../models/metodosPago');
-const { borrarOrder } = require('./pedidos');
 
-const searchIndexPayment = (id) => {
+const searchIndex = (id) => {
   return metodosPago.findIndex(x => x.id == id);
 };
 
 function obtenerNombre(id){
-  let nombre = metodosPago[searchIndexPayment(id)].name;
+  let nombre = metodosPago[searchIndex(id)].name;
   return nombre;
 };
 
@@ -28,13 +27,13 @@ function modificarPayment(id, paymentObject) {
     name: paymentObject.name
   };
 
-  metodosPago[searchIndexPayment(id)] = paymentObject;
+  metodosPago[searchIndex(id)] = paymentObject;
 
   return "Metodo de pago actualizado";
 };
 
 function borrarPayment(id){
-  const objetoBuscado = metodosPago[searchIndexPayment(id)];
+  const objetoBuscado = metodosPago[searchIndex(id)];
 
   const position = metodosPago.indexOf(objetoBuscado);
 

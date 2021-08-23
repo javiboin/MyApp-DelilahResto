@@ -8,7 +8,8 @@ let orders = [
       {id: 2, price: 500},
       {id: 3, price: 600}
     ],
-    payment: 1
+    payment: 1,
+    total: 2500
   },
   {
     id: 2,
@@ -19,7 +20,8 @@ let orders = [
       {id: 2, price: 500},
       {id: 3, price: 600}
     ],
-    payment: 1
+    payment: 1,
+    total: 2500
   },
   {
     id: 3,
@@ -30,7 +32,8 @@ let orders = [
       {id: 2, price: 500},
       {id: 3, price: 600}
     ],
-    payment: 1
+    payment: 1,
+    total: 2500
   },
   {
     id: 4,
@@ -41,7 +44,8 @@ let orders = [
       {id: 2, price: 500},
       {id: 3, price: 600}
     ],
-    payment: 1
+    payment: 1,
+    total: 2500
   }
 ];
 

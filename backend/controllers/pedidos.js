@@ -1,4 +1,8 @@
 const orders = require('../models/pedidos');
+const users = require('../controllers/usuarios');
+const states = require('../controllers/estados.js');
+const payment = require('../controllers/metodosPago');
+const products = require('../controllers/productos');
 
 function verEstados(idUser){
   return orders.filter(pedido => pedido.idUser === Number(idUser));
@@ -27,18 +31,54 @@ function listOrders(){
   return(orders);
 };
 
+function obtenerDatosProductos(productos) {
+  listaDatosProductos = [];
+
+  for (i = 0; i < productos.length; i++) {
+    listaDatosProductos.push({
+      id: productos[i].id,
+      nombre: products.obtenerNombre(productos[i].id),
+      precio: products.obtenerPrecio(productos[i].id)
+    });
+  };
+
+  return listaDatosProductos;
+};
+
+function obtenerTotal(productos){
+  sumaTotal = 0;
+
+  for (i = 0; i < productos.length; i++) {
+    sumaTotal = sumaTotal + products.obtenerPrecio(productos[i].id);
+  };
+
+  return sumaTotal;
+};
+
 function crearOrder(orderObject){
   const id = orders[orders.length -1].id +1;
+
+  let pedidoCargado = {
+    Mensaje: 'Order created',
+    ID: id,
+    Usuario: users.obtenerNickname(orderObject.idUser),
+    Nombre: users.obtenerNombre(orderObject.idUser),
+    Estado: states.obtenerNombre(1),
+    Productos: obtenerDatosProductos(orderObject.products),
+    Metodo_de_pago: payment.obtenerNombre(orderObject.payment),
+    total: obtenerTotal(orderObject.products)
+  };
 
   orders.push({
     id: id,
     idUser: orderObject.idUser,
-    state: orderObject.state,
+    state: 1,
     products: orderObject.products,
-    formaPago: orderObject.formaPago, // mostrar medios pago en swagger list metodos de pago
-    price: orderObject.price
+    payment: orderObject.payment, // mostrar medios pago en swagger list metodos de pago
+    total: pedidoCargado.total
   });
-  return 'Order created';
+
+  return pedidoCargado;
 };
 
 const searchIndexOrder = (idOrder) => {
@@ -51,8 +91,8 @@ function modificarOrder(idOrder, orderObject){
     idUser: parseInt(orderObject.idUser),
     state: parseInt(orderObject.state), 
     products: orderObject.products,
-    formaPago: parseInt(orderObject.formaPago),
-    price: parseInt(orderObject.price)
+    formaPago: parseInt(orderObject.formaPago)
+
   };
 
   orders[searchIndexOrder(idOrder)] = orderObject;

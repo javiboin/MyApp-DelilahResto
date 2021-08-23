@@ -1,5 +1,4 @@
 const products = require('../models/productos');
-const administradores = require('../controllers/administradores');
 
 const searchIndex = (idProduct) => {
   return products.findIndex(x => x.id == idProduct);
