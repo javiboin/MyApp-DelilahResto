@@ -116,6 +116,10 @@ function cambiarEstadosPedidos(idOrder, orderState){
   return `Estado de pedido Actualizado`;
 };
 
+function pedidoConfirmado(idUser, idOrder){
+  return "Pedido Confirmado";
+};
+
 function modificarOrder(idOrder, orderObject){
   orderObject = {
     id: parseInt(idOrder),
@@ -143,6 +147,7 @@ function borrarOrder(idOrder){
 
 exports.verEstados = verEstados;
 exports.cambiarEstadosPedidos = cambiarEstadosPedidos;
+exports.pedidoConfirmado = pedidoConfirmado;
 
 exports.filterOrders = filterOrders;
 
