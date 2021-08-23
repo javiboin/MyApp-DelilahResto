@@ -8,29 +8,6 @@ function verEstados(idUser){
   return orders.filter(pedido => pedido.idUser === Number(idUser));
 };
 
-function filterOrders(id){
-  const datosFiltrados = orders.filter(order => order.id == Number(id));
-  return datosFiltrados;
-};
-
-function cambiarEstadosPedidos(idOrder, orderObject){
-  orderObject = {
-    state: parseInt(orderObject.state)
-  };
-
-  orders[searchIndexOrder(idOrder)] = orderObject;
-
-  return 'Order updated';
-};
-
-function orderID(id) {
-  return orders.filter(order => order.id == id);
-};
-
-function listOrders(){
-  return(orders);
-};
-
 function obtenerDatosProductos(productos) {
   listaDatosProductos = [];
 
@@ -81,8 +58,62 @@ function crearOrder(orderObject){
   return pedidoCargado;
 };
 
-const searchIndexOrder = (idOrder) => {
+function filterOrders(id){
+  let pedidoCargado = [];
+
+  for (let i = 0; i < orders.length; i++) {
+    if (orders[i].idUser == id){
+      
+      pedidoCargado.push({
+        idPedido: orders[i].id,
+        idUsuario: orders[i].idUser,
+        Usuario: users.obtenerNickname(orders[i].idUser),
+        Nombre: users.obtenerNombre(orders[i].idUser),
+        Estado: states.obtenerNombre(orders[i].state),
+        
+        Productos: "obtenerDatosProductos(orders[i])",
+      
+        Metodo_de_pago: payment.obtenerNombre(orders[i].payment),
+        total: orders[i].total
+      });
+    }
+  };
+  
+  return pedidoCargado;
+};
+
+function listOrders(){
+  let pedidoCargado = [];
+
+  for (i = 0; i < orders.length; i++) {
+    pedidoCargado.push({
+      idPedido: orders[i].id,
+      idUsuario: orders[i].idUser,
+      Usuario: users.obtenerNickname(orders[i].idUser),
+      Nombre: users.obtenerNombre(orders[i].idUser),
+      Estado: states.obtenerNombre(orders[i].state),
+      
+      Productos: "obtenerDatosProductos(orders[i])",
+    
+      Metodo_de_pago: payment.obtenerNombre(orders[i].payment),
+      total: orders[i].total
+    });
+  };
+  return pedidoCargado;
+};
+
+const searchIndex = (idOrder) => {
   return orders.findIndex(x => x.id == idOrder);
+};
+
+function cambiarEstadosPedidos(idOrder, orderState){
+  orderState = {
+    state: parseInt(orderState)
+  };
+
+  orders[searchIndex(idOrder)] = orderState;
+
+  return `Estado de pedido Actualizado`;
 };
 
 function modificarOrder(idOrder, orderObject){
@@ -91,17 +122,17 @@ function modificarOrder(idOrder, orderObject){
     idUser: parseInt(orderObject.idUser),
     state: parseInt(orderObject.state), 
     products: orderObject.products,
-    formaPago: parseInt(orderObject.formaPago)
-
+    payment: parseInt(orderObject.payment),
+    total: orderObject.total
   };
 
-  orders[searchIndexOrder(idOrder)] = orderObject;
+  orders[searchIndex(idOrder)] = orderObject;
 
   return 'Order updated';
 };
 
 function borrarOrder(idOrder){
-  const objetoBuscado = orders[searchIndexOrder(idOrder)];
+  const objetoBuscado = orders[searchIndex(idOrder)];
 
   const orderPosition = orders.indexOf(objetoBuscado);
 
@@ -114,7 +145,6 @@ exports.verEstados = verEstados;
 exports.cambiarEstadosPedidos = cambiarEstadosPedidos;
 
 exports.filterOrders = filterOrders;
-exports.orderID = orderID;
 
 exports.listOrders = listOrders;
 exports.crearOrder = crearOrder;

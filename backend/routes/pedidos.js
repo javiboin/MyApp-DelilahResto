@@ -190,7 +190,7 @@ router.put('/:id', function (req, res){
 router.get('/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
-  respuesta.msg = functions.filterOrders ? functions.orderID(idOrders) : "no es correcto";
+  respuesta.msg = functions.filterOrders ? functions.filterOrders(idOrders) : "no es correcto";
   res.json(respuesta);
 });
 
