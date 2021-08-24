@@ -67,6 +67,7 @@ function modificarUser(id, userObject){
     phone: userObject.phone,
     address: userObject.address,
     password: userObject.password
+    /* HACER VALIDACION DE ESPACIO VACIO */
   };
 
   users[searchIndex(idUser)] = userObject;

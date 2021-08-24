@@ -42,6 +42,7 @@ function modificarProduct(idProduct, productObject){
     price: productObject.price,
     pic: productObject.pic
   };
+  /* VALIDACION DE CAMPO VACIO */
 
   products[searchIndex(idProduct)] = productObject;
 
