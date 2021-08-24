@@ -32,7 +32,7 @@ function login(userObject) {
   const username = userObject.nickname;
   const password = userObject.password;
   
-  const logins = users.find(user => user.nickname === username && user.password === password);
+  const logins = users.find(user => user.nickname == username && user.password == password);
   if (logins !== undefined){
     return `Bienvenido a nuestra ${username}`;
   } else {
