@@ -28,6 +28,10 @@ router.use(express.json());
  *    responses:
  *      200:
  *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
  */
 router.post('/login', function (req, res){
   let respuesta = {};
@@ -47,6 +51,8 @@ router.post('/login', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 
 router.get('/', function (req, res){
@@ -54,6 +60,7 @@ router.get('/', function (req, res){
   respuesta.msg = functions.listUsers();
   res.json(respuesta);
 });
+
 /**
  * @swagger
  * /users:
@@ -83,7 +90,7 @@ router.get('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
- *    - name: mainAddress
+ *    - name: address
  *      description: Domicilio de Usuario 
  *      in: formData
  *      required: true
@@ -96,6 +103,8 @@ router.get('/', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 
 router.post('/', function (req, res){
@@ -115,11 +124,16 @@ router.post('/', function (req, res){
  *    tags:
  *    - "Usuarios"
  *    summary: "Modifica por ID"
- *    description: "Se realiza la modificacón en uno o mas campos de un usuario"
+ *    description: "Se realiza la modificación en uno o mas campos de un usuario"
  *    parameters:
  *    - name: id
  *      description: Id de Usuario
  *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: idUser_Session
+ *      description: ID de usuario que realiza el cambio 
+ *      in: formData
  *      required: true
  *      type: integer
  *    - name: nickname
@@ -155,14 +169,25 @@ router.post('/', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
  */
 
 router.put('/:id', function (req, res){
   const idUser = req.params.id;
-  let respuesta = {};
-  respuesta.msg = functions.filterUsers(idUser) ? 
-  functions.modificarUser(idUser,req.body) : `El autor no existe, puede ver todos los autores en ${url}/autores`;
-  res.json(respuesta);
+  const idUser_Session = req.body.idUser_Session;
+
+  let respuesta = {}; 
+
+  if (idUser == idUser_Session){
+    respuesta.msg = functions.filterUsers(idUser) ? 
+    functions.modificarUser(idUser,req.body) : `El usuario no existe, Intentelo denuevo`;
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
 });
 
 /**
@@ -182,6 +207,8 @@ router.put('/:id', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 
 router.get('/:id', function (req, res){
@@ -190,7 +217,7 @@ router.get('/:id', function (req, res){
 
   let objetoUser = functions.filterUsers(idUser);
 
-  respuesta.msg = objetoUser.length !== 0 ? objetoUser : "El usuario no existe";
+  respuesta.msg = objetoUser.length !== 0 ? objetoUser : "El usuario no existe, Intentelo denuevo";
 
   res.json(respuesta); 
 });
@@ -212,11 +239,15 @@ router.get('/:id', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
  */
 router.delete('/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
-  respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "El usuario no existe";
+  respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "El usuario no existe, Intentelo denuevo";
   res.json(respuesta);
 });
 

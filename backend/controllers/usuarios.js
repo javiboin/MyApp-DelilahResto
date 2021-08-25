@@ -24,7 +24,7 @@ function emailrepetido(email){
 };
 
 function filterUsers(id){
-  const datosFiltrados = users.filter(usuario => usuario.id == Number(id));
+  const datosFiltrados = users.find(usuario => usuario.id == Number(id));
   return datosFiltrados;
 };
 
@@ -34,7 +34,7 @@ function login(userObject) {
   
   const logins = users.find(user => user.nickname == username && user.password == password);
   if (logins !== undefined){
-    return `Bienvenido a nuestra ${username}`;
+    return `Bienvenido a nuestra API ${username}`;
   } else {
     return 'El usuario y/o Contraseña es incorrecta, Vuelva a intentarlo';
   };
