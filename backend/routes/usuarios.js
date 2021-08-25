@@ -99,9 +99,7 @@ router.get('/', function (req, res){
  */
 
 router.post('/', function (req, res){
-  console.log(functions.emailrepetido(req.body.email));
   if (functions.emailrepetido(req.body.email)){
-
     res.json("Operación anulada. El email ingresado ya esta registrado");
   } else {  
     let respuesta = {};
@@ -144,13 +142,8 @@ router.post('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
- *    - name: mainAddress
+ *    - name: address
  *      description: Domicilio de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: altAddress
- *      description: Domicilio alternativo o transitorio 
  *      in: formData
  *      required: true
  *      type: string
@@ -168,7 +161,7 @@ router.put('/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterUsers(idUser) ? 
-  functions.modificarUser(idUser,req.body) : `ese autor no existe, puede ver todos los autores en ${url}/autores`;
+  functions.modificarUser(idUser,req.body) : `El autor no existe, puede ver todos los autores en ${url}/autores`;
   res.json(respuesta);
 });
 
@@ -197,7 +190,7 @@ router.get('/:id', function (req, res){
 
   let objetoUser = functions.filterUsers(idUser);
 
-  respuesta.msg = objetoUser.length !== 0 ? objetoUser : "no es correcto";
+  respuesta.msg = objetoUser.length !== 0 ? objetoUser : "El usuario no existe";
 
   res.json(respuesta); 
 });
@@ -223,7 +216,7 @@ router.get('/:id', function (req, res){
 router.delete('/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
-  respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "no es correcto";
+  respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "El usuario no existe";
   res.json(respuesta);
 });
 

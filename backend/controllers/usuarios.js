@@ -70,7 +70,7 @@ function modificarUser(id, userObject){
     /* HACER VALIDACION DE ESPACIO VACIO */
   };
 
-  users[searchIndex(idUser)] = userObject;
+  users[searchIndex(id)] = userObject;
 
   return 'User updated';
 };
