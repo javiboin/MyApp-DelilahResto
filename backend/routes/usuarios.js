@@ -9,7 +9,7 @@ router.use(express.json());
 /**
  * @swagger
  * /users/login:
- *  get:
+ *  post:
  *    tags:
  *    - "Usuarios"
  *    summary: "Ingresa a nuestra app"
@@ -29,14 +29,11 @@ router.use(express.json());
  *      200:
  *        description: Success
  */
-router.get('/login', function (req, res){
+router.post('/login', function (req, res){
   let respuesta = {};
+  console.log(req.body);
   respuesta.msg = functions.login(req.body);
   res.json(respuesta);
-});
-
-router.get('/filterUsers', function (req, res){
-  res.send(functions.filterUsers(1));
 });
 
 /**
@@ -51,6 +48,7 @@ router.get('/filterUsers', function (req, res){
  *      200:
  *        description: Success
  */
+
 router.get('/', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.listUsers();
@@ -90,11 +88,6 @@ router.get('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: string
- *    - name: altAddress
- *      description: Domicilio alternativo o transitorio 
- *      in: formData
- *      required: true
- *      type: string
  *    - name: password
  *      description: Contraseña de Usuario 
  *      in: formData
@@ -106,12 +99,14 @@ router.get('/', function (req, res){
  */
 
 router.post('/', function (req, res){
-  if (administradores.isAdmin(req.body.idUser)){
+  console.log(functions.emailrepetido(req.body.email));
+  if (functions.emailrepetido(req.body.email)){
+
+    res.json("Operación anulada. El email ingresado ya esta registrado");
+  } else {  
     let respuesta = {};
     respuesta.msg = functions.crearUser(req.body);
     res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. El email ingresado ya esta registrado");
   };
 });
 
@@ -126,7 +121,7 @@ router.post('/', function (req, res){
  *    parameters:
  *    - name: id
  *      description: Id de Usuario
- *      in: formData
+ *      in: path
  *      required: true
  *      type: integer
  *    - name: nickname
@@ -191,47 +186,19 @@ router.put('/:id', function (req, res){
  *      in: path
  *      required: true
  *      type: integer
- *    - name: nickname
- *      description: Nombre de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: completeName
- *      description: Nombre del propietario de la cuenta 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: email
- *      description: Correo electronico de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: phone
- *      description: Numero de telefono de Usuario 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: mainAddress
- *      description: Domicilio de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: altAddress
- *      description: Domicilio alternativo o transitorio 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: password
- *      description: Contraseña de Usuario 
- *      in: formData
- *      required: true
- *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 
 router.get('/:id', function (req, res){
   const idUser = req.params.id;
   let respuesta = {};
-  respuesta.msg = functions.filterUsers(idUser) ? functions.userID(idUser) : "no es correcto";
+
+  let objetoUser = functions.filterUsers(idUser);
+
+  respuesta.msg = objetoUser.length !== 0 ? objetoUser : "no es correcto";
+
   res.json(respuesta); 
 });
 
@@ -246,44 +213,12 @@ router.get('/:id', function (req, res){
  *    parameters:
  *    - name: id
  *      description: Id de Usuario
- *      in: formData
+ *      in: path
  *      required: true
  *      type: integer
- *    - name: nickname
- *      description: Nombre de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: completeName
- *      description: Nombre del propietario de la cuenta 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: email
- *      description: Correo electronico de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: phone
- *      description: Numero de telefono de Usuario 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: mainAddress
- *      description: Domicilio de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: altAddress
- *      description: Domicilio alternativo o transitorio 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: password
- *      description: Contraseña de Usuario 
- *      in: formData
- *      required: true
- *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
  */
 router.delete('/:id', function (req, res){
   const idUser = req.params.id;
