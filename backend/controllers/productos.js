@@ -15,7 +15,7 @@ function obtenerPrecio(id){
 };
 
 function filterProducts(id){
-  const datosFiltrados = products.filter(product => product.id == Number(id));
+  const datosFiltrados = products.find(product => product.id == Number(id));
   return datosFiltrados;
 };
 
@@ -24,27 +24,42 @@ function listProducts(){
 };
 
 function crearProduct(productObject){
-    const id = products[products.length -1].id +1;
+  const id = products[products.length -1].id +1;
 
-    products.push({
-      id: id,
-      name: productObject.name,
-      price: productObject.price,
-      pic: productObject.pic,
-    });
-    return 'Order created';
+  products.push({
+    id: id,
+    name: productObject.name,
+    price: productObject.price,
+    pic: productObject.pic,
+  });
+  return 'Product created';
 };
 
 function modificarProduct(idProduct, productObject){
-  productObject = {
+  let objetoEditado = filterProducts(idProduct);
+
+  objetoEditado.id = parseInt(idProduct);
+
+  if (productObject.name != undefined){
+    objetoEditado.name = productObject.name;
+  };
+
+  if (productObject.price != undefined){
+    objetoEditado.price = productObject.price;
+  };
+
+  if (productObject.pic != undefined){
+    objetoEditado.pic = productObject.pic;
+  };
+
+/*   productObject = {
     id: parseInt(idProduct),
     name: productObject.name,
     price: productObject.price,
     pic: productObject.pic
-  };
-  /* VALIDACION DE CAMPO VACIO */
+  }; */
 
-  products[searchIndex(idProduct)] = productObject;
+  products[searchIndex(idProduct)] = objetoEditado;
 
   return 'Product updated';
 };

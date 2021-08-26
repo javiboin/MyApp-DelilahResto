@@ -62,7 +62,7 @@ function modificarUser(id, userObject){
   let objetoEditado = filterUsers(id);
   
   objetoEditado.id = parseInt(id);
- 
+
   if (userObject.nickname != undefined){
     objetoEditado.nickname = userObject.nickname;
   };

@@ -8,7 +8,7 @@ router.use(express.json());
 
 /**
  * @swagger
- * /products:
+ * /products/menu:
  *  get:
  *    tags:
  *    - "Productos"
@@ -17,8 +17,10 @@ router.use(express.json());
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
-router.get('/', function (req, res){
+router.get('/menu', function (req, res){
   let respuesta = {};
   respuesta.msg = functions.listProducts();
   res.json(respuesta);
@@ -33,6 +35,11 @@ router.get('/', function (req, res){
  *    summary: "Agrega Producto"
  *    description: Guarda un nuevo producto en nuestra app
  *    parameters:
+ *    - name: idUser_Session
+ *      description: ID de usuario que realiza el cambio 
+ *      in: formData
+ *      required: true
+ *      type: integer
  *    - name: name
  *      description: Nombre del producto
  *      in: formData
@@ -51,9 +58,13 @@ router.get('/', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
  */
 router.post('/', function (req, res){
-  if (administradores.isAdmin(req.body.idUser)){
+  if (administradores.isAdmin(req.body.idUser_Session)){
     let respuesta = {};
     respuesta.msg = functions.crearProduct(req.body);
     res.json(respuesta); 
@@ -71,33 +82,42 @@ router.post('/', function (req, res){
  *    summary: "Modifica por ID"
  *    description: "Se realiza la modificacón en uno o más campos de un producto"
  *    parameters:
+ *    - name: idUser_Session
+ *      description: ID de usuario que realiza el cambio 
+ *      in: formData
+ *      required: true
+ *      type: integer
  *    - name: id
  *      description: Id de producto
- *      in: formData
+ *      in: path
  *      required: true
  *      type: integer
  *    - name: name
  *      description: Nombre del producto
  *      in: formData
- *      required: true
+ *      required: false
  *      type: string
  *    - name: price
  *      description: Precio del producto
  *      in: formData
- *      required: true
+ *      required: false
  *      type: integer
  *    - name: pic
  *      description: Imagen de referencia
  *      in: formData
- *      required: true
+ *      required: false
  *      type: string
  *    responses:
  *      200:
  *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
  */
 
-router.put('/:id', function (req, res){ 
-  if (administradores.isAdmin(req.body.idUser)){
+router.put('/:id', function (req, res){
+  if (administradores.isAdmin(req.body.idUser_Session)){
     const idProduct = req.params.id;
     const respuesta = {};
     respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(idProduct, req.body) : "Operación anulada. El producto no existe";
@@ -118,33 +138,20 @@ router.put('/:id', function (req, res){
  *    parameters:
  *    - name: id
  *      description: Id de producto
- *      in: formData
+ *      in: path
  *      required: true
  *      type: integer
- *    - name: name
- *      description: Nombre del producto
- *      in: formData
- *      required: true
- *      type: string
- *    - name: price
- *      description: Precio del producto
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: pic
- *      description: Imagen de referencia
- *      in: formData
- *      required: true
- *      type: string
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 
 router.get('/:id', function (req, res){
     const idProduct = req.params.id;
     let respuesta = {};
-    respuesta.msg = functions.filterProducts(idProduct) ? functions.productID(idProduct) : "no es correcto";
+    respuesta.msg = functions.filterProducts(idProduct) ? functions.filterProducts(idProduct) : "El producto no existe";
     res.json(respuesta);
 });
 
@@ -157,33 +164,27 @@ router.get('/:id', function (req, res){
  *    summary: "Elimina por ID"
  *    description: "Se elimina un producto en nuestra base de datos"
  *    parameters:
+ *    - name: idUser_Session
+ *      description: ID de usuario que realiza el cambio 
+ *      in: formData
+ *      required: true
+ *      type: integer
  *    - name: id
  *      description: Id de producto
- *      in: formData
+ *      in: path
  *      required: true
  *      type: integer
- *    - name: name
- *      description: Nombre del producto
- *      in: formData
- *      required: true
- *      type: string
- *    - name: price
- *      description: Precio del producto
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: pic
- *      description: Imagen de referencia
- *      in: formData
- *      required: true
- *      type: string
  *    responses:
  *      200:
  *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
  */
 
 router.delete('/:id', function (req, res){
-  if (administradores.isAdmin(req.body.idUser)){
+  if (administradores.isAdmin(req.body.idUser_Session)){
     const idProduct = req.params.id;
     let respuesta = {};
     respuesta.msg = functions.filterProducts(idProduct) ? functions.borrarProduct(idProduct) : "Operación anulada. El producto no existe";
