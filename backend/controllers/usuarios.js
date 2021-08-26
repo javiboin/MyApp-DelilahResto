@@ -59,18 +59,35 @@ function crearUser(userObject) {
 };
 
 function modificarUser(id, userObject){
-  userObject = {
-    id: parseInt(id),
-    nickname: userObject.nickname,
-    completeName: userObject.completeName,
-    email: userObject.email,
-    phone: userObject.phone,
-    address: userObject.address,
-    password: userObject.password
-    /* HACER VALIDACION DE ESPACIO VACIO */
+  let objetoEditado = filterUsers(id);
+  
+  objetoEditado.id = parseInt(id);
+ 
+  if (userObject.nickname != undefined){
+    objetoEditado.nickname = userObject.nickname;
   };
 
-  users[searchIndex(id)] = userObject;
+  if (userObject.completeName != undefined){
+    objetoEditado.completeName = userObject.completeName;
+  };
+
+  if (userObject.email != undefined){
+    objetoEditado.email = userObject.email;
+  };
+
+  if (userObject.phone != undefined){
+    objetoEditado.phone = userObject.phone;
+  };
+
+  if (userObject.address != undefined){
+    objetoEditado.address = userObject.address;
+  };
+
+  if (userObject.password != undefined){
+    objetoEditado.password = userObject.password;
+  };
+
+  users[searchIndex(id)] = objetoEditado;
 
   return 'User updated';
 };

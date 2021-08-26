@@ -35,7 +35,6 @@ router.use(express.json());
  */
 router.post('/login', function (req, res){
   let respuesta = {};
-  console.log(req.body);
   respuesta.msg = functions.login(req.body);
   res.json(respuesta);
 });
@@ -139,32 +138,32 @@ router.post('/', function (req, res){
  *    - name: nickname
  *      description: Nombre de Usuario 
  *      in: formData
- *      required: true
+ *      required: false
  *      type: string
  *    - name: completeName
  *      description: Nombre del propietario de la cuenta 
  *      in: formData
- *      required: true
+ *      required: false
  *      type: string
  *    - name: email
  *      description: Correo electronico de Usuario 
  *      in: formData
- *      required: true
+ *      required: false
  *      type: string
  *    - name: phone
  *      description: Numero de telefono de Usuario 
  *      in: formData
- *      required: true
+ *      required: false
  *      type: integer
  *    - name: address
  *      description: Domicilio de Usuario 
  *      in: formData
- *      required: true
+ *      required: false
  *      type: string
  *    - name: password
  *      description: Contraseña de Usuario 
  *      in: formData
- *      required: true
+ *      required: false
  *      type: string
  *    responses:
  *      200:
@@ -236,6 +235,11 @@ router.get('/:id', function (req, res){
  *      in: path
  *      required: true
  *      type: integer
+ *    - name: idUser_Session
+ *      description: ID de usuario que realiza el cambio 
+ *      in: formData
+ *      required: true
+ *      type: integer
  *    responses:
  *      200:
  *        description: Success
@@ -246,9 +250,16 @@ router.get('/:id', function (req, res){
  */
 router.delete('/:id', function (req, res){
   const idUser = req.params.id;
+  const idUser_Session = req.body.idUser_Session;
+
   let respuesta = {};
-  respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "El usuario no existe, Intentelo denuevo";
-  res.json(respuesta);
+
+  if (idUser == idUser_Session){
+    respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "El usuario no existe, Intentelo denuevo";
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
 });
 
 module.exports = router;
