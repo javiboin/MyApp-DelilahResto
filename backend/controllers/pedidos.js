@@ -4,8 +4,8 @@ const states = require('../controllers/estados.js');
 const payment = require('../controllers/metodosPago');
 const products = require('../controllers/productos');
 
-function verEstados(idUser){
-  return orders.filter(pedido => pedido.idUser === Number(idUser));
+function verEstados(id){
+  return orders.find(pedido => pedido.idUser === Number(id));
 };
 
 function obtenerDatosProductos(productos) {

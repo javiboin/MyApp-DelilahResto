@@ -7,13 +7,95 @@ const administradores = require('../controllers/administradores');
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-router.get('/byid/:idUser', function (req, res){
-  const idUser = req.params.idUser;
-  let respuesta = {};
-  respuesta.msg = functionsUser.filterUsers(idUser) ? functions.verEstados(idUser) : "Usuario no encontrado";
-  res.json(respuesta);
+/**
+ * @swagger
+ * /orders/{idSession}:
+ *  get:
+ *    tags:
+ *    - "Pedidos" 
+ *    summary: "Listado de todos los Pedidos"
+ *    description: Devuelve todos los pedidos realizados en nuestra app
+ *    parameters:
+ *    - name: idSession
+ *      description: Id del Usuario que inicio la session
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+router.get('/:idSession', function (req, res){
+  if (administradores.isAdmin(req.params.idSession)){
+    let respuesta = {};
+    respuesta.msg = functions.listOrders();
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
 });
 
+/**
+ * @swagger
+ * /users/{id}:
+ *  put:
+ *    tags:
+ *    - "Usuarios"
+ *    summary: "Modifica por ID"
+ *    description: "Se realiza la modificación en uno o mas campos de un usuario"
+ *    parameters:
+ *    - name: id
+ *      description: Id de Usuario
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: idUser_Session
+ *      description: ID de usuario que realiza el cambio 
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: nickname
+ *      description: Nombre de Usuario 
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    - name: completeName
+ *      description: Nombre del propietario de la cuenta 
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    - name: email
+ *      description: Correo electronico de Usuario 
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    - name: phone
+ *      description: Numero de telefono de Usuario 
+ *      in: formData
+ *      required: false
+ *      type: integer
+ *    - name: address
+ *      description: Domicilio de Usuario 
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    - name: password
+ *      description: Contraseña de Usuario 
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
 router.put('/changeStateOrder/:id', function (req, res){
   if (administradores.isAdmin(req.body.idUser)){
     const id = req.params.id;
@@ -27,15 +109,23 @@ router.put('/changeStateOrder/:id', function (req, res){
 
 /**
  * @swagger
- * /orders:
+ * /orders/byid/{idUser}:
  *  get:
  *    tags:
  *    - "Pedidos"
  *    summary: "Listado de todos los pedidos"
  *    description: Devuelve todos los pedidos realizados en nuestra app
+ *    parameters:
+ *    - name: idUser
+ *      description: Id de Usuario
+ *      in: path
+ *      required: true
+ *      type: integer
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 router.get('/', function (req, res){
   if (administradores.isAdmin(req.body.idUser)){
@@ -61,11 +151,6 @@ router.get('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
- *    - name: state
- *      description: Estado del pedido 
- *      in: formData
- *      required: true
- *      type: string
  *    - name: products
  *      description: Listado de productos en el pedido 
  *      in: formData
@@ -84,6 +169,8 @@ router.get('/', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 
 router.post('/', function (req, res){
@@ -131,9 +218,16 @@ router.post('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
+ *    - name: state
+ *      description: Estado del pedido 
+ *      in: formData
+ *      required: true
+ *      type: string
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 
 router.put('/:id', function (req, res){
@@ -185,6 +279,8 @@ router.put('/:id', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 
 router.get('/:id', function (req, res){
@@ -236,6 +332,8 @@ router.get('/:id', function (req, res){
  *    responses:
  *      200:
  *        description: Success
+ *      404:
+ *        description: Not found
  */
 
 router.delete('/:id', function (req, res){
