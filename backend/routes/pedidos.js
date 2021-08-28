@@ -9,12 +9,12 @@ router.use(express.json());
 
 /**
  * @swagger
- * /orders/{idSession}:
+ * /orders/all/{idSession}:
  *  get:
  *    tags:
  *    - "Pedidos" 
  *    summary: "Listado de todos los Pedidos"
- *    description: Devuelve todos los pedidos realizados en nuestra app
+ *    description: Devuelve todos los pedidos realizados solo para Usuarios Administradores
  *    parameters:
  *    - name: idSession
  *      description: Id del Usuario que inicio la session
@@ -29,7 +29,7 @@ router.use(express.json());
  *      404:
  *        description: Not found
  */
-router.get('/:idSession', function (req, res){
+router.get('/all/:idSession', function (req, res){
   if (administradores.isAdmin(req.params.idSession)){
     let respuesta = {};
     respuesta.msg = functions.listOrders();
@@ -109,15 +109,15 @@ router.put('/changeStateOrder/:id', function (req, res){
 
 /**
  * @swagger
- * /orders/byid/{idUser}:
+ * /orders/byuser/{idUser}:
  *  get:
  *    tags:
  *    - "Pedidos"
- *    summary: "Listado de todos los pedidos"
- *    description: Devuelve todos los pedidos realizados en nuestra app
+ *    summary: Listado de todos los pedidos que realizo un usuario
+ *    description: Encuentra tu historial de pedidos realizados
  *    parameters:
  *    - name: idUser
- *      description: Id de Usuario
+ *      description: ID de usuario 
  *      in: path
  *      required: true
  *      type: integer
@@ -127,14 +127,14 @@ router.put('/changeStateOrder/:id', function (req, res){
  *      404:
  *        description: Not found
  */
-router.get('/', function (req, res){
-  if (administradores.isAdmin(req.body.idUser)){
+router.get('/byuser/:idUser', function (req, res){
     let respuesta = {};
-    respuesta.msg = functions.listOrders();
+    let resultado = functions.filterOrders(req.params.idUser);
+
+    if (resultado.length === 0){ resultado = 'El usuario no ha realizado pedidos aún'}
+    respuesta.msg = resultado;
+
     res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. El email ingresado ya esta registrado");
-  };
 });
 
 /**
@@ -153,16 +153,11 @@ router.get('/', function (req, res){
  *      type: integer
  *    - name: products
  *      description: Listado de productos en el pedido 
- *      in: formData
+ *      in: body
  *      required: true
  *      type: array
  *    - name: formaPago
  *      description: Metodos de pago 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: price
- *      description: Precio del pedido 
  *      in: formData
  *      required: true
  *      type: integer
@@ -174,9 +169,10 @@ router.get('/', function (req, res){
  */
 
 router.post('/', function (req, res){
-  let respuesta = {};
+  console.log(req.body);
+/*   let respuesta = {};
   respuesta.msg = functions.crearOrder(req.body);
-  res.json(respuesta);
+  res.json(respuesta); */
 });
 
 /**
