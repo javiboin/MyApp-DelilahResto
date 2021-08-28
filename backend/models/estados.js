@@ -1,4 +1,4 @@
-let estadosDePedidos = [
+let states = [
   {id: 1, name: "Nuevo"},
   {id: 2, name: "Confirmado"},
   {id: 3, name: "Preparando"},
@@ -7,4 +7,4 @@ let estadosDePedidos = [
   {id: 6, name: "Entregado"}
 ];
 
-module.exports = estadosDePedidos;
+module.exports = states;

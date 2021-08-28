@@ -11,6 +11,7 @@ function verEstados(id){
 
 function traerPedido(id) {
   const datosFiltrados = orders.find(order => order.id == Number(id));
+
   return datosFiltrados;
 };
 
@@ -18,6 +19,13 @@ function confirmarPedido(id){
   let pedido = traerPedido(id);
   
   pedido.state = 1;
+  return pedido;
+};
+
+function modificarEstadoDePedido(id, estado){
+  let pedido = traerPedido(id);
+  
+  pedido.state = parseInt(estado);
   return pedido;
 };
 
@@ -73,6 +81,12 @@ function crearOrder(orderObject){
 };
 
 function filterOrders(id){
+  const datosFiltrados = orders.find(order => order.id == Number(id));
+  return datosFiltrados;
+};
+
+
+function filterOrdersxId(id){
   let pedidoCargado = [];
 
   for (let i = 0; i < orders.length; i++) {
@@ -161,10 +175,12 @@ function borrarOrder(idOrder){
 
 exports.verEstados = verEstados;
 exports.cambiarEstadosPedidos = cambiarEstadosPedidos;
+exports.modificarEstadoDePedido = modificarEstadoDePedido;
 exports.pedidoConfirmado = pedidoConfirmado;
 exports.confirmarPedido = confirmarPedido;
 exports.traerPedido = traerPedido;
 exports.filterOrders = filterOrders;
+exports.filterOrdersxId = filterOrdersxId;
 
 exports.listOrders = listOrders;
 exports.crearOrder = crearOrder;

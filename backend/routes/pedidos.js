@@ -61,7 +61,7 @@ router.get('/all/:idSession', function (req, res){
  */
 router.get('/byuser/:idUser', function (req, res){
   let respuesta = {};
-  let resultado = functions.filterOrders(req.params.idUser);
+  let resultado = functions.filterOrdersxId(req.params.idUser);
 
   if (resultado.length === 0){ resultado = 'El usuario no ha realizado pedidos aún'}
   respuesta.msg = resultado;
@@ -168,7 +168,7 @@ router.post('/', function (req, res){
 router.put('/confirmar-pedido/:id', function (req, res){ 
   let pedido = functions.traerPedido(req.params.id);
   let respuesta = {};
-  if (pedido.state == 0 && req.params.id == pedido.idUser){
+  if (pedido.state == 0 && req.body.idUser_Session == pedido.idUser){
     respuesta.msg = functions.confirmarPedido(req.params.id);
     res.json(respuesta); 
   } else {  
@@ -181,8 +181,8 @@ router.put('/confirmar-pedido/:id', function (req, res){
  *  put:
  *    tags:
  *    - "Pedidos"
- *    summary: "Modifica por ID"
- *    description: "Se realiza la modificación en uno o mas campos de un usuario"
+ *    summary: "Modifica Estados del pedido "
+ *    description: "Se realiza la modificación del estado del pedido por administradores"
  *    parameters:
  *    - name: id
  *      description: ID del pedido
@@ -194,11 +194,11 @@ router.put('/confirmar-pedido/:id', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
- *    - name: nickname
- *      description: Nombre de Usuario 
+ *    - name: state
+ *      description: Actualiza el Estado del pedido
  *      in: formData
  *      required: true
- *      type: string
+ *      type: integer
  *    responses:
  *      200:
  *        description: Success
@@ -208,16 +208,23 @@ router.put('/confirmar-pedido/:id', function (req, res){
  *        description: Not found
  */
 router.put('/estado-byadmin/:id', function (req, res){
-  if (administradores.isAdmin(req.body.idUser)){
-    const id = req.params.id;
-    let respuesta = {};
-    respuesta.msg = functions.filterOrders(id) ? functions.modificarOrder(id ,req.body) : "No existe el pedido que estabas buscando";
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
+  /* 
+  verifico la existencia del pedido
+  verifico que le usuario es administrador, para realizar el cambio de estado
+   */
+  let pedido = functions.traerPedido(req.params.id);
+  let respuesta = {};
 
+  if (administradores.isAdmin(req.body.idUser_Session)){
+    if (pedido.state > 0){
+      respuesta.msg = functions.modificarEstadoDePedido(req.params.id, req.body.state);
+      res.json(respuesta); 
+    } else {  
+      res.json("Operación anulada. No cuenta con los permisos para realizar esta acción")};
+    } else {  
+      res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+    };
+});
 
 /**
  * @swagger
@@ -288,37 +295,19 @@ router.put('/modificar-pedido/:id', function (req, res){
  *    parameters:
  *    - name: id
  *      description: Id de pedido
- *      in: formData
+ *      in: path
  *      required: false
  *      type: integer
- *    - name: idUser
+ *    - name: idUser_Session
  *      description: ID de Usuario que realizo el pedido 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: state
- *      description: Estado del pedido 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: products
- *      description: Listado de productos en el pedido 
- *      in: formData
- *      required: true
- *      type: array
- *    - name: formaPago
- *      description: Metodos de pago 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: price
- *      description: Precio del pedido 
  *      in: formData
  *      required: true
  *      type: integer
  *    responses:
  *      200:
  *        description: Success
+ *      401:
+ *        description: Unauthorized
  *      404:
  *        description: Not found
  */
@@ -326,8 +315,13 @@ router.put('/modificar-pedido/:id', function (req, res){
 router.delete('/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
-  respuesta.msg = functions.filterOrders ? functions.borrarOrder(idOrders) : "no es correcto";
-  res.json(respuesta);
+
+  if (administradores.isAdmin(req.body.idUser_Session)){
+    respuesta.msg = functions.filterOrders ? functions.borrarOrder(idOrders) : "no es correcto";
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
 });
 
 module.exports = router;

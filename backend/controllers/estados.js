@@ -5,7 +5,8 @@ const searchIndex = (id) => {
 };
 
 function obtenerNombre(id){
-  let name = states[searchIndex(id)].name;
+  let name = states[id].name;
+
   return name;
 };
 
