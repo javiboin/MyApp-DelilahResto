@@ -58,6 +58,11 @@ function crearOrder(orderObject){
   return pedidoCargado;
 };
 
+function traerPedido(id) {
+  const datosFiltrados = orders.find(order => order.id == Number(id));
+  return datosFiltrados;
+};
+
 function filterOrders(id){
   let pedidoCargado = [];
 
@@ -149,6 +154,7 @@ exports.verEstados = verEstados;
 exports.cambiarEstadosPedidos = cambiarEstadosPedidos;
 exports.pedidoConfirmado = pedidoConfirmado;
 
+exports.traerPedido = traerPedido;
 exports.filterOrders = filterOrders;
 
 exports.listOrders = listOrders;

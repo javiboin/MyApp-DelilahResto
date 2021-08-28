@@ -41,6 +41,37 @@ router.get('/all/:idSession', function (req, res){
 
 /**
  * @swagger
+ * /orders/{id}:
+ *  get:
+ *    tags:
+ *    - "Pedidos"
+ *    summary: "Ver info de pedidos por ID"
+ *    description: Todos los datos de un pedido
+ *    parameters:
+ *    - name: id
+ *      description: ID del pedido
+ *      in: path
+ *      required: false
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Not found
+ */
+
+router.get('/:id', function (req, res){
+  let respuesta = {};
+  let resultado = functions.traerPedido(req.params.id);
+
+  if (resultado === undefined){ resultado = 'El pedido no existe'}
+  respuesta.msg = resultado;
+
+  res.json(respuesta);
+});
+
+/**
+ * @swagger
  * /users/{id}:
  *  put:
  *    tags:
@@ -230,59 +261,6 @@ router.put('/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "no es correcto";
-  res.json(respuesta);
-});
-
-/**
- * @swagger
- * /orders/{id}:
- *  get:
- *    tags:
- *    - "Pedidos"
- *    summary: "Ver info por ID"
- *    description: Todos los datos de un pedido
- *    parameters:
- *    - name: id
- *      description: Id de pedido
- *      in: formData
- *      required: false
- *      type: integer
- *    - name: idUser
- *      description: ID de Usuario que realizo el pedido 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: state
- *      description: Estado del pedido 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: products
- *      description: Listado de productos en el pedido 
- *      in: formData
- *      required: true
- *      type: array
- *    - name: formaPago
- *      description: Metodos de pago 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: price
- *      description: Precio del pedido 
- *      in: formData
- *      required: true
- *      type: integer
- *    responses:
- *      200:
- *        description: Success
- *      404:
- *        description: Not found
- */
-
-router.get('/:id', function (req, res){
-  const idOrders = req.params.id;
-  let respuesta = {};
-  respuesta.msg = functions.filterOrders ? functions.filterOrders(idOrders) : "no es correcto";
   res.json(respuesta);
 });
 
