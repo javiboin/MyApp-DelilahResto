@@ -41,6 +41,36 @@ router.get('/all/:idSession', function (req, res){
 
 /**
  * @swagger
+ * /orders/byuser/{idUser}:
+ *  get:
+ *    tags:
+ *    - "Pedidos"
+ *    summary: Listado de todos los pedidos que realizo un usuario
+ *    description: Encuentra tu historial de pedidos realizados
+ *    parameters:
+ *    - name: idUser
+ *      description: ID de usuario 
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Not found
+ */
+router.get('/byuser/:idUser', function (req, res){
+  let respuesta = {};
+  let resultado = functions.filterOrders(req.params.idUser);
+
+  if (resultado.length === 0){ resultado = 'El usuario no ha realizado pedidos aún'}
+  respuesta.msg = resultado;
+
+  res.json(respuesta);
+});
+
+/**
+ * @swagger
  * /orders/{id}:
  *  get:
  *    tags:
@@ -68,104 +98,6 @@ router.get('/:id', function (req, res){
   respuesta.msg = resultado;
 
   res.json(respuesta);
-});
-
-/**
- * @swagger
- * /users/{id}:
- *  put:
- *    tags:
- *    - "Usuarios"
- *    summary: "Modifica por ID"
- *    description: "Se realiza la modificación en uno o mas campos de un usuario"
- *    parameters:
- *    - name: id
- *      description: Id de Usuario
- *      in: path
- *      required: true
- *      type: integer
- *    - name: idUser_Session
- *      description: ID de usuario que realiza el cambio 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: nickname
- *      description: Nombre de Usuario 
- *      in: formData
- *      required: false
- *      type: string
- *    - name: completeName
- *      description: Nombre del propietario de la cuenta 
- *      in: formData
- *      required: false
- *      type: string
- *    - name: email
- *      description: Correo electronico de Usuario 
- *      in: formData
- *      required: false
- *      type: string
- *    - name: phone
- *      description: Numero de telefono de Usuario 
- *      in: formData
- *      required: false
- *      type: integer
- *    - name: address
- *      description: Domicilio de Usuario 
- *      in: formData
- *      required: false
- *      type: string
- *    - name: password
- *      description: Contraseña de Usuario 
- *      in: formData
- *      required: false
- *      type: string
- *    responses:
- *      200:
- *        description: Success
- *      401:
- *        description: Unauthorized
- *      404:
- *        description: Not found
- */
-router.put('/changeStateOrder/:id', function (req, res){
-  if (administradores.isAdmin(req.body.idUser)){
-    const id = req.params.id;
-    let respuesta = {};
-    respuesta.msg = functions.filterOrders(id) ? functions.modificarOrder(id ,req.body) : "No existe el pedido que estabas buscando";
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
-
-/**
- * @swagger
- * /orders/byuser/{idUser}:
- *  get:
- *    tags:
- *    - "Pedidos"
- *    summary: Listado de todos los pedidos que realizo un usuario
- *    description: Encuentra tu historial de pedidos realizados
- *    parameters:
- *    - name: idUser
- *      description: ID de usuario 
- *      in: path
- *      required: true
- *      type: integer
- *    responses:
- *      200:
- *        description: Success
- *      404:
- *        description: Not found
- */
-router.get('/byuser/:idUser', function (req, res){
-    let respuesta = {};
-    let resultado = functions.filterOrders(req.params.idUser);
-
-    if (resultado.length === 0){ resultado = 'El usuario no ha realizado pedidos aún'}
-    respuesta.msg = resultado;
-
-    res.json(respuesta);
 });
 
 /**
@@ -208,7 +140,88 @@ router.post('/', function (req, res){
 
 /**
  * @swagger
- * /orders/{id}:
+ * /orders/confirmar-pedido/{id}:
+ *  put:
+ *    tags:
+ *    - "Pedidos"
+ *    summary: "Confirmar Pedido por ID"
+ *    description: "Se realiza la modificación en uno o mas campos de un usuario"
+ *    parameters:
+ *    - name: id
+ *      description: ID del Pedido
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: idUser_Session
+ *      description: ID de usuario o administrador que realiza el cambio de estado
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+router.put('/confirmar-pedido/:id', function (req, res){ 
+  let pedido = functions.traerPedido(req.params.id);
+  let respuesta = {};
+  if (pedido.state == 0 && req.params.id == pedido.idUser){
+    respuesta.msg = functions.confirmarPedido(req.params.id);
+    res.json(respuesta); 
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción"); 
+}});
+
+/**
+ * @swagger
+ * /orders/estado-byadmin/{id}:
+ *  put:
+ *    tags:
+ *    - "Pedidos"
+ *    summary: "Modifica por ID"
+ *    description: "Se realiza la modificación en uno o mas campos de un usuario"
+ *    parameters:
+ *    - name: id
+ *      description: ID del pedido
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: idUser_Session
+ *      description: ID del administrador que realiza el cambio de estado 
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: nickname
+ *      description: Nombre de Usuario 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+router.put('/estado-byadmin/:id', function (req, res){
+  if (administradores.isAdmin(req.body.idUser)){
+    const id = req.params.id;
+    let respuesta = {};
+    respuesta.msg = functions.filterOrders(id) ? functions.modificarOrder(id ,req.body) : "No existe el pedido que estabas buscando";
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
+});
+
+
+/**
+ * @swagger
+ * /orders/modificar-pedido/{id}:
  *  put:
  *    tags:
  *    - "Pedidos"
@@ -257,7 +270,7 @@ router.post('/', function (req, res){
  *        description: Not found
  */
 
-router.put('/:id', function (req, res){
+router.put('/modificar-pedido/:id', function (req, res){
   const idOrders = req.params.id;
   let respuesta = {};
   respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "no es correcto";

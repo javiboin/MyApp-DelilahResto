@@ -8,6 +8,20 @@ function verEstados(id){
   return orders.find(pedido => pedido.idUser === Number(id));
 };
 
+
+function traerPedido(id) {
+  const datosFiltrados = orders.find(order => order.id == Number(id));
+  return datosFiltrados;
+};
+
+function confirmarPedido(id){
+  let pedido = traerPedido(id);
+  
+  pedido.state = 1;
+  return pedido;
+};
+
+
 function obtenerDatosProductos(productos) {
   listaDatosProductos = [];
 
@@ -56,11 +70,6 @@ function crearOrder(orderObject){
   });
 
   return pedidoCargado;
-};
-
-function traerPedido(id) {
-  const datosFiltrados = orders.find(order => order.id == Number(id));
-  return datosFiltrados;
 };
 
 function filterOrders(id){
@@ -153,7 +162,7 @@ function borrarOrder(idOrder){
 exports.verEstados = verEstados;
 exports.cambiarEstadosPedidos = cambiarEstadosPedidos;
 exports.pedidoConfirmado = pedidoConfirmado;
-
+exports.confirmarPedido = confirmarPedido;
 exports.traerPedido = traerPedido;
 exports.filterOrders = filterOrders;
 

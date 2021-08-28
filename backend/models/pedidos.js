@@ -45,7 +45,7 @@ let orders = [
   {
     id: 4,
     idUser: 4,
-    state: 1,
+    state: 0,
     date: "date",
     hour: "hora",
     products: [
