@@ -1,7 +1,7 @@
 const metodosPago =  require('../models/metodosPago');
 
 function filterPayment(id){
-  const datosFiltrados = metodosPago.filter(metodo => metodo.id == Number(id));
+  const datosFiltrados = metodosPago.find(metodo => metodo.id == Number(id));
   return datosFiltrados;
 };
 
@@ -19,7 +19,7 @@ function listPayment() {
 
   for (i = 0; i < metodosPago.length; i++) {
     pedidoCargado.push({
-      ID: metodosPago[i].id,
+      ID: parseInt(metodosPago[i].id),
       Nombre: metodosPago[i].name
     });
   };
@@ -27,7 +27,7 @@ function listPayment() {
 }
 
 function crearMedioPago(paymentObject) {
-  const id = metodosPago[metodosPago.length -1].id +1;
+  const id = parseInt(metodosPago[metodosPago.length -1].id +1);
   metodosPago.push({
     id: id,
     name: paymentObject.name
@@ -44,7 +44,7 @@ function crearMedioPago(paymentObject) {
 
 function modificarPayment(id, paymentObject) {
   paymentObject = {
-    id: id,
+    id: parseInt(id),
     name: paymentObject.name
   };
 
