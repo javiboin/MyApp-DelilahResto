@@ -116,7 +116,7 @@ router.get('/:id', function (req, res){
  *      schema:
  *        type: object
  *        properties:
- *          id_User:
+ *          idUser:
  *            type: number
  *            example: 1 
  *          products:
@@ -145,7 +145,6 @@ router.get('/:id', function (req, res){
  */
 
 router.post('/', function (req, res){
-  console.log(req.body); /* OK */
   let respuesta = {};
   respuesta.msg = functions.crearOrder(req.body);
   res.json(respuesta);

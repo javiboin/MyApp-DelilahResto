@@ -1,6 +1,7 @@
 const users = require('../models/usuarios');
 
 const searchIndex = (id) => {
+  console.log(users.findIndex(x => x.id == id));
   return users.findIndex(x => x.id == id);
 };
 

@@ -30,26 +30,11 @@ function modificarEstadoDePedido(id, estado){
   return pedido;
 };
 
-
-function obtenerDatosProductos(productos) {
-  listaDatosProductos = [];
-
-  for (i = 0; i < productos.length; i++) {
-    listaDatosProductos.push({
-      id: productos[i].id,
-      nombre: products.obtenerNombre(productos[i].id),
-      precio: products.obtenerPrecio(productos[i].id)
-    });
-  };
-
-  return listaDatosProductos;
-};
-
 function obtenerTotal(productos){
   sumaTotal = 0;
 
   for (i = 0; i < productos.length; i++) {
-    sumaTotal = sumaTotal + products.obtenerPrecio(productos[i].id);
+    sumaTotal = sumaTotal + (products.obtenerPrecio(productos[i].id) * productos[i].cant);
   };
 
   return sumaTotal;
@@ -63,29 +48,23 @@ function crearOrder(orderObject){
   let pedidoCargado = {
     Mensaje: 'Order created',
     ID: id,
-    Usuario1: users.obtenerNickname(orderObject.idUser),
-    Nombre1: users.obtenerNombre(orderObject.idUser),
-    Estado1: states.obtenerNombre(1),
     Usuario: orderObject.idUser,
     Estado: 0,
-    dia: moment().format('DD-MM-YYYY'),
-    hora: moment().format('hh:mm:ss a'),
+    dia: dia,
+    hora: hora,
     Productos: orderObject.products,
     Metodo_de_pago: orderObject.payment,
-    total: obtenerTotal(orderObject.products)/* ,
-    Productos: obtenerDatosProductos(orderObject.products),
-    Metodo_de_pago: payment.obtenerNombre(orderObject.payment),
-    total: obtenerTotal(orderObject.products) */
+    total: obtenerTotal(orderObject.products)
   };
 
   orders.push({
     id: id,
     idUser: orderObject.idUser,
     state: 0,
-    products: orderObject.products,
     date: dia,
     hour: hora,
-    payment: orderObject.payment, // mostrar medios pago en swagger list metodos de pago
+    products: orderObject.products,
+    payment: orderObject.payment, 
     total: obtenerTotal(orderObject.products)
   });
 
@@ -123,23 +102,7 @@ function filterOrdersxId(id){
 };
 
 function listOrders(){
-  let pedidoCargado = [];
-
-  for (i = 0; i < orders.length; i++) {
-    pedidoCargado.push({
-      idPedido: orders[i].id,
-      idUsuario: orders[i].idUser,
-      Usuario: users.obtenerNickname(orders[i].idUser),
-      Nombre: users.obtenerNombre(orders[i].idUser),
-      Estado: states.obtenerNombre(orders[i].state),
-      
-      Productos: "obtenerDatosProductos(orders[i])",
-    
-      Metodo_de_pago: payment.obtenerNombre(orders[i].payment),
-      total: orders[i].total
-    });
-  };
-  return pedidoCargado;
+  return (orders);
 };
 
 const searchIndex = (idOrder) => {
