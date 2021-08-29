@@ -124,13 +124,17 @@ function pedidoConfirmado(idUser, idOrder){
 };
 
 function modificarOrder(idOrder, orderObject){
+  let dia = moment().format('DD-MM-YYYY');
+  let hora = moment().format('hh:mm:ss a');
   orderObject = {
     id: parseInt(idOrder),
     idUser: parseInt(orderObject.idUser),
     state: parseInt(orderObject.state), 
+    date: dia,
+    hour: hora,
     products: orderObject.products,
     payment: parseInt(orderObject.payment),
-    total: orderObject.total
+    total: obtenerTotal(orderObject.products)
   };
 
   orders[searchIndex(idOrder)] = orderObject;

@@ -240,48 +240,47 @@ router.put('/estado-byadmin/:id', function (req, res){
 
 /**
  * @swagger
- * /orders/modificar-pedido/{id}:
+ * /orders/modificar-pedido:
  *  put:
  *    tags:
  *    - "Pedidos"
- *    summary: "Modifica por ID"
- *    description: "Se realiza la modificacón en uno o mas campos de un pedido"
- *    parameters:
- *    - name: id
- *      description: Id de pedido
- *      in: formData
+ *    summary: "Modifica Pedido"
+ *    description: Modificar varios campos de un pedido. Operacion para administradores
+ *    parameters: 
+ *    - in: body
+ *      name: orders
  *      required: false
- *      type: integer
- *    - name: idUser
- *      description: ID de Usuario que realizo el pedido 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: state
- *      description: Estado del pedido 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: products
- *      description: Listado de productos en el pedido 
- *      in: formData
- *      required: true
- *      type: array
- *    - name: formaPago
- *      description: Metodos de pago 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: price
- *      description: Precio del pedido 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: state
- *      description: Estado del pedido 
- *      in: formData
- *      required: true
- *      type: string
+ *      description : Listado de productos en el pedido 
+ *      schema:
+ *        type: object
+ *        properties:
+ *          id:
+ *            type: number
+ *            example: 1 
+ *          idUser:
+ *            type: number
+ *            example: 1 
+ *          state:
+ *            type: number
+ *            example: 1 
+ *          products:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                id:
+ *                  type: number
+ *                  example: 3
+ *                cant: 
+ *                  type: number
+ *                  example: 1
+ *          payment:
+ *            type: number
+ *            example: 1 
+ *    consumes:
+ *    - application/json
+ *    produces:
+ *    - application/json
  *    responses:
  *      200:
  *        description: Success
@@ -289,10 +288,10 @@ router.put('/estado-byadmin/:id', function (req, res){
  *        description: Not found
  */
 
-router.put('/modificar-pedido/:id', function (req, res){
-  const idOrders = req.params.id;
+router.put('/modificar-pedido', function (req, res){
+  const idOrders = req.body.id;
   let respuesta = {};
-  respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "no es correcto";
+  respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "El pedido no existe";
   res.json(respuesta);
 });
 
