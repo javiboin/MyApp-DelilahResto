@@ -1,3 +1,4 @@
+const moment = require('moment');
 const orders = require('../models/pedidos');
 const users = require('../controllers/usuarios');
 const states = require('../controllers/estados.js');
@@ -60,21 +61,27 @@ function crearOrder(orderObject){
   let pedidoCargado = {
     Mensaje: 'Order created',
     ID: id,
-    Usuario: users.obtenerNickname(orderObject.idUser),
+    /* Usuario: users.obtenerNickname(orderObject.idUser),
     Nombre: users.obtenerNombre(orderObject.idUser),
-    Estado: states.obtenerNombre(1),
+    Estado: states.obtenerNombre(1), */
+    dia: moment().format('DD-MM-YYYY'),
+    hora: moment().format('hh:mm:ss a')/* ,
     Productos: obtenerDatosProductos(orderObject.products),
     Metodo_de_pago: payment.obtenerNombre(orderObject.payment),
-    total: obtenerTotal(orderObject.products)
+    total: obtenerTotal(orderObject.products) */
   };
+
+  console.log(pedidoCargado.Productos);
 
   orders.push({
     id: id,
     idUser: orderObject.idUser,
-    state: 1,
-    products: orderObject.products,
+    state: 0,
+    products: "orderObject.products",
+    date: pedidoCargado.dia,
+    hour: pedidoCargado.hora,
     payment: orderObject.payment, // mostrar medios pago en swagger list metodos de pago
-    total: pedidoCargado.total
+    total: obtenerTotal(orderObject.products)
   });
 
   return pedidoCargado;
