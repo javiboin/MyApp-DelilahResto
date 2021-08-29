@@ -1,4 +1,3 @@
-/* FALTA CANTIDADES Y FECHA DE PEDIDO */
 let orders = [
   {
     id: 1,
@@ -7,9 +6,9 @@ let orders = [
     date: '29-08-2021',
     hour: '04:13:43 pm',
     products: [
-      {id: 1, price: 400, cant: 1},
-      {id: 2, price: 500, cant: 1},
-      {id: 3, price: 600, cant: 1}
+      {id: 1, cant: 1},
+      {id: 2, cant: 1},
+      {id: 3, cant: 1}
     ],
     payment: 1,
     total: 2500
@@ -21,9 +20,9 @@ let orders = [
     date: '29-08-2021',
     hour: '04:13:43 pm',
     products: [
-      {id: 1, price: 400, cant: 1},
-      {id: 2, price: 500, cant: 1},
-      {id: 3, price: 600, cant: 1}
+      {id: 1, cant: 1},
+      {id: 2, cant: 1},
+      {id: 3, cant: 1}
     ],
     payment: 1,
     total: 2500
@@ -35,9 +34,9 @@ let orders = [
     date: '29-08-2021',
     hour: '04:13:43 pm',
     products: [
-      {id: 1, price: 400, cant: 1},
-      {id: 2, price: 500, cant: 1},
-      {id: 3, price: 600, cant: 1}
+      {id: 1, cant: 1},
+      {id: 2, cant: 1},
+      {id: 3, cant: 1}
     ],
     payment: 1,
     total: 2500
@@ -49,9 +48,9 @@ let orders = [
     date: '29-08-2021',
     hour: '04:13:43 pm',
     products: [
-      {id: 1, price: 400, cant: 1},
-      {id: 2, price: 500, cant: 1},
-      {id: 3, price: 600, cant: 1}
+      {id: 1, cant: 1},
+      {id: 2, cant: 1},
+      {id: 3, cant: 1}
     ],
     payment: 1,
     total: 2500
