@@ -169,6 +169,11 @@ router.post('/', function (req, res){
  *      in: formData
  *      required: true
  *      type: integer
+ *    - name: address
+ *      description: Direccion alternativa, si se deja vacio se guardara la direccion que guardaste en tu perfil
+ *      in: formData
+ *      required: false
+ *      type: string
  *    responses:
  *      200:
  *        description: Success
@@ -178,6 +183,7 @@ router.post('/', function (req, res){
  *        description: Not found
  */
 router.put('/confirmar-pedido/:id', function (req, res){ 
+  console.log(req.body.address);
   let pedido = functions.traerPedido(req.params.id);
   let respuesta = {};
   if (pedido.state == 0 && req.body.idUser_Session == pedido.idUser){
@@ -254,15 +260,18 @@ router.put('/estado-byadmin/:id', function (req, res){
  *      schema:
  *        type: object
  *        properties:
+ *          idSession:
+ *            type: number
+ *            example: 1 
  *          id:
  *            type: number
  *            example: 1 
  *          idUser:
  *            type: number
- *            example: 1 
+ *            example: 2 
  *          state:
  *            type: number
- *            example: 1 
+ *            example: 2 
  *          products:
  *            type: array
  *            items:
@@ -273,7 +282,7 @@ router.put('/estado-byadmin/:id', function (req, res){
  *                  example: 3
  *                cant: 
  *                  type: number
- *                  example: 1
+ *                  example: 3
  *          payment:
  *            type: number
  *            example: 1 
@@ -291,8 +300,18 @@ router.put('/estado-byadmin/:id', function (req, res){
 router.put('/modificar-pedido', function (req, res){
   const idOrders = req.body.id;
   let respuesta = {};
-  respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "El pedido no existe";
-  res.json(respuesta);
+
+  /* 
+  Validamos que se pueda modificar un pedido en los siguientes casos:
+    - Un Usuario que quiera modificar su pedido, SOLO si éste no esta confirmado
+    - Un Administrador pueda realizar cambios al pedido SOLO si esta confirmado por el usuario que creo el pedido
+   */
+  if ((req.body.state == 0 && req.body.idSession == req.body.idUser) || (req.body.state > 0 && administradores.isAdmin(req.body.idSession))){
+    respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "El pedido no existe";
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
 });
 
 /**

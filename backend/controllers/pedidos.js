@@ -18,6 +18,13 @@ function traerPedido(id) {
 
 function confirmarPedido(id){
   let pedido = traerPedido(id);
+
+  console.log(pedido);
+  if (pedido.address == undefined){
+    console.log("funciona");
+  } else {
+    console.log("nono");
+  };
   
   pedido.state = 1;
   return pedido;
