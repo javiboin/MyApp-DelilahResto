@@ -108,26 +108,35 @@ router.get('/:id', function (req, res){
  *    - "Pedidos"
  *    summary: "Agrega Pedido"
  *    description: Guarda un nuevo pedido de comida en nuestra app
- *    parameters:
- *    - name: idUser
- *      description: ID de Usuario que realizo el pedido 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: products
- *      description: Listado de productos en el pedido 
- *      in: body
- *      required: true
- *      type: object
- *    - name: formaPago
- *      description: Metodos de pago 
- *      in: formData
- *      required: true
- *      type: integer
- *      minimum: 1
- *      maximum: 3
+ *    parameters: 
+ *    - in: body
+ *      name: orders
+ *      required: false
+ *      description : Listado de productos en el pedido 
+ *      schema:
+ *        type: object
+ *        properties:
+ *          id_User:
+ *            type: number
+ *            example: 1 
+ *          products:
+ *            type: array
+ *            items:
+ *              type: object
+ *              properties:
+ *                id:
+ *                  type: number
+ *                  example: 1
+ *                cant: 
+ *                  type: number
+ *                  example: 1
+ *          payment:
+ *            type: number
+ *            example: 1 
+ *    consumes:
+ *    - application/json
  *    produces:
- *     - application/json
+ *    - application/json
  *    responses:
  *      200:
  *        description: Success
@@ -136,7 +145,7 @@ router.get('/:id', function (req, res){
  */
 
 router.post('/', function (req, res){
-  console.log(req.body);
+  console.log(req.body); /* OK */
   let respuesta = {};
   respuesta.msg = functions.crearOrder(req.body);
   res.json(respuesta);

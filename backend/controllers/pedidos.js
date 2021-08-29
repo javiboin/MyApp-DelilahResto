@@ -56,30 +56,35 @@ function obtenerTotal(productos){
 };
 
 function crearOrder(orderObject){
-  const id = orders[orders.length -1].id +1;
+  let id = orders[orders.length -1].id +1;
+  let dia = moment().format('DD-MM-YYYY');
+  let hora = moment().format('hh:mm:ss a');
 
   let pedidoCargado = {
     Mensaje: 'Order created',
     ID: id,
-    /* Usuario: users.obtenerNickname(orderObject.idUser),
-    Nombre: users.obtenerNombre(orderObject.idUser),
-    Estado: states.obtenerNombre(1), */
+    Usuario1: users.obtenerNickname(orderObject.idUser),
+    Nombre1: users.obtenerNombre(orderObject.idUser),
+    Estado1: states.obtenerNombre(1),
+    Usuario: orderObject.idUser,
+    Estado: 0,
     dia: moment().format('DD-MM-YYYY'),
-    hora: moment().format('hh:mm:ss a')/* ,
+    hora: moment().format('hh:mm:ss a'),
+    Productos: orderObject.products,
+    Metodo_de_pago: orderObject.payment,
+    total: obtenerTotal(orderObject.products)/* ,
     Productos: obtenerDatosProductos(orderObject.products),
     Metodo_de_pago: payment.obtenerNombre(orderObject.payment),
     total: obtenerTotal(orderObject.products) */
   };
 
-  console.log(pedidoCargado.Productos);
-
   orders.push({
     id: id,
     idUser: orderObject.idUser,
     state: 0,
-    products: "orderObject.products",
-    date: pedidoCargado.dia,
-    hour: pedidoCargado.hora,
+    products: orderObject.products,
+    date: dia,
+    hour: hora,
     payment: orderObject.payment, // mostrar medios pago en swagger list metodos de pago
     total: obtenerTotal(orderObject.products)
   });
