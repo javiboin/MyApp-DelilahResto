@@ -6,6 +6,16 @@ npm i express -S
 npm i moment -S
 npm i swagger-ui-express swagger-jsdoc
 ```
+## Start Server:
+```
+npm start 
+or go to 
+```
+```bash
+cd backend
+node index.js
+```
+
 ## Swagger:
 ```
 http://localhost:3001/api-docs
