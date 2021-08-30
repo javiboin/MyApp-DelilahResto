@@ -7,10 +7,12 @@ npm i moment -S
 npm i swagger-ui-express swagger-jsdoc
 ```
 ## Start Server:
-```
+```bash
 npm start 
-or go to 
 ```
+
+or go to 
+
 ```bash
 cd backend
 node index.js
