@@ -24,5 +24,5 @@ http://localhost:3001/api-docs
 ```
 ## GitHub:
 ```
-https://github.com/javiboin/MyApp-DelilahResto.git
+https://github.com/javiboin
 ```
