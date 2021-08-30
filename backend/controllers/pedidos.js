@@ -16,14 +16,11 @@ function traerPedido(id) {
   return datosFiltrados;
 };
 
-function confirmarPedido(id){
+function confirmarPedido(id, direccionAlternativa){
   let pedido = traerPedido(id);
 
-  console.log(pedido);
-  if (pedido.address == undefined){
-    console.log("funciona");
-  } else {
-    console.log("nono");
+  if (direccionAlternativa != undefined){
+    pedido.address = direccionAlternativa;
   };
   
   pedido.state = 1;
@@ -51,6 +48,8 @@ function crearOrder(orderObject){
   let id = orders[orders.length -1].id +1;
   let dia = moment().format('DD-MM-YYYY');
   let hora = moment().format('hh:mm:ss a');
+  let direccion_de_envio = users.obtenerDireccion(orderObject.idUser);
+  let total = obtenerTotal(orderObject.products);
 
   let pedidoCargado = {
     Mensaje: 'Order created',
@@ -61,7 +60,8 @@ function crearOrder(orderObject){
     hora: hora,
     Productos: orderObject.products,
     Metodo_de_pago: orderObject.payment,
-    total: obtenerTotal(orderObject.products)
+    total: total,
+    Direccion_de_Envio: direccion_de_envio
   };
 
   orders.push({
@@ -72,7 +72,8 @@ function crearOrder(orderObject){
     hour: hora,
     products: orderObject.products,
     payment: orderObject.payment, 
-    total: obtenerTotal(orderObject.products)
+    total: total,
+    address: direccion_de_envio
   });
 
   return pedidoCargado;
@@ -97,7 +98,7 @@ function filterOrdersxId(id){
         Nombre: users.obtenerNombre(orders[i].idUser),
         Estado: states.obtenerNombre(orders[i].state),
         
-        Productos: "obtenerDatosProductos(orders[i])",
+        Productos: orders[i].products,
       
         Metodo_de_pago: payment.obtenerNombre(orders[i].payment),
         total: orders[i].total

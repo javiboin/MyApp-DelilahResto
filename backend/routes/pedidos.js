@@ -183,11 +183,10 @@ router.post('/', function (req, res){
  *        description: Not found
  */
 router.put('/confirmar-pedido/:id', function (req, res){ 
-  console.log(req.body.address);
   let pedido = functions.traerPedido(req.params.id);
   let respuesta = {};
   if (pedido.state == 0 && req.body.idUser_Session == pedido.idUser){
-    respuesta.msg = functions.confirmarPedido(req.params.id);
+    respuesta.msg = functions.confirmarPedido(req.params.id, req.body.address);
     res.json(respuesta); 
   } else {  
     res.json("Operación anulada. No cuenta con los permisos para realizar esta acción"); 
@@ -308,6 +307,7 @@ router.put('/modificar-pedido', function (req, res){
    */
   if ((req.body.state == 0 && req.body.idSession == req.body.idUser) || (req.body.state > 0 && administradores.isAdmin(req.body.idSession))){
     respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "El pedido no existe";
+    
     res.json(respuesta);
   } else {  
     res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");

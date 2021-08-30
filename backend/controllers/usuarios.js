@@ -15,7 +15,7 @@ function obtenerNombre(id){
 };
 
 function obtenerDireccion(id){
-  let address = products[searchIndex(id)].address;
+  let address = users[searchIndex(id)].address;
   return address;
 };
 

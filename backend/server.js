@@ -48,6 +48,3 @@ router.use(function(req, res, next) {
 });
 
 module.exports = app;
-
-
-/* REVISAR EL ENPOINT GENERAL */
