@@ -9,7 +9,6 @@ function verEstados(id){
   return orders.find(pedido => pedido.idUser === Number(id));
 };
 
-
 function traerPedido(id) {
   const datosFiltrados = orders.find(order => order.id == Number(id));
 
@@ -110,7 +109,34 @@ function filterOrdersxId(id){
 };
 
 function listOrders(){
-  return (orders);
+  /* return (orders); */
+  let pedidoCargado = [];
+
+  for (let i = 0; i < orders.length; i++) {  
+      listado_de_productos = [];
+      
+      for (let p = 0; p < orders[i].products.length; p++){
+        listado_de_productos.push({
+          Producto: products.obtenerNombre(orders[i].products[p].id),
+          Cantidad: orders[i].products[p].cant
+        }); 
+      };
+
+      pedidoCargado.push({
+        idPedido: orders[i].id,
+        idUsuario: orders[i].idUser,
+        Usuario: users.obtenerNickname(orders[i].idUser),
+        Nombre: users.obtenerNombre(orders[i].idUser),
+        Estado: states.obtenerNombre(orders[i].state),
+        
+        Productos: listado_de_productos, /* orders[i].products, */
+      
+        Metodo_de_pago: payment.obtenerNombre(orders[i].payment),
+        total: orders[i].total
+      });
+  };
+  
+  return pedidoCargado;
 };
 
 const searchIndex = (idOrder) => {
