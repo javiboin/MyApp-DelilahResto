@@ -19,11 +19,23 @@ app.use('/products', productos);
 const metodosDePago = require('./routes/metodosPago');
 app.use('/payment', metodosDePago);
 
+/* ------------------------------------------------------------ */
+
 const estados = require('./routes/state.route');
 app.use('/states', estados);
 
 const pagos = require('./routes/payment.route');
 app.use('/payments', pagos);
+
+const administradores = require('./routes/administrators.route');
+app.use('/administrators', administradores);
+
+
+
+
+
+
+
 
 /* -------------- SWAGGER CONFIGURATION -------------------- */
 const swaggerUI = require('swagger-ui-express');
