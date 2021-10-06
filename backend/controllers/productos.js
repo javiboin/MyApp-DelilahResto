@@ -1,4 +1,4 @@
-const products = require('../models/productos');
+const products = require('../models/product.model');
 
 const searchIndex = (idProduct) => {
   return products.findIndex(x => x.id == idProduct);

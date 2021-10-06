@@ -6,6 +6,13 @@ const administradores = require('../controllers/administradores');
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
+/* const isAdmin = (req, res, next) => {
+  const bearer = req.headers.authorization.replace('Bearer ','');
+  const token = bearer.replace('Bearer ','');
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  decoded.user === 'admin' ? next() : res.status(401).send('Unauthorized');
+} */
+
 /**
  * @swagger
  * /users/login:

@@ -1,4 +1,4 @@
-const states = require('../models/estados');
+const states = require('../models/state.model');
 
 const searchIndex = (id) => {
   return states.findIndex(x => x.id == id);

@@ -1,4 +1,7 @@
-const users = require('../models/usuarios');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+
+const users = require('../models/user.model');
 
 const searchIndex = (id) => {
   return users.findIndex(x => x.id == id);
@@ -102,7 +105,34 @@ function borrarUser(idUser){
   return 'User deleted'; 
 };
 
-exports.obtenerNickname = obtenerNickname;
+const login1 = (info) => {
+  const username = info.username;
+  const password = info.password;
+  const data = { user : 'admin', password: 'clavesegura'};
+
+  if (username === data.user && password === data.password) {
+      const token = jwt.sign({ user: data.user }, process.env.JWT_SECRET, { expiresIn: 3600 });
+      return { yourToken: token };
+  } else {
+      return 'inicio incorrecto';
+  }
+
+}
+
+module.exports = {
+  obtenerNickname,
+  obtenerNombre,
+  obtenerDireccion,
+  emailrepetido,
+  filterUsers,
+  login,
+  listUsers,
+  crearUser,
+  modificarUser,
+  borrarUser,
+  login1
+};
+/* exports.obtenerNickname = obtenerNickname;
 exports.obtenerNombre = obtenerNombre;
 exports.obtenerDireccion = obtenerDireccion;
 
@@ -114,4 +144,4 @@ exports.listUsers = listUsers;
 
 exports.crearUser = crearUser;
 exports.modificarUser = modificarUser;
-exports.borrarUser = borrarUser;
+exports.borrarUser = borrarUser; */

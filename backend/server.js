@@ -1,8 +1,15 @@
-const moment = require('moment');
+/* require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const helmet = require("helmet"); */
 const express = require('express');
+
+const moment = require('moment');
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+/* app.use(helmet()); */
 
 const router = express.Router();
 
@@ -16,8 +23,6 @@ app.use('/orders', pedidos);
 const productos = require('./routes/productos');
 app.use('/products', productos);
 
-const metodosDePago = require('./routes/metodosPago');
-app.use('/payment', metodosDePago);
 
 /* ------------------------------------------------------------ */
 
@@ -29,6 +34,15 @@ app.use('/payments', pagos);
 
 const administradores = require('./routes/administrators.route');
 app.use('/administrators', administradores);
+
+/* -------------------------------------- */
+
+/* const isAdmin = (req, res, next) => {
+  const bearer = req.headers.authorization.replace('Bearer ','');
+  const token = bearer.replace('Bearer ','');
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  decoded.user === 'admin' ? next() : res.status(401).send('Unauthorized');
+} */
 
 
 

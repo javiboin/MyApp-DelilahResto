@@ -1,4 +1,4 @@
-const metodosPago =  require('../models/metodosPago');
+const metodosPago =  require('../models/payment.model');
 
 function filterPayment(id){
   const datosFiltrados = metodosPago.find(metodo => metodo.id == Number(id));
