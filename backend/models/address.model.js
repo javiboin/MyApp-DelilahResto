@@ -4,10 +4,10 @@ const AddressModel = (connection, Sequelize) => {
       type: Sequelize.INTEGER,
       primaryKey: true
     },
-    id_user: {
+    name: {
       type: Sequelize.STRING
     },
-    id_address: {
+    number: {
       type: Sequelize.INTEGER
     }
   },
