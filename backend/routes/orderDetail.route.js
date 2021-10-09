@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const stateController = require("../controllers/state.controller");
+/* const stateController = require("../controllers/state.controller");
 
 router.get("/", (req, res) => {
   stateController.listStates()
@@ -19,6 +19,6 @@ router.get("/", (req, res) => {
       status: 400
     });
   });
-});
+}); */
 
 module.exports = router;

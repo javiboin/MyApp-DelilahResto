@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const paymentController = require("../controllers/payment.controller");
+/* const stateController = require("../controllers/state.controller");
 
 router.get("/", (req, res) => {
-  paymentController.listPayments()
+  stateController.listStates()
   .then((result) => {
     res.status(200).send({
       status: 200,
@@ -19,6 +19,6 @@ router.get("/", (req, res) => {
       status: 400
     });
   });
-});
+}); */
 
 module.exports = router;

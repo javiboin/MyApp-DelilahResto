@@ -14,13 +14,13 @@ app.use(express.json());
 const router = express.Router();
 
 /* -------------- IMPORTAR RUTAS -------------------- */
-const usuarios = require('./routes/usuarios');
+const usuarios = require('./routes/user.route');
 app.use('/users', usuarios);
 
-const pedidos = require('./routes/pedidos');
+const pedidos = require('./routes/order.route');
 app.use('/orders', pedidos);
 
-const productos = require('./routes/productos');
+const productos = require('./routes/product.route');
 app.use('/products', productos);
 
 
@@ -29,13 +29,48 @@ app.use('/products', productos);
 const estados = require('./routes/state.route');
 app.use('/states', estados);
 
-const pagos = require('./routes/payment.route');
+const pagos = require('./routes/paymentMethod.route');
 app.use('/payments', pagos);
 
 const administradores = require('./routes/administrators.route');
 app.use('/administrators', administradores);
 
 app.use(require('./controllers/auth.controller'));
+
+/* ------------------------------------------------------------ */
+
+const addresses = require('./routes/address.route');
+app.use('/addresses', addresses);
+
+const orders = require('./routes/order.route');
+app.use('/orders', orders);
+
+const ordersDetail = require('./routes/orderDetail.route');
+app.use('/orders-detail', ordersDetail);
+
+const orderStates = require('./routes/orderState.route');
+app.use('/order-states', orderStates);
+
+const paymentMethods = require('./routes/paymentMethod.route');
+app.use('/payment-methods', paymentMethods);
+
+const products = require('./routes/product.route');
+app.use('/products', products);
+
+const productStates = require('./routes/productState.route');
+app.use('/product-states', productStates);
+
+const users = require('./routes/user.route');
+app.use('/users', users);
+
+const userAddress = require('./routes/userAddress.route');
+app.use('/addresses', userAddress);
+
+const userStates = require('./routes/userState.route');
+app.use('/user-states', userStates);
+
+const userSuspensions = require('./routes/userSuspension.route');
+app.use('/user-suspensions', userSuspensions);
 
 /* -------------------------------------- */
 
