@@ -35,6 +35,8 @@ app.use('/payments', pagos);
 const administradores = require('./routes/administrators.route');
 app.use('/administrators', administradores);
 
+app.use(require('./controllers/auth.controller'));
+
 /* -------------------------------------- */
 
 /* const isAdmin = (req, res, next) => {

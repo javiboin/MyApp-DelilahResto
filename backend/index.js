@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3030;
 const host = 'http://localhost'
 const URL = `${host}:${PORT}`;
 
-async function init() {
+(async () =>{
   await app.listen(PORT, () => {
     console.log(`Server is running on port ${URL}.`);
     connection.authenticate().then(() => {
@@ -15,6 +15,5 @@ async function init() {
         console.log('BBDD error', err);
     })
   });
-};
+})();
 
-init();
