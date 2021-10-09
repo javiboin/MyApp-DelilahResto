@@ -7,7 +7,7 @@ const UserModel = (connection, Sequelize) => {
     nickname: {
       type: Sequelize.STRING
     },
-    complete_name: {
+    name: {
       type: Sequelize.STRING
     },
     email: {
@@ -16,11 +16,11 @@ const UserModel = (connection, Sequelize) => {
     phone: {
       type: Sequelize.STRING
     },
-    address: {
-      type: Sequelize.STRING
-    },
     password: {
       type: Sequelize.STRING
+    },
+    id_user_state: {
+      type: Sequelize.INTEGER
     }
   },
   {
