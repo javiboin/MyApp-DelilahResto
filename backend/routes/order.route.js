@@ -7,6 +7,26 @@ const functionsUser = require('../controllers/user.controller');
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
+const OrderController = require("../controllers/order.controller");
+
+router.get("/", (req, res) => {
+  OrderController.listValues()
+  .then((result) => {
+    res.status(200).send({
+      status: 200,
+      message: "Data find Successfully",
+      data: result
+    });
+  })
+  .catch(error => {
+    res.status(404).send({
+      message: "Unable to find data",
+      errors: error,
+      status: 404
+    });
+  });
+});
+
 /**
  * @swagger
  * /orders/all/{idSession}:
