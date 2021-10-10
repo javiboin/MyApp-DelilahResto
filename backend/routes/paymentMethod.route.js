@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const administradores = require('../controllers/administradores');
+/* const administradores = require('../controllers/administradores');
 const functions = require('../controllers/metodosPago');
-
+ */
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 

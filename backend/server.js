@@ -26,14 +26,14 @@ app.use('/products', productos);
 
 /* ------------------------------------------------------------ */
 
-const estados = require('./routes/state.route');
+/* const estados = require('./routes/state.route');
 app.use('/states', estados);
 
 const pagos = require('./routes/paymentMethod.route');
 app.use('/payments', pagos);
 
 const administradores = require('./routes/administrators.route');
-app.use('/administrators', administradores);
+app.use('/administrators', administradores); */
 
 app.use(require('./controllers/auth.controller'));
 

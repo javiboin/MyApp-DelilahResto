@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-/* const stateController = require("../controllers/state.controller");
+const userSuspensionController = require("../controllers/userSuspension.controller");
 
 router.get("/", (req, res) => {
-  stateController.listStates()
+  userSuspensionController.listValues()
   .then((result) => {
     res.status(200).send({
       status: 200,
@@ -19,6 +19,6 @@ router.get("/", (req, res) => {
       status: 400
     });
   });
-}); */
+});
 
 module.exports = router;

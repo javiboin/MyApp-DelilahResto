@@ -1,9 +1,9 @@
-const moment = require('moment');
+/* const moment = require('moment');
 const orders = require('../models/pedidos');
 const users = require('../controllers/usuarios');
 const states = require('../controllers/estados.js');
 const payment = require('../controllers/metodosPago');
-const products = require('../controllers/productos');
+const products = require('../controllers/productos'); */
 
 function verEstados(id){
   return orders.find(pedido => pedido.idUser === Number(id));
