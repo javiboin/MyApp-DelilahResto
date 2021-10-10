@@ -1,4 +1,4 @@
-require('dotenv').config();
+/* require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 const users = require('../models/user.model');
@@ -132,7 +132,8 @@ module.exports = {
   borrarUser,
   login1
 };
-/* exports.obtenerNickname = obtenerNickname;
+
+exports.obtenerNickname = obtenerNickname;
 exports.obtenerNombre = obtenerNombre;
 exports.obtenerDireccion = obtenerDireccion;
 
@@ -144,4 +145,15 @@ exports.listUsers = listUsers;
 
 exports.crearUser = crearUser;
 exports.modificarUser = modificarUser;
-exports.borrarUser = borrarUser; */
+exports.borrarUser = borrarUser; */ 
+
+require("dotenv").config();
+const Sequelize = require('sequelize');
+const connection = require("../config/db.config");
+const UsersModel = require('../models/user.model')(connection, Sequelize);
+
+const listValues = async () => await UsersModel.findAll();
+
+module.exports = {
+  listValues
+};

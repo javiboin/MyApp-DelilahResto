@@ -1,6 +1,4 @@
-const { Sequelize } = require("sequelize/types")
-
-const UserAddressModel = (connection, sequelize) => {
+const UserAddressModel = (connection, Sequelize) => {
   const UserAddress = connection.define('users_address', {
     id: {
       type: Sequelize.INTEGER,
@@ -13,7 +11,7 @@ const UserAddressModel = (connection, sequelize) => {
       type: Sequelize.INTEGER
     }
   },{
-    timestamp: false
+    timestamps: false
   });
   return UserAddress
 };

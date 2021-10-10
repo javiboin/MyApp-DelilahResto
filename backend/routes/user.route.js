@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const functions = require('../controllers/usuarios');
+const functions = require('../controllers/user.controller');
 /* const administradores = require('../controllers/administradores'); */
 
 router.use(express.urlencoded({ extended: true }));
@@ -61,10 +61,22 @@ router.post('/login', function (req, res){
  *        description: Not found
  */
 
-router.get('/', function (req, res){
-  let respuesta = {};
-  respuesta.msg = functions.listUsers();
-  res.json(respuesta);
+router.get("/", (req, res) => {
+  functions.listValues()
+  .then((result) => {
+    res.status(200).send({
+      status: 200,
+      message: "Data find Successfully",
+      data: result
+    });
+  })
+  .catch(error => {
+    res.status(404).send({
+      message: "Unable to find data",
+      errors: error,
+      status: 404
+    });
+  });
 });
 
 /**

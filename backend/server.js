@@ -14,8 +14,8 @@ app.use(express.json());
 const router = express.Router();
 
 /* -------------- IMPORTAR RUTAS -------------------- */
-const usuarios = require('./routes/user.route');
-app.use('/users', usuarios);
+/* const usuarios = require('./routes/user.route');
+app.use('/users', usuarios); */
 
 const pedidos = require('./routes/order.route');
 app.use('/orders', pedidos);
@@ -64,7 +64,7 @@ const users = require('./routes/user.route');
 app.use('/users', users);
 
 const userAddress = require('./routes/userAddress.route');
-app.use('/addresses', userAddress);
+app.use('/user-address', userAddress);
 
 const userStates = require('./routes/userState.route');
 app.use('/user-states', userStates);

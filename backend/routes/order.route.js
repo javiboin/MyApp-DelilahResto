@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const functions = require('../controllers/pedidos');
-const functionsUser = require('../controllers/usuarios');
+const functionsUser = require('../controllers/user.controller');
 /* const administradores = require('../controllers/administradores'); */
 
 router.use(express.urlencoded({ extended: true }));
