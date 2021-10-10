@@ -21,4 +21,21 @@ router.get("/", (req, res) => {
   });
 });
 
+router.post("/", (req, res) => {
+  UserStateController.createUserState(req)
+  .then(() => {
+    res.status(200).send({
+      status: 200,
+      message: "Data Save Successfully",
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to insert data",
+      errors: error,
+      status: 400
+    });
+  });
+});
+
 module.exports = router;

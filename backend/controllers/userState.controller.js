@@ -5,6 +5,16 @@ const UserStateModel = require('../models/userStates.model')(connection, Sequeli
 
 const listValues = async () => await UserStateModel.findAll();
 
+const createUserState = async (req) => {
+  const newUserState = await UserStateModel.build({
+    name: req.body.name
+  });
+
+  const result = await newUserState.save();
+  return result;
+}
+
 module.exports = {
-  listValues
+  listValues,
+  createUserState
 };
