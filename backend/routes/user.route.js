@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const functions = require('../controllers/user.controller');
-/* const administradores = require('../controllers/administradores'); */
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -75,6 +74,23 @@ router.get("/", (req, res) => {
       message: "Unable to find data",
       errors: error,
       status: 404
+    });
+  });
+});
+
+router.post("/", (req, res) => {
+  functions.createUser(req)
+  .then(() => {
+    res.status(200).send({
+      status: 200,
+      message: "Data Save Successfully",
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to insert data",
+      errors: error,
+      status: 400
     });
   });
 });

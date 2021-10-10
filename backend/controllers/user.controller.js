@@ -154,6 +154,21 @@ const UsersModel = require('../models/user.model')(connection, Sequelize);
 
 const listValues = async () => await UsersModel.findAll();
 
+const createUser = async (req) => {
+  const newUser = await UsersModel.build({
+    nickname: req.body.nickname,
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    password: req.body.password,
+    id_user_state: req.body.id_user_state
+  });
+
+  const result = await newUser.save();
+  return result;
+}
+
 module.exports = {
-  listValues
+  listValues,
+  createUser
 };
