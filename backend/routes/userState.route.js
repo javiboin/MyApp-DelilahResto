@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-/* const stateController = require("../controllers/state.controller");
+const UserStateController = require("../controllers/userState.controller");
 
 router.get("/", (req, res) => {
-  stateController.listStates()
+  UserStateController.listValues()
   .then((result) => {
     res.status(200).send({
       status: 200,
@@ -13,12 +13,12 @@ router.get("/", (req, res) => {
     });
   })
   .catch(error => {
-    res.status(400).send({
+    res.status(404).send({
       message: "Unable to find data",
       errors: error,
-      status: 400
+      status: 404
     });
   });
-}); */
+});
 
 module.exports = router;
