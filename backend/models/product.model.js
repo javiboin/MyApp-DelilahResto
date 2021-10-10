@@ -5,13 +5,13 @@ const ProductModel = (connection, Sequelize) => {
       primaryKey: true
     },
     name: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING
     },
     price: {
       type: Sequelize.FLOAT(6, 2)
     },
     pic: {
-      type: Sequelize.INTEGER
+      type: Sequelize.STRING
     }
   },
   {
