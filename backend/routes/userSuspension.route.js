@@ -21,6 +21,23 @@ router.get("/", (req, res) => {
   });
 });
 
+router.post("/", (req, res) => {
+  userSuspensionController.createUserSuspension(req)
+  .then(() => {
+    res.status(200).send({
+      status: 200,
+      message: "Data Save Successfully",
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to insert data",
+      errors: error,
+      status: 400
+    });
+  });
+});
+
 /* router.get("/:id", (req, res) => {
   userSuspensionController.ValueById()
   .then((result) => {

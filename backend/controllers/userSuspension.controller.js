@@ -5,6 +5,17 @@ const UserSuspensionModel = require('../models/userSuspension.model')(connection
 
 const listValues = async () => await UserSuspensionModel.findAll();
 
+const createUserSuspension = async (req) => {
+  const newUserSuspension = await UserSuspensionModel.build({
+    reason: req.body.reason,
+    id_user: req.body.id_user,
+  });
+
+  const result = await newUserSuspension.save();
+  return result;
+}
+
 module.exports = {
-  listValues
+  listValues,
+  createUserSuspension
 };
