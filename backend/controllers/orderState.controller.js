@@ -14,7 +14,34 @@ const createOrderState = async (req) => {
   return result;
 }
 
+const updateOrderState = async (req) => {
+  const id_order_state = parseInt(req.params.id);
+  const result = await orderStateModel.update({
+    name: req.body.name
+    },
+    { where: { id: id_order_state } }
+  );
+  return result;
+}
+
+const deleteOrderState = async (req) => {
+  const id_order_state = parseInt(req.params.id);
+  const result = await orderStateModel.destroy({
+    where: { id: id_order_state }
+  });
+  return result;
+}
+
+const listOrderStateById = async (req) => {
+  const id_order_state = parseInt(req.params.id);
+  const result = await orderStateModel.findOne({ where: { id: id_order_state } });
+  return result;
+}
+
 module.exports = {
   listValues,
-  createOrderState
+  createOrderState,
+  updateOrderState,
+  deleteOrderState,
+  listOrderStateById
 };
