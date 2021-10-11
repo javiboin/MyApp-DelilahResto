@@ -15,7 +15,35 @@ const createUserAddress = async (req) => {
   return result;
 }
 
+const updateUserAddress = async (req) => {
+  const id_user_address = parseInt(req.params.id);
+  const result = await UserAddressModel.update({
+    id_user: req.body.id_user,
+    id_address: req.body.id_address,
+    },
+    { where: { id: id_user_address } }
+  );
+  return result;
+}
+
+const deleteUserAddress = async (req) => {
+  const id_user_address = parseInt(req.params.id);
+  const result = await UserAddressModel.destroy({
+    where: { id: id_user_address }
+  });
+  return result;
+}
+
+const listUserAddressById = async (req) => {
+  const id_user_address = parseInt(req.params.id);
+  const result = await UserAddressModel.findOne({ where: { id: id_user_address } });
+  return result;
+}
+
 module.exports = {
   listValues,
-  createUserAddress
+  createUserAddress,
+  updateUserAddress,
+  deleteUserAddress,
+  listUserAddressById
 };
