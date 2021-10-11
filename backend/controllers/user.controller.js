@@ -168,7 +168,39 @@ const createUser = async (req) => {
   return result;
 }
 
+const updateUser = async (req) => {
+  const id_user = parseInt(req.params.id);
+  const result = await UsersModel.update({
+    nickname: req.body.nickname,
+    name: req.body.name,
+    email: req.body.email,
+    phone: req.body.phone,
+    password: req.body.password,
+    id_user_state: req.body.id_user_state
+    },
+    { where: { id: id_user } }
+  );
+  return result;
+}
+
+const deleteUser = async (req) => {
+  const id_user = parseInt(req.params.id);
+  const result = await UsersModel.destroy({
+    where: { id: id_user }
+  });
+  return result;
+}
+
+const listUserById = async (req) => {
+  const id_user = parseInt(req.params.id);
+  const result = await UsersModel.findOne({ where: { id: id_user } });
+  return result;
+}
+
 module.exports = {
   listValues,
-  createUser
+  createUser,
+  updateUser,
+  deleteUser,
+  listUserById
 };
