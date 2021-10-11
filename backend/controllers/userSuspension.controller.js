@@ -36,7 +36,6 @@ const deleteUserSupension = async (req) => {
 
 const listUserSupensionById = async (req) => {
   const id_user_suspension = parseInt(req.params.id);
-  console.log(id_user_suspension);
   const result = await UserSuspensionModel.findOne({ where: { id: id_user_suspension } });
   return result;
 }
