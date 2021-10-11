@@ -14,7 +14,34 @@ const createPaymentMethod = async (req) => {
   return result;
 }
 
+const updatePaymentMethod = async (req) => {
+  const id_payment_method = parseInt(req.params.id);
+  const result = await paymentMethodModel.update({
+    name: req.body.name
+    },
+    { where: { id: id_payment_method } }
+  );
+  return result;
+}
+
+const deletePaymentMethod = async (req) => {
+  const id_payment_method = parseInt(req.params.id);
+  const result = await paymentMethodModel.destroy({
+    where: { id: id_payment_method }
+  });
+  return result;
+}
+
+const listPaymentMethodById = async (req) => {
+  const id_payment_method = parseInt(req.params.id);
+  const result = await paymentMethodModel.findOne({ where: { id: id_payment_method } });
+  return result;
+}
+
 module.exports = {
   listValues,
-  createPaymentMethod
+  createPaymentMethod,
+  updatePaymentMethod,
+  deletePaymentMethod,
+  listPaymentMethodById
 };
