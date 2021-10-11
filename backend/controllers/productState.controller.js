@@ -14,7 +14,34 @@ const createProductState = async (req) => {
   return result;
 }
 
+const updateProductState = async (req) => {
+  const id_product_state = parseInt(req.params.id);
+  const result = await ProductStateModel.update({
+    name: req.body.name
+    },
+    { where: { id: id_product_state } }
+  );
+  return result;
+}
+
+const deleteProductState = async (req) => {
+  const id_product_state = parseInt(req.params.id);
+  const result = await ProductStateModel.destroy({
+    where: { id: id_product_state }
+  });
+  return result;
+}
+
+const listProductStateById = async (req) => {
+  const id_product_state = parseInt(req.params.id);
+  const result = await ProductStateModel.findOne({ where: { id: id_product_state } });
+  return result;
+}
+
 module.exports = {
   listValues,
-  createProductState
+  createProductState,
+  updateProductState,
+  deleteProductState,
+  listProductStateById
 };
