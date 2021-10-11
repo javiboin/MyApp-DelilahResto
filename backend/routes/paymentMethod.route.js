@@ -26,6 +26,23 @@ router.get("/", (req, res) => {
   });
 });
 
+router.post("/", (req, res) => {
+  paymentMethodController.createPaymentMethod(req)
+  .then(() => {
+    res.status(200).send({
+      status: 200,
+      message: "Data Save Successfully",
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to insert data",
+      errors: error,
+      status: 400
+    });
+  });
+});
+
 
 /* router.get("/", (req, res) => {
   paymentController.listPayments()

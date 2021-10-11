@@ -5,6 +5,16 @@ const paymentMethodModel = require('../models/paymentMethod.model')(connection, 
 
 const listValues = async () => await paymentMethodModel.findAll();
 
+const createPaymentMethod = async (req) => {
+  const newPaymentMethod = await paymentMethodModel.build({
+    name: req.body.name
+  });
+
+  const result = await newPaymentMethod.save();
+  return result;
+}
+
 module.exports = {
-  listValues
+  listValues,
+  createPaymentMethod
 };
