@@ -5,6 +5,16 @@ const orderStateModel = require('../models/orderState.model')(connection, Sequel
 
 const listValues = async () => await orderStateModel.findAll();
 
+const createOrderState = async (req) => {
+  const newOrderState = await orderStateModel.build({
+    name: req.body.name
+  });
+
+  const result = await newOrderState.save();
+  return result;
+}
+
 module.exports = {
-  listValues
+  listValues,
+  createOrderState
 };
