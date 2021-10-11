@@ -18,7 +18,38 @@ const createOrder = async (req) => {
   return result;
 }
 
+const updateOrder = async (req) => {
+  const id_order = parseInt(req.params.id);
+  const result = await OrderModel.update({
+    total: req.body.total,
+    id_user: req.body.id_user,
+    id_address: req.body.id_address,
+    id_order_state: req.body.id_order_state,
+    id_payment_method: req.body.id_payment_method
+    },
+    { where: { id: id_order } }
+  );
+  return result;
+}
+
+const deleteOrder = async (req) => {
+  const id_order = parseInt(req.params.id);
+  const result = await OrderModel.destroy({
+    where: { id: id_order }
+  });
+  return result;
+}
+
+const listOrderById = async (req) => {
+  const id_order = parseInt(req.params.id);
+  const result = await OrderModel.findOne({ where: { id: id_order } });
+  return result;
+}
+
 module.exports = {
   listValues,
-  createOrder
+  createOrder,
+  updateOrder,
+  deleteOrder,
+  listOrderById
 };

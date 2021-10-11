@@ -8,7 +8,7 @@ const listValues = async () => await ProductModel.findAll();
 const createProduct = async (req) => {
   const newProduct = await ProductModel.build({
     name: req.body.name,
-    price: req.body.id_user,
+    price: req.body.price,
     pic: req.body.pic
   });
 
@@ -16,7 +16,36 @@ const createProduct = async (req) => {
   return result;
 }
 
+const updateProduct = async (req) => {
+  const id_product = parseInt(req.params.id);
+  const result = await ProductModel.update({
+    name: req.body.name,
+    price: req.body.price,
+    pic: req.body.pic
+    },
+    { where: { id: id_product } }
+  );
+  return result;
+}
+
+const deleteProduct = async (req) => {
+  const id_product = parseInt(req.params.id);
+  const result = await ProductModel.destroy({
+    where: { id: id_product }
+  });
+  return result;
+}
+
+const listProductById = async (req) => {
+  const id_product = parseInt(req.params.id);
+  const result = await ProductModel.findOne({ where: { id: id_product } });
+  return result;
+}
+
 module.exports = {
   listValues,
-  createProduct
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  listProductById
 };
