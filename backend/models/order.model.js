@@ -4,13 +4,6 @@ const OrderModel = (connection, Sequelize) => {
       type: Sequelize.INTEGER,
       primaryKey: true
     },
-    date: {
-      type: Sequelize.DATEONLY
-    },
-    hour: {
-      type: Sequelize.DATE,
-      primaryKey: true
-    },
     total: {
       type: Sequelize.FLOAT(6, 2)
     },
