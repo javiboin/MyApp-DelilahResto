@@ -10,7 +10,7 @@ const OrderDetailModel = (connection, Sequelize) => {
     id_product: {
       type: Sequelize.INTEGER
     },
-    quantity: {
+    amount: {
       type: Sequelize.INTEGER
     },
     price: {

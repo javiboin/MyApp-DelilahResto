@@ -9,7 +9,7 @@ const createOrderDetail = async (req) => {
   const newOrderDetail = await orderDetailModel.build({
     id_order: req.body.id_order,
     id_product: req.body.id_product,
-    quantity: req.body.quantity,
+    amount: req.body.amount,
     price: req.body.price,
   });
 
@@ -22,7 +22,7 @@ const updateOrderDetail = async (req) => {
   const result = await orderDetailModel.update({
     id_order: req.body.id_order,
     id_product: req.body.id_product,
-    quantity: req.body.quantity,
+    amount: req.body.amount,
     price: req.body.price
     },
     { where: { id: id_order_detail } }
