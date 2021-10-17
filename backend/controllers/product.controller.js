@@ -5,6 +5,8 @@ const ProductModel = require('../models/product.model')(connection, Sequelize);
 
 const listValues = async () => await ProductModel.findAll();
 
+const listValuesRedis = async () => await ProductModel.findAll();
+
 const createProduct = async (req) => {
   const newProduct = await ProductModel.build({
     name: req.body.name,
@@ -44,6 +46,7 @@ const listProductById = async (req) => {
 
 module.exports = {
   listValues,
+  listValuesRedis,
   createProduct,
   updateProduct,
   deleteProduct,

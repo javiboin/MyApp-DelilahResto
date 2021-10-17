@@ -60,6 +60,37 @@ router.post('/login', function (req, res){
  *        description: Not found
  */
 
+const cacheUsers = (req, res, next) => {
+  const { character } = req.params;
+  redisClient.get(character, (err, data) => {
+    if (err) throw err;
+    if (data) {
+      res.json(JSON.parse(data));
+    } else {
+      next();
+    }
+  });
+};
+
+router.get('/redis/:id', cacheUsers, (req, res) => { 
+  functions.listValuesRedis()
+  .then((result) => {
+    res.status(200).send({
+      status: 200,
+      message: "Data find Successfully",
+      data: result
+    });
+  })
+  .catch(error => {
+    res.status(404).send({
+      message: "Unable to find data",
+      errors: error,
+      status: 404
+    });
+  });
+});
+
+
 router.get("/", (req, res) => {
   functions.listValues()
   .then((result) => {

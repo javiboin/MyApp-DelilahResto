@@ -154,6 +154,8 @@ const UsersModel = require('../models/user.model')(connection, Sequelize);
 
 const listValues = async () => await UsersModel.findAll();
 
+const listValuesRedis = async () => await UsersModel.findAll();
+
 const createUser = async (req) => {
   const newUser = await UsersModel.build({
     nickname: req.body.nickname,
@@ -199,6 +201,7 @@ const listUserById = async (req) => {
 
 module.exports = {
   listValues,
+  listValuesRedis,
   createUser,
   updateUser,
   deleteUser,
