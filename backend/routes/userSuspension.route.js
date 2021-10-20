@@ -72,14 +72,24 @@ router.delete("/:id", (req, res) => {
   });
 });
 
+/* REVISAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 router.get("/:id", (req, res) => {
   userSuspensionController.listUserSupensionById(req)
   .then((result) => {
-    res.status(200).send({
-      status: 200,
-      message: "Data find Successfully",
-      data: result
-    });
+    console.log(result);
+    if (res) {
+      res.status(404).send({
+        message: "Suspension not found",
+        errors: error,
+        status: 404
+      });
+    } else {
+      res.status(200).send({
+        status: 200,
+        message: "Data find Successfully",
+        data: result
+      });
+    }
   })
   .catch(error => {
     res.status(400).send({

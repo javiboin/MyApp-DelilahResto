@@ -186,6 +186,19 @@ const listValues = async () => await UsersModel.findAll();
 const listValuesRedis = async () => await UsersModel.findAll();
 
 const createUser = async (req) => {
+
+/*   const listUserById = async (req) => {
+    const id_user = parseInt(req.params.id);
+    const result = await UsersModel.findOne({ where: { id: id_user } });
+    return result;
+  } 
+  
+  req.body.name 
+  const algo = await UsersModel.findOne ( { where : { users.name : req.body.name } } );
+  if algo { no esta permitido } 
+  else { guardar }
+  */
+
   const newUser = await UsersModel.build({
     nickname: req.body.nickname,
     name: req.body.name,
@@ -197,6 +210,13 @@ const createUser = async (req) => {
 
   const result = await newUser.save();
   return result;
+}
+
+const searchName = async (req) => {
+/*   req.body.name 
+  const algo = await UsersModel.findOne ( { where : { users.name : req.body.name } } );
+  if algo { no esta permitido } 
+  else { guardar } */
 }
 
 const updateUser = async (req) => {
