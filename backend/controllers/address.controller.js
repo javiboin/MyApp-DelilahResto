@@ -3,16 +3,26 @@ const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const AddressModel = require('../models/address.model')(connection, Sequelize);
 
+const jwt = require('jsonwebtoken');
+
 const listValues = async () => await AddressModel.findAll();
 
-const   createAddress = async (req) => {
-  const newAddress = await AddressModel.build({
-    name: req.body.name,
-    number: req.body.number,
+const   createAddress = async (address, token) => {
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  console.log(decoded.user);
+
+  if (decoded.user === 'admin') {
+    return 'no autorizado';
+  }
+
+/*   const newAddress = await AddressModel.build({
+    name: address.name,
+    number: address.number,
   });
 
   const result = await newAddress.save();
-  return result;
+  return result; */
 }
 
 const updateAddress = async (req) => {

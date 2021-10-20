@@ -31,63 +31,53 @@ function filterUsers(id){
   return datosFiltrados;
 };
 
-function login(userObject) {
-  const username = userObject.nickname;
-  const password = userObject.password;
-  
-  const logins = users.find(user => user.nickname == username && user.password == password);
-  if (logins !== undefined){
-    return `Bienvenido a nuestra API ${username}`;
-  } else {
-    return 'El usuario y/o Contraseña es incorrecta, Vuelva a intentarlo';
-  };
-};
+
 
 function listUsers(){
   return(users);
 };
 
-function crearUser(userObject) {
+function crearUser(req) {
   const id = users[users.length -1].id +1;
   users.push({
     id: id,
-    nickname: userObject.nickname,
-    completeName: userObject.completeName,
-    email: userObject.email,
-    phone: userObject.phone,
-    address: userObject.address,
-    password: userObject.password
+    nickname: req.nickname,
+    completeName: req.completeName,
+    email: req.email,
+    phone: req.phone,
+    address: req.address,
+    password: req.password
   });
   return 'User created';
 };
 
-function modificarUser(id, userObject){
+function modificarUser(id, req){
   let objetoEditado = filterUsers(id);
   
   objetoEditado.id = parseInt(id);
 
-  if (userObject.nickname != undefined){
-    objetoEditado.nickname = userObject.nickname;
+  if (req.nickname != undefined){
+    objetoEditado.nickname = req.nickname;
   };
 
-  if (userObject.completeName != undefined){
-    objetoEditado.completeName = userObject.completeName;
+  if (req.completeName != undefined){
+    objetoEditado.completeName = req.completeName;
   };
 
-  if (userObject.email != undefined){
-    objetoEditado.email = userObject.email;
+  if (req.email != undefined){
+    objetoEditado.email = req.email;
   };
 
-  if (userObject.phone != undefined){
-    objetoEditado.phone = userObject.phone;
+  if (req.phone != undefined){
+    objetoEditado.phone = req.phone;
   };
 
-  if (userObject.address != undefined){
-    objetoEditado.address = userObject.address;
+  if (req.address != undefined){
+    objetoEditado.address = req.address;
   };
 
-  if (userObject.password != undefined){
-    objetoEditado.password = userObject.password;
+  if (req.password != undefined){
+    objetoEditado.password = req.password;
   };
 
   users[searchIndex(id)] = objetoEditado;
@@ -152,6 +142,45 @@ const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const UsersModel = require('../models/user.model')(connection, Sequelize);
 
+const users = require('../models/user.model');
+
+const jwt = require('jsonwebtoken');
+
+const login = (info) => {
+  const username = info.username;
+  const password = info.password;
+
+  const data = { user : 'admin', password : 'clavesegura' };
+
+  // con el usuario de la base de datos, creo el token y su duracion
+  if (username === data.user && password === data.password) {
+    const token = jwt.sign({ user: data.user }, process.env.JWT_SECRET, { expiresIn : '1h' });
+    return { yourToken : token };
+  } else {
+    console.log(info);
+    return 'inicio incorrecto';
+  }
+
+/*   const token = jwt.sign(info, process.env.JWT_SECRET);
+
+  console.log(token)
+  
+  const logins = users.find(user => user.nickname == username && user.password == password);
+
+  if (logins !== undefined){
+      /* crear token */
+/*     const token = jwt.sign(req, process.env.JWT_SECRET);
+
+    console.log(token) 
+    return `Bienvenido a nuestra API ${username}`;
+  } else {
+    return 'El usuario y/o Contraseña es incorrecta, Vuelva a intentarlo';
+  }; */
+};
+
+/* middleware validar si existe usuario en BD
+revisar si esta */
+
 const listValues = async () => await UsersModel.findAll();
 
 const listValuesRedis = async () => await UsersModel.findAll();
@@ -200,6 +229,7 @@ const listUserById = async (req) => {
 }
 
 module.exports = {
+  login,
   listValues,
   listValuesRedis,
   createUser,

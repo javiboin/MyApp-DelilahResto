@@ -4,7 +4,9 @@ const morgan = require('morgan');
 
 const jwt = require('jsonwebtoken');
 const helmet = require("helmet");
-const userInfo = {id: 1, nombre: "Javier", edad: 31};
+
+
+const userInfo = {nickname: "Javier", password: 31};
 const signature = process.env.JWT_SECRET;
 const token = jwt.sign(userInfo, signature);
 console.log(token);
@@ -24,16 +26,18 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
-/* app.use(helmet()); */
-
-const router = express.Router();
+app.use(helmet());
 
 /* ------------------------------------------------------------ */
 /* JWT */
-app.post('/api/login', ensureToken, (req, res) => {
+app.post('/api/login', (req, res) => {
+  const reqprueba = req.body;
+  console.log(reqprueba);
+
   const user = {id: 2, nombre: "JavierO", edad: 31};
   const signature = process.env.JWT_SECRET;
   const token = jwt.sign(user, signature);
+  // funciona ahora llevarlo al login origininal de usuarios
 
   console.log(token)
   res.json({ token });

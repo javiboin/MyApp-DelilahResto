@@ -22,7 +22,10 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  addressController.createAddress(req)
+  const bearer = req.headers.authorization.split(" ");
+  const token = bearer[1];
+  console.log(token);
+  addressController.createAddress(req.body, token)
   .then(() => {
     res.status(200).send({
       status: 200,

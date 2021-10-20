@@ -40,9 +40,14 @@ router.use(express.json());
  *        description: Not found
  */
 router.post('/login', function (req, res){
-  let respuesta = {};
+/*   let respuesta = {};
   respuesta.msg = functions.login(req.body);
   res.json(respuesta);
+
+  functions.listUserById(req) */
+
+  const response = functions.login(req.body);
+  res.json(response);
 });
 
 /**
