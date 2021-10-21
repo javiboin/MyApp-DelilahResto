@@ -146,11 +146,20 @@ const users = require('../models/user.model');
 
 const jwt = require('jsonwebtoken');
 
+const bcrypt = require('bcrypt');
+
 const login = (info) => {
   const username = info.username;
   const password = info.password;
 
-  const data = { user : 'admin', password : 'clavesegura' };
+  const data = { nickname : 'daveG', password : '146bea927a6743c026f4084b061d3c1c' };
+  
+  console.log(info.username);
+  // llamar a la base de datos y hacer la consulta
+  
+
+  buscarUsuarioDB(info.username);
+
 
   // con el usuario de la base de datos, creo el token y su duracion
   if (username === data.user && password === data.password) {
@@ -178,6 +187,11 @@ const login = (info) => {
   }; */
 };
 
+const buscarUsuarioDB = async (username) => {
+  const usuarioEncontrado = await UsersModel.findOne({ where: { nickname: username } });
+  console.log(usuarioEncontrado);
+};
+
 /* middleware validar si existe usuario en BD
 revisar si esta */
 
@@ -197,7 +211,13 @@ const createUser = async (req) => {
   const algo = await UsersModel.findOne ( { where : { users.name : req.body.name } } );
   if algo { no esta permitido } 
   else { guardar }
+
+
+  
   */
+
+
+  // llamar a searchname
 
   const newUser = await UsersModel.build({
     nickname: req.body.nickname,

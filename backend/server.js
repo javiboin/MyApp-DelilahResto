@@ -3,8 +3,8 @@ require('dotenv').config();
 const morgan = require('morgan');
 
 const jwt = require('jsonwebtoken');
-const helmet = require("helmet");
 
+const helmet = require("helmet");
 
 const userInfo = {nickname: "Javier", password: 31};
 const signature = process.env.JWT_SECRET;
@@ -190,6 +190,6 @@ app.use(function(req, res, next) {
   next();
 });
 
-app.use(express.static('public')); /* no funciona */
+app.use('/', express.static('/backend/public/index.html')); /* no funciona */
 
 module.exports = app;
