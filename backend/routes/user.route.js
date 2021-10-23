@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const userMiddleware = require('../middlewares/user.middleware');
 const functions = require('../controllers/user.controller');
 
 router.use(express.urlencoded({ extended: true }));
@@ -39,15 +40,39 @@ router.use(express.json());
  *      404:
  *        description: Not found
  */
-router.post('/login', function (req, res){
-/*   let respuesta = {};
-  respuesta.msg = functions.login(req.body);
-  res.json(respuesta);
 
-  functions.listUserById(req) */
+/* 1er middleware!!!!!!  */
+function isAdmin(req, res, next) {
+  console.log('is admin');
+  /* if (req.body.id_user_state === 1) */ 
+  if (req.body.nickname === "daveG"){
+    console.log('pase por aca');
+    next();
+  } else {
+    res.status(403).send(`Sorry but you are not an admin and you do not have access to route ${req.url}`);
+  }
+};
+/* router.post('/login', isAdmin, function (req, res){ */
 
-  const response = functions.login(req.body);
-  res.json(response);
+router.post('/login', userMiddleware.isAdmin, function (req, res){
+/*   const response =  */
+  functions.login(req.body)
+  .then((result) => {
+    res.status(200).send({
+      status: 200,
+      message: "Data find Successfully",
+      data: result
+    });
+  })
+  .catch(error => {
+    res.status(404).send({
+      message: "Unable to find data",
+      errors: error,
+      status: 404
+    });
+  });
+
+/*   res.json(response); */ // nose si cambiar esto
 });
 
 /**

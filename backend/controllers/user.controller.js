@@ -121,21 +121,7 @@ module.exports = {
   modificarUser,
   borrarUser,
   login1
-};
-
-exports.obtenerNickname = obtenerNickname;
-exports.obtenerNombre = obtenerNombre;
-exports.obtenerDireccion = obtenerDireccion;
-
-exports.emailrepetido = emailrepetido;
-
-exports.filterUsers = filterUsers;
-exports.login = login;
-exports.listUsers = listUsers;
-
-exports.crearUser = crearUser;
-exports.modificarUser = modificarUser;
-exports.borrarUser = borrarUser; */ 
+}; */ 
 
 require("dotenv").config();
 const Sequelize = require('sequelize');
@@ -148,49 +134,72 @@ const jwt = require('jsonwebtoken');
 
 const bcrypt = require('bcrypt');
 
-const login = (info) => {
-  const username = info.username;
+const login = async (info) => {
+  const username = info.nickname;
   const password = info.password;
 
   const data = { nickname : 'daveG', password : '146bea927a6743c026f4084b061d3c1c' };
   
-  console.log(info.username);
+  console.log(username);
   // llamar a la base de datos y hacer la consulta
-  
+  const user = searchUser(username)
+  .then(() => {
+    console.log('OK');
+    console.log(user);
+    const mensaje = 'hola';
+  })
+  .catch(error => {
+    console.log('NO OK');
+    console.log(error);
+  });
 
-  buscarUsuarioDB(info.username);
+  console.log('afuera' + user);
+
+/*   const { Op } = require("sequelize");
+Post.findOne({
+  where: {
+    [Op.and]: [
+      { authorId: 12 },
+      { status: 'active' }
+    ]
+  }
+}); */
+
+/*   const { Op } = require("sequelize");
+info.findOne({
+  where: {
+    [Op.and]: [
+      { nickname: 12 },
+      { password: info.password },
+      { id_user_state: 2} // el estado hay q cambiarlo
+    ]
+  }
+}); */
 
 
   // con el usuario de la base de datos, creo el token y su duracion
-  if (username === data.user && password === data.password) {
+/*   if (username === data.user && password === data.password) {
     const token = jwt.sign({ user: data.user }, process.env.JWT_SECRET, { expiresIn : '1h' });
     return { yourToken : token };
   } else {
     console.log(info);
     return 'inicio incorrecto';
   }
+}; */
 
-/*   const token = jwt.sign(info, process.env.JWT_SECRET);
-
-  console.log(token)
-  
-  const logins = users.find(user => user.nickname == username && user.password == password);
-
-  if (logins !== undefined){
-      /* crear token */
-/*     const token = jwt.sign(req, process.env.JWT_SECRET);
-
-    console.log(token) 
-    return `Bienvenido a nuestra API ${username}`;
-  } else {
-    return 'El usuario y/o Contraseña es incorrecta, Vuelva a intentarlo';
-  }; */
+if (username === data.nickname && password === data.password) {
+  const token = jwt.sign({ user: data.nickname }, process.env.JWT_SECRET, { expiresIn : '1h' });
+  return { yourToken : token };
+} else {
+  console.log(info);
+  return 'inicio incorrecto';
+}
 };
 
-const buscarUsuarioDB = async (username) => {
+const searchUser = async (username) => {
   const usuarioEncontrado = await UsersModel.findOne({ where: { nickname: username } });
-  console.log(usuarioEncontrado);
-};
+  return usuarioEncontrado;
+}
 
 /* middleware validar si existe usuario en BD
 revisar si esta */
