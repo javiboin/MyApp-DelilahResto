@@ -58,8 +58,6 @@ router.post('/login', function (req, res){
       status: 404
     });
   });
-
-/*   res.json(response); */ // nose si cambiar esto
 });
 
 /**

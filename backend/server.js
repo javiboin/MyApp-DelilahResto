@@ -172,7 +172,9 @@ const swaggerOptions = {
       version: '1.0.1'
     }
   },
-  apis: ['./routes/usuarios.js', './routes/pedidos.js', './routes/productos.js','./routes/metodosPago.js']
+  apis: [
+    './routes/user.route.js'
+  ]
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
