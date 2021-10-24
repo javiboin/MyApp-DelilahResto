@@ -138,66 +138,30 @@ const login = async (info) => {
   const username = info.nickname;
   const password = info.password;
 
-  const data = { nickname : 'daveG', password : '146bea927a6743c026f4084b061d3c1c' };
-  
-  console.log(username);
-  // llamar a la base de datos y hacer la consulta
-  const user = searchUser(username)
-  .then(() => {
-    console.log('OK');
-    console.log(user);
-    const mensaje = 'hola';
-  })
-  .catch(error => {
-    console.log('NO OK');
-    console.log(error);
-  });
+  console.log(username, password);
 
-  console.log('afuera' + user);
+  const usuarioEncontrado = await UsersModel.findOne({ where: { 
+    nickname : username,
+    password : password
+  } });
 
-/*   const { Op } = require("sequelize");
-Post.findOne({
-  where: {
-    [Op.and]: [
-      { authorId: 12 },
-      { status: 'active' }
-    ]
-  }
-}); */
-
-/*   const { Op } = require("sequelize");
-info.findOne({
-  where: {
-    [Op.and]: [
-      { nickname: 12 },
-      { password: info.password },
-      { id_user_state: 2} // el estado hay q cambiarlo
-    ]
-  }
-}); */
+  if (usuarioEncontrado) {
+    const token = jwt.sign({ 
+      nickname: usuarioEncontrado.nickname ,
+      password: usuarioEncontrado.password ,
+      id_user_state : usuarioEncontrado.id_user_state
+    }, process.env.JWT_SECRET, { expiresIn : '1h' });
 
 
-  // con el usuario de la base de datos, creo el token y su duracion
-/*   if (username === data.user && password === data.password) {
-    const token = jwt.sign({ user: data.user }, process.env.JWT_SECRET, { expiresIn : '1h' });
     return { yourToken : token };
-  } else {
-    console.log(info);
-    return 'inicio incorrecto';
   }
-}; */
-
-if (username === data.nickname && password === data.password) {
-  const token = jwt.sign({ user: data.nickname }, process.env.JWT_SECRET, { expiresIn : '1h' });
-  return { yourToken : token };
-} else {
-  console.log(info);
-  return 'inicio incorrecto';
-}
 };
 
-const searchUser = async (username) => {
-  const usuarioEncontrado = await UsersModel.findOne({ where: { nickname: username } });
+const searchUser = async (username, password) => {
+  const usuarioEncontrado = await UsersModel.findOne({ where: { 
+    nickname : username,
+    password : password
+  } });
   return usuarioEncontrado;
 }
 

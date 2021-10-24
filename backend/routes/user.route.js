@@ -41,33 +41,20 @@ router.use(express.json());
  *        description: Not found
  */
 
-/* 1er middleware!!!!!!  */
-function isAdmin(req, res, next) {
-  console.log('is admin');
-  /* if (req.body.id_user_state === 1) */ 
-  if (req.body.nickname === "daveG"){
-    console.log('pase por aca');
-    next();
-  } else {
-    res.status(403).send(`Sorry but you are not an admin and you do not have access to route ${req.url}`);
-  }
-};
-/* router.post('/login', isAdmin, function (req, res){ */
+/* router.post('/login', userMiddleware.isAdmin, function (req, res){ */
 
-router.post('/login', userMiddleware.isAdmin, function (req, res){
-/*   const response =  */
+router.post('/login', function (req, res){
   functions.login(req.body)
   .then((result) => {
     res.status(200).send({
       status: 200,
-      message: "Data find Successfully",
+      message: "Login OK",
       data: result
     });
   })
-  .catch(error => {
+  .catch(() => {
     res.status(404).send({
-      message: "Unable to find data",
-      errors: error,
+      message: "El usuario y/o la contraseña son incorrectos",
       status: 404
     });
   });
