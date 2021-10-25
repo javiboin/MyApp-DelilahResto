@@ -6,13 +6,43 @@ const jwt = require('jsonwebtoken');
 
 const helmet = require("helmet");
 
-const userInfo = {nickname: "Javier", password: 31};
-const signature = process.env.JWT_SECRET;
-const token = jwt.sign(userInfo, signature);
-console.log(token);
-
+/* 
 const decoded = jwt.verify(token, signature);
-console.log(decoded);
+console.log(decoded); */
+/* ////////////////////////////////////////////////////////////////////////// */
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const myPlaintextPassword = 'contrasenna';
+
+
+const hash = async () => {
+  await bcrypt.hash(myPlaintextPassword, saltRounds)/* , (err, hash) => {
+  // Store hash in your password DB.
+  console.log('ok');
+});
+ */}
+
+
+
+console.log('hash', hash);
+
+const password1 = 'contrasenna1';
+
+const encrypPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+}
+
+/* const crearHash = await encrypPassword(password1);
+console.log(crearHash); */
+
+const matchPassword = async (password) => {
+  return await bcrypt.compare(password, this.password);
+}
+
+/* console.log(matchPassword()); */
+/* ////////////////////////////////////////////////////////////////////////// */
+
 
 const redis = require('redis');
 const fetch = require('node-fetch');
@@ -112,44 +142,45 @@ async function getPostRickAndMorty(req, res) {
 
 app.get('/post/:character', cacheCharacter, getPostRickAndMorty);
 
-/* ------------------------------------------------------------ */
-
-app.use(require('./controllers/auth.controller'));
 
 /* -------------- IMPORTAR RUTAS -------------------- */
+const all = require('./middlewares/all.middleware');
+
+const login = require('./routes/login.route');
+app.use('/login', login);
 
 const addresses = require('./routes/address.route');
-app.use('/addresses', addresses);
+app.use('/addresses', all.access, addresses);
 
 const orders = require('./routes/order.route');
-app.use('/orders', orders);
+app.use('/orders', all.access, orders);
 
 const ordersDetail = require('./routes/orderDetail.route');
-app.use('/orders-detail', ordersDetail);
+app.use('/orders-detail', all.access, ordersDetail);
 
 const orderStates = require('./routes/orderState.route');
-app.use('/order-states', orderStates);
+app.use('/order-states', all.access, orderStates);
 
 const paymentMethods = require('./routes/paymentMethod.route');
-app.use('/payment-methods', paymentMethods);
+app.use('/payment-methods', all.access, paymentMethods);
 
 const products = require('./routes/product.route');
-app.use('/products', products);
+app.use('/products', all.access, products);
 
 const productStates = require('./routes/productState.route');
-app.use('/product-states', productStates);
+app.use('/product-states', all.access, productStates);
 
 const users = require('./routes/user.route');
-app.use('/users', users);
+app.use('/users', all.access, users);
 
 const userAddress = require('./routes/userAddress.route');
-app.use('/user-address', userAddress);
+app.use('/user-address', all.access, userAddress);
 
 const userStates = require('./routes/userState.route');
-app.use('/user-states', userStates);
+app.use('/user-states', all.access, userStates);
 
 const userSuspensions = require('./routes/userSuspension.route');
-app.use('/user-suspensions', userSuspensions);
+app.use('/user-suspensions', all.access, userSuspensions);
 
 /* -------------------------------------- */
 
@@ -164,6 +195,7 @@ app.use('/user-suspensions', userSuspensions);
 /* -------------- SWAGGER CONFIGURATION -------------------- */
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
+const { token } = require('morgan');
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -182,7 +214,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 /* -------------- ENDPOINT GENERAL -------------------- */
-app.use(function(req, res, next) {
+/* app.use(function(req, res, next) {
   console.log(req.params);
   const respuesta = `${moment().format('DD-MM-YYYY, hh:mm:ss a')} ${req.method} ${req.url} path: ${req.path} ${req.statusCode} ${req.statusMessage}}`;
   
@@ -190,8 +222,8 @@ app.use(function(req, res, next) {
   console.log(respuesta);
 
   next();
-});
+}); */
 
-app.use('/', express.static('/backend/public/index.html')); /* no funciona */
+//app.use('/', express.static('/backend/public/index.html')); /* no funciona */
 
 module.exports = app;

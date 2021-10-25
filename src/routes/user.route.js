@@ -6,59 +6,7 @@ const functions = require('../controllers/user.controller');
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-/* const isAdmin = (req, res, next) => {
-  const bearer = req.headers.authorization.replace('Bearer ','');
-  const token = bearer.replace('Bearer ','');
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  decoded.user === 'admin' ? next() : res.status(401).send('Unauthorized');
-} */
-
-/**
- * @swagger
- * /users/login:
- *  post:
- *    tags:
- *    - "Usuarios"
- *    summary: "Ingresa a nuestra app"
- *    description: Autentica el ingreso a la app
- *    parameters:
- *    - name: nickname
- *      description: Nombre de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *    - name: password
- *      description: Contraseña de usuario
- *      in: formData
- *      required: true
- *      type: string
- *    responses:
- *      200:
- *        description: Success
- *      401:
- *        description: Unauthorized
- *      404:
- *        description: Not found
- */
-
 /* router.post('/login', userMiddleware.isAdmin, function (req, res){ */
-
-router.post('/login', function (req, res){
-  functions.login(req.body)
-  .then((result) => {
-    res.status(200).send({
-      status: 200,
-      message: "Login OK",
-      data: result
-    });
-  })
-  .catch(() => {
-    res.status(404).send({
-      message: "El usuario y/o la contraseña son incorrectos",
-      status: 404
-    });
-  });
-});
 
 /**
  * @swagger

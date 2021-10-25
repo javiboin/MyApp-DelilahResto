@@ -150,8 +150,14 @@ const login = async (info) => {
       id_user_state : usuarioEncontrado.id_user_state
     }, process.env.JWT_SECRET, { expiresIn : '1h' });
 
+  /*   console.group('decodificador');
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log(decoded);
+    console.groupEnd('decodificador'); */
 
     return { yourToken : token };
+  } else {
+    throw new Error
   }
 };
 
