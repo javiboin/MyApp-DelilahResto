@@ -28,7 +28,8 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  OrderController.createOrder(req)
+  //OrderController.createOrder(req)
+  OrderController.createOrderTransaction(req)
   .then(() => {
     res.status(200).send({
       status: 200,

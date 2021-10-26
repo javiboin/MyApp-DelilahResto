@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const userMiddleware = require('../middlewares/user.middleware');
+//const userMiddleware = require('../middlewares/user.middleware');
 const functions = require('../controllers/user.controller');
 
 router.use(express.urlencoded({ extended: true }));
@@ -22,6 +22,9 @@ router.use(express.json());
  *      404:
  *        description: Not found
  */
+
+////////////////////////////////////////////////////////////////////////////////
+// redis
 
 const cacheUsers = (req, res, next) => {
   const { character } = req.params;
@@ -52,6 +55,8 @@ router.get('/redis/:id', cacheUsers, (req, res) => {
     });
   });
 });
+// FIN REDIS
+////////////////////////////////////////////////////////////////////////////////
 
 
 router.get("/", (req, res) => {
@@ -187,6 +192,8 @@ router.get("/:id", (req, res) => {
  *        description: Not found
  */
 
+
+/* MODIFICAR ESTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 router.post('/', function (req, res){
   if (functions.emailrepetido(req.body.email)){
     res.json("Operación anulada. El email ingresado ya esta registrado");
@@ -254,6 +261,8 @@ router.post('/', function (req, res){
  *      404:
  *        description: Not found
  */
+
+// ESTO TAMBIEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 router.put('/:id', function (req, res){
   const idUser = req.params.id;
