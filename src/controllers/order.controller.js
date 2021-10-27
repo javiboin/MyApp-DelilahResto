@@ -32,6 +32,7 @@ const createOrderTransaction = async (req) => {
     }), { transaction: t };
 
     //await newOrder.save();
+    //await OrderModel.sync({ force: true });
 
     // guardar el detalle del pedido
 
@@ -41,9 +42,10 @@ const createOrderTransaction = async (req) => {
       id_product: req.body.id_product,
       amount: req.body.amount,
       price: req.body.price
-    }), { transaction: t };
+    }), { transaction: t }; //{ transaction };
 
     //await newOrderDetail.save();
+    //await OrderDetailModel.sync({ force: true });
 
     // commit 
     console.log('antes del commit');
@@ -54,6 +56,8 @@ const createOrderTransaction = async (req) => {
     console.log(error);
     t.rollback();
   }
+
+  //connection.sync({ force: true })
 }
 
 const updateOrder = async (req) => {

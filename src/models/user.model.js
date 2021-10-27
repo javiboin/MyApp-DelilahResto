@@ -20,7 +20,9 @@ const UserModel = (connection, Sequelize) => {
       type: Sequelize.STRING
     },
     id_user_state: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'user_states', 
+      referencesKey: 'id'
     }
   },
   {

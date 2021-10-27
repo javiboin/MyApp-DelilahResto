@@ -150,24 +150,11 @@ const login = async (info) => {
       id_user_state : usuarioEncontrado.id_user_state
     }, process.env.JWT_SECRET, { expiresIn : '1h' });
 
-  /*   console.group('decodificador');
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log(decoded);
-    console.groupEnd('decodificador'); */
-
     return { yourToken : token };
   } else {
     throw new Error
   }
 };
-
-const searchUser = async (username, password) => {
-  const usuarioEncontrado = await UsersModel.findOne({ where: { 
-    nickname : username,
-    password : password
-  } });
-  return usuarioEncontrado;
-}
 
 /* middleware validar si existe usuario en BD
 revisar si esta */
@@ -178,11 +165,7 @@ const listValuesRedis = async () => await UsersModel.findAll();
 
 const createUser = async (req) => {
 
-/*   const listUserById = async (req) => {
-    const id_user = parseInt(req.params.id);
-    const result = await UsersModel.findOne({ where: { id: id_user } });
-    return result;
-  } 
+/*   
   
   req.body.name 
   const algo = await UsersModel.findOne ( { where : { users.name : req.body.name } } );
@@ -209,11 +192,17 @@ const createUser = async (req) => {
   return result;
 }
 
-const searchName = async (req) => {
-/*   req.body.name 
-  const algo = await UsersModel.findOne ( { where : { users.name : req.body.name } } );
-  if algo { no esta permitido } 
-  else { guardar } */
+const searchUser = async (req) => {
+  const usuarioEncontrado = await UsersModel.findOne({ where: { 
+    nickname : req.body.nickname,
+    password : req.body.password,
+    email : req.body.email
+  } });
+  if (!usuarioEncontrado) {
+    return usuarioEncontrado
+  } else {
+    res.status(400).send('Existe otro usuario con este nombre y/o email')
+  }
 }
 
 const updateUser = async (req) => {
@@ -250,6 +239,7 @@ module.exports = {
   listValues,
   listValuesRedis,
   createUser,
+  searchUser,
   updateUser,
   deleteUser,
   listUserById

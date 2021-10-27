@@ -5,10 +5,14 @@ const OrderDetailModel = (connection, Sequelize) => {
       primaryKey: true
     },
     id_order: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'orders', 
+      referencesKey: 'id'
     },
     id_product: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'products', 
+      referencesKey: 'id'
     },
     amount: {
       type: Sequelize.INTEGER

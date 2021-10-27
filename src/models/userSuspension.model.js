@@ -8,7 +8,9 @@ const UserSuspensionModel = (connection, Sequelize) => {
       type: Sequelize.STRING
     },
     id_user: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'users', 
+      referencesKey: 'id'
     }
   },
   {

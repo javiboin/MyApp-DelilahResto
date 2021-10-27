@@ -205,7 +205,7 @@ const swaggerOptions = {
     }
   },
   apis: [
-    './routes/user.route.js'
+    "./routes/user.route.js", "./routes/userSuspension.route"
   ]
 };
 

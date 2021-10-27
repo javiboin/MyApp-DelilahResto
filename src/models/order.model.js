@@ -11,13 +11,19 @@ const OrderModel = (connection, Sequelize) => {
       type: Sequelize.INTEGER
     },
     id_address: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'addressesr', 
+      referencesKey: 'id'
     },
     id_order_state: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'order_states', 
+      referencesKey: 'id'
     },
     id_payment_method: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'payment_methods', 
+      referencesKey: 'id'
     }
   },
   {

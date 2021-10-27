@@ -5,10 +5,14 @@ const UserAddressModel = (connection, Sequelize) => {
       primaryKey: true
     },
     id_user: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'users', 
+      referencesKey: 'id'
     },
     id_address: {
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
+      references: 'addresses', 
+      referencesKey: 'id'
     }
   },{
     timestamps: false
