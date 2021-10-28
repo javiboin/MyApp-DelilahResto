@@ -203,7 +203,12 @@ const swaggerOptions = {
     }
   },
   apis: [
-    "./routes/user.route.js", "./routes/userSuspension.route"
+    './routes/login.route', './routes/user.route.js',
+    './routes/userAddress.route', './routes/userState.route', './routes/userSuspension.route', 
+    './routes/product.route', './routes/productState.route',
+    './routes/paymentMethod.route', './routes/address.route', 
+    './routes/order.route', './routes/orderDetail.route',
+    './routes/orderState.route'
   ]
 };
 
