@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { compareSync } = require("bcrypt");
 const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const OrderModel = require('../models/order.model')(connection, Sequelize);
@@ -23,41 +24,41 @@ const createOrderTransaction = async (req) => {
   const t =  await connection.transaction();
   try {
     // guardar aca la orden
-    /* const newOrder =  */await OrderModel.create({
+    const newOrder = await OrderModel.create({
       total: req.body.total,
       id_user: req.body.id_user,
       id_address: req.body.id_address,
       id_order_state: req.body.id_order_state,
       id_payment_method: req.body.id_payment_method
-    }), { transaction: t };
+    }, { transaction: t });
 
-    //await newOrder.save();
-    //await OrderModel.sync({ force: true });
+    const lastOrder = newOrder.null;
 
     // guardar el detalle del pedido
+    let subtotal = 0;
 
-    // deberia crear un order detail por producto, deberia nose q usar
-    /* const newOrderDetail = */ await OrderDetailModel.create({
-      id_order: req.body.id_order,
-      id_product: req.body.id_product,
-      amount: req.body.amount,
-      price: req.body.price
-    }), { transaction: t }; //{ transaction };
+    for (let i = 0; i < req.body.products.length; i++) {
+      await OrderDetailModel.create({
+        id_order: lastOrder,
+        id_product: req.body.products[i].id_product,
+        amount: req.body.products[i].amount,
+        price: req.body.products[i].price
+      }, { transaction: t });
 
-    //await newOrderDetail.save();
-    //await OrderDetailModel.sync({ force: true });
+      subtotal += req.body.products[i].price * req.body.products[i].amount
+    };
 
-    // commit 
-    console.log('antes del commit');
     t.commit();
-    console.log('despues del coso');
+
+    await OrderModel.update({
+      total: subtotal
+    }, { where: { id: lastOrder } }) ;
+
   } catch (error) {
-    console.log('aca hay un error, decime cual error!!!!')
+    console.log('Error!!');
     console.log(error);
     t.rollback();
   }
-
-  //connection.sync({ force: true })
 }
 
 const updateOrder = async (req) => {

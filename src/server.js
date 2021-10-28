@@ -2,36 +2,34 @@ require('dotenv').config();
 
 const morgan = require('morgan');
 
-const jwt = require('jsonwebtoken');
-
 const helmet = require("helmet");
 
-/* 
-const decoded = jwt.verify(token, signature);
-console.log(decoded); */
+
 /* ////////////////////////////////////////////////////////////////////////// */
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
-const myPlaintextPassword = 'contrasenna';
 
+/* const jwt = require('jsonwebtoken'); */
+/* const saltRounds = 10;
+const myPlaintextPassword = 'contrasenna'; */
 
+/* 
 const hash = async () => {
   await bcrypt.hash(myPlaintextPassword, saltRounds)/* , (err, hash) => {
   // Store hash in your password DB.
   console.log('ok');
 });
- */}
+ } */
 
 
 
-console.log('hash', hash);
+/* console.log('hash', hash); */
 
-const password1 = 'contrasenna1';
+/* const password1 = 'contrasenna1';
 
 const encrypPassword = async (password) => {
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(password, salt);
-}
+} */
 
 /* const crearHash = await encrypPassword(password1);
 console.log(crearHash); */

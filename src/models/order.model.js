@@ -12,7 +12,7 @@ const OrderModel = (connection, Sequelize) => {
     },
     id_address: {
       type: Sequelize.INTEGER,
-      references: 'addressesr', 
+      references: 'addresses', 
       referencesKey: 'id'
     },
     id_order_state: {
