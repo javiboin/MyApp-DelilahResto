@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 //const userMiddleware = require('../middlewares/user.middleware');
 const functions = require('../controllers/user.controller');
+const middlewareUser = require('../middlewares/user.middleware');
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -77,7 +78,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/", middlewareUser.searchUser , (req, res) => {
   functions.createUser(req)
   .then(() => {
     res.status(200).send({

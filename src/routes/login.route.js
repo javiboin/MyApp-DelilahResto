@@ -10,7 +10,7 @@ router.use(express.json());
  * /login:
  *  post:
  *    tags:
- *    - "Usuarios"
+ *    - "Login"
  *    summary: "Ingresa a nuestra app"
  *    description: Autentica el ingreso a la app
  *    parameters:

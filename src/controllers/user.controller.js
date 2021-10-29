@@ -1,8 +1,4 @@
-/* require('dotenv').config();
-const jwt = require('jsonwebtoken');
-
-const users = require('../models/user.model');
-
+/* 
 const searchIndex = (id) => {
   return users.findIndex(x => x.id == id);
 };
@@ -30,98 +26,7 @@ function filterUsers(id){
   const datosFiltrados = users.find(usuario => usuario.id == Number(id));
   return datosFiltrados;
 };
-
-
-
-function listUsers(){
-  return(users);
-};
-
-function crearUser(req) {
-  const id = users[users.length -1].id +1;
-  users.push({
-    id: id,
-    nickname: req.nickname,
-    completeName: req.completeName,
-    email: req.email,
-    phone: req.phone,
-    address: req.address,
-    password: req.password
-  });
-  return 'User created';
-};
-
-function modificarUser(id, req){
-  let objetoEditado = filterUsers(id);
-  
-  objetoEditado.id = parseInt(id);
-
-  if (req.nickname != undefined){
-    objetoEditado.nickname = req.nickname;
-  };
-
-  if (req.completeName != undefined){
-    objetoEditado.completeName = req.completeName;
-  };
-
-  if (req.email != undefined){
-    objetoEditado.email = req.email;
-  };
-
-  if (req.phone != undefined){
-    objetoEditado.phone = req.phone;
-  };
-
-  if (req.address != undefined){
-    objetoEditado.address = req.address;
-  };
-
-  if (req.password != undefined){
-    objetoEditado.password = req.password;
-  };
-
-  users[searchIndex(id)] = objetoEditado;
-
-  return 'User updated';
-};
-
-function borrarUser(idUser){
-  const objetoBuscado = users[searchIndex(idUser)];
-
-  const userPosition = users.indexOf(objetoBuscado);
-
-  users.splice(userPosition, 1);
-
-  return 'User deleted'; 
-};
-
-const login1 = (info) => {
-  const username = info.username;
-  const password = info.password;
-  const data = { user : 'admin', password: 'clavesegura'};
-
-  if (username === data.user && password === data.password) {
-      const token = jwt.sign({ user: data.user }, process.env.JWT_SECRET, { expiresIn: 3600 });
-      return { yourToken: token };
-  } else {
-      return 'inicio incorrecto';
-  }
-
-}
-
-module.exports = {
-  obtenerNickname,
-  obtenerNombre,
-  obtenerDireccion,
-  emailrepetido,
-  filterUsers,
-  login,
-  listUsers,
-  crearUser,
-  modificarUser,
-  borrarUser,
-  login1
-}; */ 
+ */ 
 
 require("dotenv").config();
 const Sequelize = require('sequelize');
@@ -163,22 +68,9 @@ const listValues = async () => await UsersModel.findAll();
 
 const listValuesRedis = async () => await UsersModel.findAll();
 
+
+
 const createUser = async (req) => {
-
-/*   
-  
-  req.body.name 
-  const algo = await UsersModel.findOne ( { where : { users.name : req.body.name } } );
-  if algo { no esta permitido } 
-  else { guardar }
-
-
-  
-  */
-
-
-  // llamar a searchname
-
   const newUser = await UsersModel.build({
     nickname: req.body.nickname,
     name: req.body.name,
@@ -190,19 +82,6 @@ const createUser = async (req) => {
 
   const result = await newUser.save();
   return result;
-}
-
-const searchUser = async (req) => {
-  const usuarioEncontrado = await UsersModel.findOne({ where: { 
-    nickname : req.body.nickname,
-    password : req.body.password,
-    email : req.body.email
-  } });
-  if (!usuarioEncontrado) {
-    return usuarioEncontrado
-  } else {
-    res.status(400).send('Existe otro usuario con este nombre y/o email')
-  }
 }
 
 const updateUser = async (req) => {
@@ -239,7 +118,6 @@ module.exports = {
   listValues,
   listValuesRedis,
   createUser,
-  searchUser,
   updateUser,
   deleteUser,
   listUserById

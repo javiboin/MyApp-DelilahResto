@@ -199,22 +199,28 @@ const swaggerOptions = {
   swaggerDefinition: {
     info: {
       title: 'Delilah Restó API',
-      version: '1.0.1'
+      version: '2.0.1'
     }
   },
   apis: [
-    './routes/login.route', './routes/user.route.js',
-    './routes/userAddress.route', './routes/userState.route', './routes/userSuspension.route', 
-    './routes/product.route', './routes/productState.route',
-    './routes/paymentMethod.route', './routes/address.route', 
-    './routes/order.route', './routes/orderDetail.route',
-    './routes/orderState.route'
+    './routes/login.route.js', './routes/user.route.js',
+    './routes/userAddress.route.js', './routes/userState.route.js', './routes/userSuspension.route.js', 
+    './routes/product.route.js', './routes/productState.route.js',
+    './routes/paymentMethod.route.js', './routes/address.route.js', 
+    './routes/order.route.js', './routes/orderDetail.route.js',
+    './routes/orderState.route.js'
   ]
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+try {
+
+app.use('/api-docs/v2/', swaggerUI.serve, swaggerUI.setup(swaggerDocs)); 
+} catch(error) {
+  console.log(error);
+}
+
 
 /* -------------- ENDPOINT GENERAL -------------------- */
 /* app.use(function(req, res, next) {

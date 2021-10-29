@@ -15,4 +15,21 @@ function isAdmin(req, res, next) {
 
 /* aca lo que quiero hacer es hacer funcionar un middleware solo para pasar informacion */
 
-module.exports = { isAdmin };
+const searchUser = async (req, res, next) => {
+  const usuarioEncontrado = await UsersModel.findOne({ where: { 
+    nickname : req.body.nickname
+  } });
+
+  const emailEncontrado = await UsersModel.findOne({ where: { 
+    email : req.body.email
+  } });
+
+  console.log(usuarioEncontrado);
+  if (!usuarioEncontrado && !emailEncontrado) {
+    next();
+  } else {
+    res.status(400).send('Existe otro usuario con este nombre y/o email')
+  }
+}
+
+module.exports = { isAdmin, searchUser };
