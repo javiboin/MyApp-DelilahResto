@@ -61,14 +61,9 @@ const login = async (info) => {
   }
 };
 
-/* middleware validar si existe usuario en BD
-revisar si esta */
-
 const listValues = async () => await UsersModel.findAll();
 
 const listValuesRedis = async () => await UsersModel.findAll();
-
-
 
 const createUser = async (req) => {
   const newUser = await UsersModel.build({
@@ -96,6 +91,12 @@ const updateUser = async (req) => {
     },
     { where: { id: id_user } }
   );
+  console.log('nickname', req.body.nickname);
+  console.log('name', req.body.name);
+  console.log('email', req.body.email);
+  console.log('phone', req.body.phone);
+  console.log('password', req.body.password);
+  console.log('state user', req.body.id_user_state);
   return result;
 }
 

@@ -180,16 +180,6 @@ app.use('/user-states', all.access, userStates);
 const userSuspensions = require('./routes/userSuspension.route');
 app.use('/user-suspensions', all.access, userSuspensions);
 
-/* -------------------------------------- */
-
-/* const isAdmin = (req, res, next) => {
-  const bearer = req.headers.authorization.replace('Bearer ','');
-  const token = bearer.replace('Bearer ','');
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  decoded.user === 'admin' ? next() : res.status(401).send('Unauthorized');
-} */
-
-
 /* -------------- SWAGGER CONFIGURATION -------------------- */
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');

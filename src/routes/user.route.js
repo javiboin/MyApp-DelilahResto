@@ -94,8 +94,6 @@ router.post("/", middlewareUser.searchUser , (req, res) => {
     });
   });
 });
- // en create agregar si el email o el usuario existe, o no dejar cambiar el nombre de usuario
-// llas nuevas apps permiten el cambiio, xq no hacerlo...
 
 router.put("/:id",(req, res) => {
   functions.updateUser(req)
@@ -113,7 +111,8 @@ router.put("/:id",(req, res) => {
     });
   });
 });
- // en update agregar si el email o el usuario existe, o no dejar cambiar el nombre de usuario
+
+// en update agregar si el email o el usuario existe, o no dejar cambiar el nombre de usuario
 // llas nuevas apps permiten el cambiio, xq no hacerlo...
 
 router.delete("/:id", (req, res) => {

@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
-/* const administradores = require('../controllers/administradores');
-const functions = require('../controllers/metodosPago');
- */
+
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 const paymentMethodController = require("../controllers/paymentMethod.controller");
+const all = require('../middlewares/all.middleware');
 
-router.get("/", (req, res) => {
+router.get("/", all.isAdmin, (req, res) => {
   paymentMethodController.listValues()
   .then((result) => {
     res.status(200).send({
@@ -26,7 +25,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/", all.isAdmin, (req, res) => {
   paymentMethodController.createPaymentMethod(req)
   .then(() => {
     res.status(200).send({
@@ -43,7 +42,7 @@ router.post("/", (req, res) => {
   });
 });
 
-router.put("/:id",(req, res) => {
+router.put("/:id", all.isAdmin, (req, res) => {
   paymentMethodController.updatePaymentMethod(req)
   .then(() => {
     res.status(200).send({
@@ -60,7 +59,7 @@ router.put("/:id",(req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", all.isAdmin, (req, res) => {
   paymentMethodController.deletePaymentMethod(req)
   .then(() => {
     res.status(200).send({
@@ -76,6 +75,7 @@ router.delete("/:id", (req, res) => {
     });
   });
 });
+
 
 router.get("/:id", (req, res) => {
   paymentMethodController.listPaymentMethodById(req)
@@ -96,25 +96,7 @@ router.get("/:id", (req, res) => {
 });
 
 
-/* router.get("/", (req, res) => {
-  paymentController.listPayments()
-  .then((result) => {
-    res.status(200).send({
-      status: 200,
-      message: "Data find Successfully",
-      data: result
-    });
-  })
-  .catch(error => {
-    res.status(400).send({
-      message: "Unable to find data",
-      errors: error,
-      status: 400
-    });
-  });
-}); */
-
-
+/* 
 /**
  * @swagger
  * /payment/{idSession}:
@@ -137,17 +119,7 @@ router.get("/:id", (req, res) => {
  *      404:
  *        description: Not found
  */
-router.get('/:idSession', function (req, res){
-  let administrador = req.params.idSession;
 
-  if (administradores.isAdmin(administrador)){
-    let respuesta = {};
-    respuesta.msg = functions.listPayment();
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. NO cuenta con los permisos para realizar esta acción");
-  };
-});
 
 /**
  * @swagger
@@ -176,17 +148,6 @@ router.get('/:idSession', function (req, res){
  *      404:
  *        description: Not found
  */
-router.post('/', function (req, res){
-  let administrador = req.body.idSession;
-
-  if (administradores.isAdmin(administrador)){
-    let respuesta = {};
-    respuesta.msg = functions.crearMedioPago(req.body);
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. NO cuenta con los permisos para realizar esta acción");
-  };
-});
 
 /**
  * @swagger
@@ -220,17 +181,6 @@ router.post('/', function (req, res){
  *      404:
  *        description: Not found
  */
-router.put('/:id', function (req, res){
-  if (administradores.isAdmin(req.body.idSession)){
-    const idPayment = parseInt(req.params.id);
-    const respuesta = {};
-
-    respuesta.msg = functions.filterPayment(idPayment) ? functions.modificarPayment(idPayment, req.body) : "Operación anulada. El producto no existe";
-    res.json(respuesta); 
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
 
 /**
  * @swagger
@@ -259,15 +209,5 @@ router.put('/:id', function (req, res){
  *      404:
  *        description: Not found
  */
-router.delete('/:id', function (req, res){
-  if (administradores.isAdmin(req.body.idSession)){
-    const idPayment = req.params.id;
-    let respuesta = {};
-    respuesta.msg = functions.filterPayment(idPayment) ? functions.borrarPayment(idPayment) : "Operación anulada. El metodo de pago no existe";
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
 
 module.exports = router;
