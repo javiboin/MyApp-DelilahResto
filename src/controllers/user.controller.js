@@ -33,8 +33,6 @@ const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const UsersModel = require('../models/user.model')(connection, Sequelize);
 
-const users = require('../models/user.model');
-
 const jwt = require('jsonwebtoken');
 
 const bcrypt = require('bcrypt');
@@ -62,8 +60,6 @@ const login = async (info) => {
 };
 
 const listValues = async () => await UsersModel.findAll();
-
-const listValuesRedis = async () => await UsersModel.findAll();
 
 const createUser = async (req) => {
   const newUser = await UsersModel.build({
@@ -117,7 +113,6 @@ const listUserById = async (req) => {
 module.exports = {
   login,
   listValues,
-  listValuesRedis,
   createUser,
   updateUser,
   deleteUser,

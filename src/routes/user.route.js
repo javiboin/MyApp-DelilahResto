@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-//const userMiddleware = require('../middlewares/user.middleware');
 const functions = require('../controllers/user.controller');
 const middlewareUser = require('../middlewares/user.middleware');
 
@@ -23,41 +22,6 @@ router.use(express.json());
  *      404:
  *        description: Not found
  */
-
-////////////////////////////////////////////////////////////////////////////////
-// redis
-
-const cacheUsers = (req, res, next) => {
-  const { character } = req.params;
-  redisClient.get(character, (err, data) => {
-    if (err) throw err;
-    if (data) {
-      res.json(JSON.parse(data));
-    } else {
-      next();
-    }
-  });
-};
-
-router.get('/redis/:id', cacheUsers, (req, res) => { 
-  functions.listValuesRedis()
-  .then((result) => {
-    res.status(200).send({
-      status: 200,
-      message: "Data find Successfully",
-      data: result
-    });
-  })
-  .catch(error => {
-    res.status(404).send({
-      message: "Unable to find data",
-      errors: error,
-      status: 404
-    });
-  });
-});
-// FIN REDIS
-////////////////////////////////////////////////////////////////////////////////
 
 
 router.get("/", (req, res) => {

@@ -33,4 +33,8 @@ const isAdmin = (req, res, next) => {
   }
 }
 
+const isCurrentUser = (req, res, next) => {
+  console.log('es el usuario actual, puede hacer algunas cosas');
+}
+
 module.exports = { access , isAdmin};
