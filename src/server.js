@@ -41,10 +41,6 @@ const matchPassword = async (password) => {
 /* console.log(matchPassword()); */
 /* ////////////////////////////////////////////////////////////////////////// */
 
-
-const redis = require('redis');
-const fetch = require('node-fetch');
-
 const express = require('express');
 
 const moment = require('moment');
@@ -99,61 +95,6 @@ function ensureToken(req, res, next) {
   }
   next(); 
 };
-
-/* ------------------------------------------------------------ */
-/* REDIS */
-const redisClient = redis.createClient();
-
-redisClient.on('err', err => console.log(err) );
-
-const cacheCharacter = (req, res, next) => {
-  const { character } = req.params;
-  redisClient.get(character, (err, data) => {
-    if (err) throw err;
-    if (data) {
-      res.json(JSON.parse(data));
-    } else {
-      next();
-    }
-  });
-  
-  console.log(response);
-  redisClient.get('Products', (err, response) => console.log(err ? err : response));
-};
-
-async function getPostRickAndMorty(req, res) {
-  const { character } = req.params;
-
-  try {
-    const response = await fetch(`https://rickandmortyapi.com/api/character/${character}`);
-    const data = await response.json();
-
-    let infoCharacter = [];
-    
-    infoCharacter.push(data);
-
-    redisClient.setex(character, 30, JSON.stringify(infoCharacter));
-    return res.json(infoCharacter);
-  } catch (error) {
-    return res.json({
-      message: error.message
-    })
-  }
-}
-
-// prender redis
-// crear elemento en redis
-// verificacion si existe en db redis sino crearla, existe en redis? creala en redis sino
-// ver datos: si existe en redis traer dato en redis
-// hacer un get de pedidos que tambien traiga el detalle del pedido
-
-//pasos
-// 1 middleware si existe data next si no existe en redis
-// hacer get
-// crear el objeto en redis
-
-app.get('/post/:character', cacheCharacter, getPostRickAndMorty);
-
 
 /* -------------- IMPORTAR RUTAS -------------------- */
 const all = require('./middlewares/all.middleware');

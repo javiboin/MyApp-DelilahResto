@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const functions = require('../controllers/productos');
-/* const administradores = require('../controllers/administradores'); */
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -9,7 +8,6 @@ router.use(express.json());
 const productController = require("../controllers/product.controller");
 
 router.get("/", (req, res) => {
-  //productController.listValues()
   productController.getProducts()
   .then((result) => {
     res.status(200).send({
@@ -110,11 +108,6 @@ router.get("/:id", (req, res) => {
  *      404:
  *        description: Not found
  */
-router.get('/menu', function (req, res){
-  let respuesta = {};
-  respuesta.msg = functions.listProducts();
-  res.json(respuesta);
-});
 
 /**
  * @swagger
