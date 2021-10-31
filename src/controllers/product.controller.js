@@ -3,9 +3,29 @@ const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const ProductModel = require('../models/product.model')(connection, Sequelize);
 
-const listValues = async () => await ProductModel.findAll();
+const redis = require('redis');
+const bluebird = require('bluebird');
+bluebird.promisifyAll(redis);
+const redisClient = redis.createClient();
 
-const listValuesRedis = async () => await ProductModel.findAll();
+redisClient.on('err', err => { console.log(err) });
+
+const getProducts = async() => {
+  const productsOnRedis = await redisClient.getAsync('all-products');
+
+  if (productsOnRedis !== null) {
+    return JSON.parse(productsOnRedis);
+  } else {
+    const result = await ProductModel.findAll()
+      .then((res) => {
+        redisClient.set('all-products', JSON.stringify(res), 'EX', 60 * 20);
+        return res;
+      })
+      .catch((err) => {
+        return err});
+      return result;
+      }
+}
 
 const createProduct = async (req) => {
   const newProduct = await ProductModel.build({
@@ -45,8 +65,7 @@ const listProductById = async (req) => {
 }
 
 module.exports = {
-  listValues,
-  listValuesRedis,
+  getProducts,
   createProduct,
   updateProduct,
   deleteProduct,

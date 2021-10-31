@@ -9,7 +9,8 @@ router.use(express.json());
 const productController = require("../controllers/product.controller");
 
 router.get("/", (req, res) => {
-  productController.listValues()
+  //productController.listValues()
+  productController.getProducts()
   .then((result) => {
     res.status(200).send({
       status: 200,

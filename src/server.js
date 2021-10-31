@@ -104,7 +104,7 @@ function ensureToken(req, res, next) {
 /* REDIS */
 const redisClient = redis.createClient();
 
-redisClient.on('err', err => { console.log(err) });
+redisClient.on('err', err => console.log(err) );
 
 const cacheCharacter = (req, res, next) => {
   const { character } = req.params;
@@ -116,6 +116,9 @@ const cacheCharacter = (req, res, next) => {
       next();
     }
   });
+  
+  console.log(response);
+  redisClient.get('Products', (err, response) => console.log(err ? err : response));
 };
 
 async function getPostRickAndMorty(req, res) {
@@ -137,6 +140,17 @@ async function getPostRickAndMorty(req, res) {
     })
   }
 }
+
+// prender redis
+// crear elemento en redis
+// verificacion si existe en db redis sino crearla, existe en redis? creala en redis sino
+// ver datos: si existe en redis traer dato en redis
+// hacer un get de pedidos que tambien traiga el detalle del pedido
+
+//pasos
+// 1 middleware si existe data next si no existe en redis
+// hacer get
+// crear el objeto en redis
 
 app.get('/post/:character', cacheCharacter, getPostRickAndMorty);
 
