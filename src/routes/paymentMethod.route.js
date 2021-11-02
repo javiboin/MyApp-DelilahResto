@@ -7,7 +7,7 @@ router.use(express.json());
 const paymentMethodController = require("../controllers/paymentMethod.controller");
 const all = require('../middlewares/all.middleware');
 
-router.get("/", all.isAdmin, (req, res) => {
+router.get("/", (req, res) => {
   paymentMethodController.listValues()
   .then((result) => {
     res.status(200).send({

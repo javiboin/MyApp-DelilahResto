@@ -2,8 +2,9 @@ const express = require('express')
 const router = express.Router()
 
 const orderStateController = require("../controllers/orderState.controller");
+const all = require('../middlewares/all.middleware');
 
-router.get("/", (req, res) => {
+router.get("/", all.isAdmin, (req, res) => {
   orderStateController.listValues()
   .then((result) => {
     res.status(200).send({
@@ -21,7 +22,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/", all.isAdmin, (req, res) => {
   orderStateController.createOrderState(req)
   .then(() => {
     res.status(200).send({
@@ -38,7 +39,7 @@ router.post("/", (req, res) => {
   });
 });
 
-router.put("/:id",(req, res) => {
+router.put("/:id", all.isAdmin, (req, res) => {
   orderStateController.updateOrderState(req)
   .then(() => {
     res.status(200).send({
@@ -55,7 +56,7 @@ router.put("/:id",(req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", all.isAdmin, (req, res) => {
   orderStateController.deleteOrderState(req)
   .then(() => {
     res.status(200).send({
@@ -72,7 +73,7 @@ router.delete("/:id", (req, res) => {
   });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", all.isAdmin, (req, res) => {
   orderStateController.listOrderStateById(req)
   .then((result) => {
     res.status(200).send({

@@ -6,6 +6,7 @@ router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 const productController = require("../controllers/product.controller");
+const all = require('../middlewares/all.middleware');
 
 router.get("/", (req, res) => {
   productController.getProducts()
@@ -25,7 +26,7 @@ router.get("/", (req, res) => {
   });
 });
 
-router.post("/", (req, res) => {
+router.post("/", all.isAdmin, (req, res) => {
   productController.createProduct(req)
   .then(() => {
     res.status(200).send({
@@ -42,7 +43,7 @@ router.post("/", (req, res) => {
   });
 });
 
-router.put("/:id",(req, res) => {
+router.put("/:id", all.isAdmin, (req, res) => {
   productController.updateProduct(req)
   .then(() => {
     res.status(200).send({
@@ -59,7 +60,7 @@ router.put("/:id",(req, res) => {
   });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", all.isAdmin, (req, res) => {
   productController.deleteProduct(req)
   .then(() => {
     res.status(200).send({

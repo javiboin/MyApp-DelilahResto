@@ -33,7 +33,7 @@ router.use(express.json());
  *        description: Not found
  */
 
-  router.post('/', function (req, res){
+  router.post('/', (req, res) => {
     functions.login(req.body)
     .then((result) => {
       res.status(200).send({

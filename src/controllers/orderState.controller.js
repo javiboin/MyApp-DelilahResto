@@ -2,6 +2,7 @@ require("dotenv").config();
 const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const orderStateModel = require('../models/orderState.model')(connection, Sequelize);
+const all = require('../middlewares/all.middleware');
 
 const listValues = async () => await orderStateModel.findAll();
 
@@ -16,12 +17,12 @@ const createOrderState = async (req) => {
 
 const updateOrderState = async (req) => {
   const id_order_state = parseInt(req.params.id);
-  const result = await orderStateModel.update({
-    name: req.body.name
-    },
-    { where: { id: id_order_state } }
-  );
-  return result;
+    const result = await orderStateModel.update({
+      name: req.body.name
+      },
+      { where: { id: id_order_state } }
+    );
+    return result;
 }
 
 const deleteOrderState = async (req) => {

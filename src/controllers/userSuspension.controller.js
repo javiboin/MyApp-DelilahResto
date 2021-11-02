@@ -34,6 +34,7 @@ const deleteUserSupension = async (req) => {
   return result;
 }
 
+// TODOS LOS GET BY ID TIENEN PROBLEMAS, REVISAR
 const listUserSupensionById = async (req) => {
   const id_user_suspension = parseInt(req.params.id);
   const result = await UserSuspensionModel.findOne({ where: { id_user: id_user_suspension } });

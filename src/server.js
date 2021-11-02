@@ -51,50 +51,6 @@ app.use(morgan('dev'));
 
 app.use(helmet());
 
-/* ------------------------------------------------------------ */
-/* JWT */
-app.post('/api/login', (req, res) => {
-  const reqprueba = req.body;
-  console.log(reqprueba);
-
-  const user = {id: 2, nombre: "JavierO", edad: 31};
-  const signature = process.env.JWT_SECRET;
-  const token = jwt.sign(user, signature);
-  // funciona ahora llevarlo al login origininal de usuarios
-
-  console.log(token)
-  res.json({ token });
-});
-
-app.get('/api/protected', ensureToken, (req, res) => {
-  jwt.verify(req.token, signature, (err, data) => {
-    if (err) {
-      res.sendStatus(403)
-    } else {
-      res.json({
-        text: 'protected', 
-        data
-      });
-    }
-  })
-});
-
-function ensureToken(req, res, next) {
-  const bearerHeader = req.headers['authorization'];
-  console.log(bearerHeader);
-  console.log('aca');
-
-  if (typeof bearerHeader !== 'undefined') {
-    const bearer = bearerHeader.split(" ");
-    const bearerToken = bearer[1];
-    req.token = bearerToken;
-    
-  } else {
-    /* res.sendStatus(403); */
-  }
-  next(); 
-};
-
 /* -------------- IMPORTAR RUTAS -------------------- */
 const all = require('./middlewares/all.middleware');
 

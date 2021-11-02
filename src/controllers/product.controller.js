@@ -38,6 +38,7 @@ const createProduct = async (req) => {
   return result;
 }
 
+// si se modifica el precio modificar redis
 const updateProduct = async (req) => {
   const id_product = parseInt(req.params.id);
   const result = await ProductModel.update({

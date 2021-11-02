@@ -73,7 +73,6 @@ router.delete("/:id", all.isAdmin, (req, res) => {
   });
 });
 
-/* REVISAR !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 router.get("/:id", all.isAdmin, (req, res) => {
   userSuspensionController.listUserSupensionById(req)
   .then((result) => {
