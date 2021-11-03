@@ -73,7 +73,8 @@ router.delete("/:id", all.isAdmin, (req, res) => {
   });
 });
 
-router.get("/:id", all.isAdmin, (req, res) => {
+//router.get("/:id", all.isAdmin, (req, res) => {
+  router.get("/:id", all.isCurrentUser, (req, res) => {
   UserStateController.listUserStateById(req)
   .then((result) => {
     res.status(200).send({

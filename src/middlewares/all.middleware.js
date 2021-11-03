@@ -12,7 +12,7 @@ const access = (req, res, next) => {
     const token = bearer[1];
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded);
+    //console.log(decoded);
 
     next();
   } catch {
@@ -34,7 +34,16 @@ const isAdmin = (req, res, next) => {
 }
 
 const isCurrentUser = (req, res, next) => {
-  console.log('es el usuario actual, puede hacer algunas cosas');
+  const bearer = req.headers['authorization'].split(" ");
+  const token = bearer[1];
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+  if (decoded.id_user_state == req.params.id || decoded.id_user_state === 1) { 
+    next();
+  } else {
+    res.status(403).send('Acceso no autorizado');
+  }
 }
 
-module.exports = { access , isAdmin};
+module.exports = { access , isAdmin, isCurrentUser };

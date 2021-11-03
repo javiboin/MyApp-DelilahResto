@@ -6,8 +6,6 @@ const middlewareUser = require('../middlewares/user.middleware');
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-/* router.post('/login', userMiddleware.isAdmin, function (req, res){ */
-
 /**
  * @swagger
  * /users:
@@ -59,6 +57,7 @@ router.post("/", middlewareUser.searchUser , (req, res) => {
   });
 });
 
+// is current user
 router.put("/:id",(req, res) => {
   functions.updateUser(req)
   .then(() => {
@@ -79,6 +78,7 @@ router.put("/:id",(req, res) => {
 // en update agregar si el email o el usuario existe, o no dejar cambiar el nombre de usuario
 // llas nuevas apps permiten el cambiio, xq no hacerlo...
 
+// is current user
 router.delete("/:id", (req, res) => {
   functions.deleteUser(req)
   .then(() => {
@@ -160,18 +160,6 @@ router.get("/:id", (req, res) => {
  *        description: Not found
  */
 
-
-/* MODIFICAR ESTO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-router.post('/', function (req, res){
-  if (functions.emailrepetido(req.body.email)){
-    res.json("Operación anulada. El email ingresado ya esta registrado");
-  } else {  
-    let respuesta = {};
-    respuesta.msg = functions.crearUser(req.body);
-    res.json(respuesta);
-  };
-});
-
 /**
  * @swagger
  * /users/{id}:
@@ -230,22 +218,6 @@ router.post('/', function (req, res){
  *        description: Not found
  */
 
-// ESTO TAMBIEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-router.put('/:id', function (req, res){
-  const idUser = req.params.id;
-  const idUser_Session = req.body.idUser_Session;
-
-  let respuesta = {}; 
-
-  if (idUser == idUser_Session){
-    respuesta.msg = functions.filterUsers(idUser) ? 
-    functions.modificarUser(idUser,req.body) : `El usuario no existe, Intentelo denuevo`;
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
 
 /**
  * @swagger
@@ -267,17 +239,6 @@ router.put('/:id', function (req, res){
  *      404:
  *        description: Not found
  */
-
-router.get('/:id', function (req, res){
-  const idUser = req.params.id;
-  let respuesta = {};
-
-  let objetoUser = functions.filterUsers(idUser);
-
-  respuesta.msg = objetoUser.length !== 0 ? objetoUser : "El usuario no existe, Intentelo denuevo";
-
-  res.json(respuesta); 
-});
 
 /**
  * @swagger
@@ -306,18 +267,5 @@ router.get('/:id', function (req, res){
  *      404:
  *        description: Not found
  */
-router.delete('/:id', function (req, res){
-  const idUser = req.params.id;
-  const idUser_Session = req.body.idUser_Session;
-
-  let respuesta = {};
-
-  if (idUser == idUser_Session){
-    respuesta.msg = functions.filterUsers(idUser) ? functions.borrarUser(idUser) : "El usuario no existe, Intentelo denuevo";
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
 
 module.exports = router;
