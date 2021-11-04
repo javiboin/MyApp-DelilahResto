@@ -21,7 +21,6 @@ router.use(express.json());
  *        description: Not found
  */
 
-
 router.get("/", (req, res) => {
   functions.listValues()
   .then((result) => {
@@ -57,7 +56,6 @@ router.post("/", middlewareUser.searchUser , (req, res) => {
   });
 });
 
-// is current user
 router.put("/:id",(req, res) => {
   functions.updateUser(req)
   .then(() => {
@@ -78,7 +76,6 @@ router.put("/:id",(req, res) => {
 // en update agregar si el email o el usuario existe, o no dejar cambiar el nombre de usuario
 // llas nuevas apps permiten el cambiio, xq no hacerlo...
 
-// is current user
 router.delete("/:id", (req, res) => {
   functions.deleteUser(req)
   .then(() => {
