@@ -15,14 +15,14 @@ router.use(express.json());
  *    description: Autentica el ingreso a la app
  *    parameters:
  *    - name: nickname
- *      description: Introduzca el Nombre de Usuario 
- *      in: formdata
+ *      description: Nombre de Usuario 
+ *      in: formData
  *      required: true
  *      type: string
  *      example: fulanito33
  *    - name: password
- *      description: Introduzca su Contraseña de usuario
- *      in: formdata
+ *      description: Contraseña de Usuario 
+ *      in: formData
  *      required: true
  *      type: string
  *      example: miContrasenniaSecreta! 
