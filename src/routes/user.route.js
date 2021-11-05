@@ -20,11 +20,12 @@ router.use(express.json());
  *      in: header
  *      required: false
  *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    responses:
  *      200:
  *        description: Success
- *      404:
- *        description: Not found
+ *      401:
+ *        description: Unauthorized
  */
 
 router.get("/", (req, res) => {

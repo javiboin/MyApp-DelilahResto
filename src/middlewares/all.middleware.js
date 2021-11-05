@@ -12,7 +12,6 @@ const access = (req, res, next) => {
     const token = bearer[1];
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    //console.log(decoded);
 
     next();
   } catch {
