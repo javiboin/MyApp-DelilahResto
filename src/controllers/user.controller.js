@@ -68,7 +68,7 @@ const createUser = async (req) => {
     email: req.body.email,
     phone: req.body.phone,
     password: req.body.password,
-    id_user_state: req.body.id_user_state
+    id_user_state: 2
   });
 
   const result = await newUser.save();

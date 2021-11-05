@@ -6,28 +6,6 @@ const middlewareUser = require('../middlewares/user.middleware');
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-/**
- * @swagger
- * /users:
- *  get:
- *    tags:
- *    - "Usuarios" 
- *    summary: "Listado de todos los usuarios"
- *    description: Devuelve todos los usuarios dados de alta en nuestra app
- *    parameters:
- *    - name: authorization
- *      description: token de autorizacion para acceder a la operacion 
- *      in: header
- *      required: false
- *      type: string
- *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
- *    responses:
- *      200:
- *        description: Success
- *      401:
- *        description: Unauthorized
- */
-
 router.get("/", (req, res) => {
   functions.listValues()
   .then((result) => {
@@ -118,45 +96,75 @@ router.get("/:id", (req, res) => {
   });
 });
 
+
 /**
  * @swagger
  * /users:
+ *  get:
+ *    tags:
+ *    - "Usuarios" 
+ *    summary: "Listado de todos los usuarios"
+ *    description: Devuelve todos los usuarios dados de alta en nuestra app
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
  *  post:
  *    tags:
  *    - "Usuarios"
  *    summary: "Agrega Usuario"
  *    description: Guarda un nuevo usuario en nuestra app
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: nickname
  *      description: Nombre de Usuario 
  *      in: formData
  *      required: true
  *      type: string
+ *      example: fulanito33
  *    - name: completeName
  *      description: Nombre del propietario de la cuenta 
  *      in: formData
  *      required: true
  *      type: string
+ *      example: Fulanito Gomez
  *    - name: email
  *      description: Correo electronico de Usuario 
  *      in: formData
  *      required: true
  *      type: string
+ *      example: fulanito1@gmail.com
  *    - name: phone
  *      description: Numero de telefono de Usuario 
  *      in: formData
  *      required: true
  *      type: integer
+ *      example: 542964444111
  *    - name: address
  *      description: Domicilio de Usuario 
  *      in: formData
  *      required: true
  *      type: string
+ *      example: Calle False 123
  *    - name: password
  *      description: Contraseña de Usuario 
  *      in: formData
  *      required: true
  *      type: string
+ *      example: contraseñasecreta 
  *    responses:
  *      200:
  *        description: Success
