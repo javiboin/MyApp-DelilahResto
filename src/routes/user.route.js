@@ -14,6 +14,12 @@ router.use(express.json());
  *    - "Usuarios" 
  *    summary: "Listado de todos los usuarios"
  *    description: Devuelve todos los usuarios dados de alta en nuestra app
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
  *    responses:
  *      200:
  *        description: Success

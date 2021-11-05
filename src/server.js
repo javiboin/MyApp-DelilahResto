@@ -103,12 +103,12 @@ const swaggerOptions = {
     }
   },
   apis: [
-    './routes/login.route.js', './routes/user.route.js',
-    './routes/userAddress.route.js', './routes/userState.route.js', './routes/userSuspension.route.js', 
-    './routes/product.route.js', './routes/productState.route.js',
-    './routes/paymentMethod.route.js', './routes/address.route.js', 
-    './routes/order.route.js', './routes/orderDetail.route.js',
-    './routes/orderState.route.js'
+    './src/routes/login.route.js', './src/routes/user.route.js',
+    './src/routes/userAddress.route.js', '/src./routes/userState.route.js', '/src./routes/userSuspension.route.js', 
+    './src/routes/product.route.js', './src/routes/productState.route.js',
+    './src/routes/paymentMethod.route.js', './src/routes/address.route.js', 
+    './src/routes/order.route.js', './src/routes/orderDetail.route.js',
+    './src/routes/orderState.route.js'
   ]
 };
 
@@ -116,7 +116,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 try {
 
-app.use('/api-docs/v2/', swaggerUI.serve, swaggerUI.setup(swaggerDocs)); 
+app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerDocs)); 
 } catch(error) {
   console.log(error);
 }
