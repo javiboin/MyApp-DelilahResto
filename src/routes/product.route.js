@@ -182,7 +182,7 @@ router.delete('/:id', function (req, res){
  *      description: Precio del producto
  *      in: formData
  *      required: true
- *      type: integer
+ *      type: number
  *    - name: pic
  *      description: Imagen de referencia
  *      in: formData

@@ -12,6 +12,9 @@ const ProductModel = (connection, Sequelize) => {
     },
     pic: {
       type: Sequelize.STRING
+    },
+    id_product_state: {
+      type: Sequelize.INTEGER
     }
   },
   {

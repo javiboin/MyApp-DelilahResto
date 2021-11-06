@@ -30,8 +30,9 @@ const getProducts = async() => {
 const createProduct = async (req) => {
   const newProduct = await ProductModel.build({
     name: req.body.name,
-    price: req.body.price,
-    pic: req.body.pic
+    price: parseFloat(req.body.price),
+    pic: req.body.pic,
+    id_product_state: 1
   });
 
   const result = await newProduct.save();
