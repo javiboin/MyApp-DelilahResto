@@ -15,7 +15,7 @@ const ProductModel = (connection, Sequelize) => {
     },
     id_product_state: {
       type: Sequelize.INTEGER
-    }
+    } // revisar para agregar clave foranea
   },
   {
     timestamps: false

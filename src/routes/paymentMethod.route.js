@@ -76,7 +76,6 @@ router.delete("/:id", all.isAdmin, (req, res) => {
   });
 });
 
-
 router.get("/:id", (req, res) => {
   paymentMethodController.listPaymentMethodById(req)
   .then((result) => {
@@ -95,22 +94,21 @@ router.get("/:id", (req, res) => {
   });
 });
 
-
-/* 
 /**
  * @swagger
- * /payment/{idSession}:
+ * /payment-methods:
  *  get:
  *    tags:
  *    - "Medios de Pago" 
  *    summary: "Listado de todos Medios de Pago"
  *    description: Devuelve todos los medios de pago disponibles solo para Usuarios Administradores
  *    parameters:
- *    - name: idSession
- *      description: Id del Usuario que inicio la session
- *      in: path
- *      required: true
- *      type: integer
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    responses:
  *      200:
  *        description: Success
@@ -123,18 +121,19 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /payment:
+ * /payment-methods:
  *  post:
  *    tags:
  *    - "Medios de Pago" 
  *    summary: "Crear nuevos medios de pago"
  *    description: Crear nuevos medios de pago disponibles solo para Usuarios Administradores
  *    parameters:
- *    - name: idSession
- *      description: ID de usuario administrador que realiza el nuevo medio de pago
- *      in: formData
- *      required: true
- *      type: number
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: name
  *      description: Nombre del medio de pago
  *      in: formData
@@ -151,13 +150,19 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /payment/{id}:
+ * /payment-methods/{id}:
  *  put:
  *    tags:
  *    - "Medios de Pago" 
  *    summary: "Modificar Medios de pago"
  *    description: Modificar medios de pago disponibles solo para Usuarios Administradores
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: ID de pedido
  *      in: path
@@ -184,22 +189,23 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /payment/{id}:
+ * /payment-methods/{id}:
  *  delete:
  *    tags:
  *    - "Medios de Pago"
  *    summary: "Elimina por ID"
  *    description: "Se elimina un medio de pago en nuestra base de datos"
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: ID de Medio de Pago
  *      in: path
  *      required: false
- *      type: integer
- *    - name: idSession
- *      description: ID de Usuario que realizo el pedido 
- *      in: formData
- *      required: true
  *      type: integer
  *    responses:
  *      200:
