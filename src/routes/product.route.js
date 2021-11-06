@@ -95,14 +95,62 @@ router.get("/:id", (req, res) => {
   });
 });
 
+// Cambiar en metodo de entrada del campo price,
+// de string a float probar swagger
+router.post('/', function (req, res){
+  if (administradores.isAdmin(req.body.idUser_Session)){
+    let respuesta = {};
+    respuesta.msg = functions.crearProduct(req.body);
+    res.json(respuesta); 
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
+});
+
+router.put('/:id', function (req, res){
+  if (administradores.isAdmin(req.body.idUser_Session)){
+    const idProduct = req.params.id;
+    const respuesta = {};
+    respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(idProduct, req.body) : "Operación anulada. El producto no existe";
+    res.json(respuesta); 
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
+});
+
+router.get('/:id', function (req, res){
+    const idProduct = req.params.id;
+    let respuesta = {};
+    respuesta.msg = functions.filterProducts(idProduct) ? functions.filterProducts(idProduct) : "El producto no existe";
+    res.json(respuesta);
+});
+
+router.delete('/:id', function (req, res){
+  if (administradores.isAdmin(req.body.idUser_Session)){
+    const idProduct = req.params.id;
+    let respuesta = {};
+    respuesta.msg = functions.filterProducts(idProduct) ? functions.borrarProduct(idProduct) : "Operación anulada. El producto no existe";
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
+});
+
 /**
  * @swagger
- * /products/menu:
+ * /products:
  *  get:
  *    tags:
  *    - "Productos"
  *    summary: "Listado de todos los productos"
  *    description: Devuelve todos los productos en nuestra app
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    responses:
  *      200:
  *        description: Success
@@ -119,11 +167,12 @@ router.get("/:id", (req, res) => {
  *    summary: "Agrega Producto"
  *    description: Guarda un nuevo producto en nuestra app
  *    parameters:
- *    - name: idUser_Session
- *      description: ID de usuario que realiza el cambio 
- *      in: formData
- *      required: true
- *      type: integer
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: name
  *      description: Nombre del producto
  *      in: formData
@@ -147,15 +196,6 @@ router.get("/:id", (req, res) => {
  *      404:
  *        description: Not found
  */
-router.post('/', function (req, res){
-  if (administradores.isAdmin(req.body.idUser_Session)){
-    let respuesta = {};
-    respuesta.msg = functions.crearProduct(req.body);
-    res.json(respuesta); 
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
 
 /**
  * @swagger
@@ -166,6 +206,12 @@ router.post('/', function (req, res){
  *    summary: "Modifica por ID"
  *    description: "Se realiza la modificacón en uno o más campos de un producto"
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: idUser_Session
  *      description: ID de usuario que realiza el cambio 
  *      in: formData
@@ -200,17 +246,6 @@ router.post('/', function (req, res){
  *        description: Not found
  */
 
-router.put('/:id', function (req, res){
-  if (administradores.isAdmin(req.body.idUser_Session)){
-    const idProduct = req.params.id;
-    const respuesta = {};
-    respuesta.msg = functions.filterProducts(idProduct) ? functions.modificarProduct(idProduct, req.body) : "Operación anulada. El producto no existe";
-    res.json(respuesta); 
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
-
 /**
  * @swagger
  * /products/{id}:
@@ -220,6 +255,12 @@ router.put('/:id', function (req, res){
  *    summary: "Ver info por ID"
  *    description: Todos los datos de un producto
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: Id de producto
  *      in: path
@@ -232,13 +273,6 @@ router.put('/:id', function (req, res){
  *        description: Not found
  */
 
-router.get('/:id', function (req, res){
-    const idProduct = req.params.id;
-    let respuesta = {};
-    respuesta.msg = functions.filterProducts(idProduct) ? functions.filterProducts(idProduct) : "El producto no existe";
-    res.json(respuesta);
-});
-
 /**
  * @swagger
  * /products/{id}:
@@ -248,11 +282,12 @@ router.get('/:id', function (req, res){
  *    summary: "Elimina por ID"
  *    description: "Se elimina un producto en nuestra base de datos"
  *    parameters:
- *    - name: idUser_Session
- *      description: ID de usuario que realiza el cambio 
- *      in: formData
- *      required: true
- *      type: integer
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: Id de producto
  *      in: path
@@ -266,16 +301,5 @@ router.get('/:id', function (req, res){
  *      404:
  *        description: Not found
  */
-
-router.delete('/:id', function (req, res){
-  if (administradores.isAdmin(req.body.idUser_Session)){
-    const idProduct = req.params.id;
-    let respuesta = {};
-    respuesta.msg = functions.filterProducts(idProduct) ? functions.borrarProduct(idProduct) : "Operación anulada. El producto no existe";
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
 
 module.exports = router;
