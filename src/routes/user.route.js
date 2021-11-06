@@ -181,6 +181,12 @@ router.get("/:id", (req, res) => {
  *    summary: "Modifica por ID"
  *    description: "Se realiza la modificación en uno o mas campos de un usuario"
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: Id de Usuario
  *      in: path
@@ -240,6 +246,12 @@ router.get("/:id", (req, res) => {
  *    summary: "Ver info por ID"
  *    description: Todos los datos de un usuario
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: Id de Usuario
  *      in: path
@@ -261,14 +273,15 @@ router.get("/:id", (req, res) => {
  *    summary: "Elimina por ID"
  *    description: "Se elimina un usuario en nuestra base de datos"
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: Id de Usuario
  *      in: path
- *      required: true
- *      type: integer
- *    - name: idUser_Session
- *      description: ID de usuario que realiza el cambio 
- *      in: formData
  *      required: true
  *      type: integer
  *    responses:

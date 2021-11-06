@@ -10,6 +10,7 @@ const access = (req, res, next) => {
   try {
     const bearer = req.headers['authorization'].split(" ");
     const token = bearer[1];
+    // revisar si lo modifico
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
