@@ -90,4 +90,162 @@ router.get("/:id", (req, res) => {
   });
 });
 
+/**
+ * @swagger
+ * /user-address:
+ *  get:
+ *    tags:
+ *    - "Direcciones de Usuarios" 
+ *    summary: "Listado de todos las Direcciones de Usuarios"
+ *    description: Devuelve todos las Direcciones de Usuarios disponibles
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+
+/**
+ * @swagger
+ * /user-address:
+ *  post:
+ *    tags:
+ *    - "Direcciones de Usuarios"
+ *    summary: "Agrega Direcciones de Usuarios"
+ *    description: Guarda una nueva Direccion de Usuario en nuestra app
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    - name: id_user
+ *      description: Usuario
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    - name: id_address
+ *      description: direccion
+ *      in: formData
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+
+/**
+ * @swagger
+ * /user-address/{id}:
+ *  get:
+ *    tags:
+ *    - "Direcciones de Usuarios"
+ *    summary: "Ver info por ID"
+ *    description: Todos los datos de una direccion
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    - name: id
+ *      description: Id de Direccion de usuario
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Not found
+ */
+
+/**
+ * @swagger
+ * /user-address/{id}:
+ *  put:
+ *    tags:
+ *    - "Direcciones de Usuarios"
+ *    summary: "Modifica por ID"
+ *    description: "Se realiza la modificacón de direcciones de usuarios"
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    - name: id
+ *      description: Id de producto
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: name
+ *      description: Nombre del producto
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    - name: price
+ *      description: Precio del producto
+ *      in: formData
+ *      required: false
+ *      type: number
+ *    - name: pic
+ *      description: Imagen de referencia
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+
+/**
+ * @swagger
+ * /user-address/{id}:
+ *  delete:
+ *    tags:
+ *    - "Direcciones de Usuarios"
+ *    summary: "Elimina por ID"
+ *    description: "Se elimina una direccion"
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    - name: id
+ *      description: Id de direccion
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+
 module.exports = router;
