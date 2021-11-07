@@ -104,7 +104,7 @@ const swaggerOptions = {
   },
   apis: [
     './src/routes/login.route.js', './src/routes/user.route.js',
-    './src/routes/userAddress.route.js', '/src./routes/userState.route.js', '/src./routes/userSuspension.route.js', 
+    './src/routes/userAddress.route.js', './src/routes/userState.route.js', './src/routes/userSuspension.route.js', 
     './src/routes/product.route.js', './src/routes/productState.route.js',
     './src/routes/paymentMethod.route.js', './src/routes/address.route.js', 
     './src/routes/order.route.js', './src/routes/orderDetail.route.js',

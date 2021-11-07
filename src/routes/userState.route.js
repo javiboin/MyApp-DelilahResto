@@ -73,8 +73,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
   });
 });
 
-//router.get("/:id", all.isAdmin, (req, res) => {
-  router.get("/:id", all.isCurrentUser, (req, res) => {
+  router.get("/:id", all.isAdmin, (req, res) => {
   UserStateController.listUserStateById(req)
   .then((result) => {
     res.status(200).send({
@@ -91,5 +90,129 @@ router.delete("/:id", all.isAdmin, (req, res) => {
     });
   });
 });
+
+/**
+ * @swagger
+ * /user-states:
+ *  get:
+ *    tags:
+ *    - "Estado de Usuarios" 
+ *    summary: "Listado de todos Domicilios"
+ *    description: Devuelve todos los domicilios disponibles
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+
+/**
+ * @swagger
+ * /user-states/{id}:
+ *  get:
+ *    tags:
+ *    - "Estado de Usuarios"
+ *    summary: "Ver info por ID"
+ *    description: Todos los datos de un domicilio
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    - name: id
+ *      description: Id de domicilio
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Not found
+ */
+
+/**
+ * @swagger
+ * /user-states/{id}:
+ *  put:
+ *    tags:
+ *    - "Estado de Usuarios"
+ *    summary: "Modifica por ID"
+ *    description: "Se realiza la modificacón en uno o más campos de un domicilio"
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    - name: id
+ *      description: Id de producto
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    - name: name
+ *      description: Nombre del producto
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    - name: price
+ *      description: Precio del producto
+ *      in: formData
+ *      required: false
+ *      type: number
+ *    - name: pic
+ *      description: Imagen de referencia
+ *      in: formData
+ *      required: false
+ *      type: string
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+
+/**
+ * @swagger
+ * /user-states/{id}:
+ *  delete:
+ *    tags:
+ *    - "Estado de Usuarios"
+ *    summary: "Elimina por ID"
+ *    description: "Se elimina un domicilio en nuestra base de datos"
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    - name: id
+ *      description: Id de producto
+ *      in: path
+ *      required: true
+ *      type: integer
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
 
 module.exports = router;
