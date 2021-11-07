@@ -97,8 +97,8 @@ router.delete("/:id", all.isAdmin, (req, res) => {
  *  get:
  *    tags:
  *    - "Estado de Usuarios" 
- *    summary: "Listado de todos Domicilios"
- *    description: Devuelve todos los domicilios disponibles
+ *    summary: "Listado de todos estados de los usuarios"
+ *    description: Devuelve todos los estados de los usuarios
  *    parameters:
  *    - name: authorization
  *      description: token de autorizacion para acceder a la operacion 
@@ -122,7 +122,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
  *    tags:
  *    - "Estado de Usuarios"
  *    summary: "Ver info por ID"
- *    description: Todos los datos de un domicilio
+ *    description: Todos los datos de un estado
  *    parameters:
  *    - name: authorization
  *      description: token de autorizacion para acceder a la operacion 
@@ -131,7 +131,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
- *      description: Id de domicilio
+ *      description: Id de estado
  *      in: path
  *      required: true
  *      type: integer
@@ -149,7 +149,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
  *    tags:
  *    - "Estado de Usuarios"
  *    summary: "Modifica por ID"
- *    description: "Se realiza la modificacón en uno o más campos de un domicilio"
+ *    description: "Se realiza la modificacón de un estado"
  *    parameters:
  *    - name: authorization
  *      description: token de autorizacion para acceder a la operacion 
@@ -158,12 +158,12 @@ router.delete("/:id", all.isAdmin, (req, res) => {
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
- *      description: Id de producto
+ *      description: Id de estado
  *      in: path
  *      required: true
  *      type: integer
  *    - name: name
- *      description: Nombre del producto
+ *      description: Nombre del estado
  *      in: formData
  *      required: false
  *      type: string
@@ -193,7 +193,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
  *    tags:
  *    - "Estado de Usuarios"
  *    summary: "Elimina por ID"
- *    description: "Se elimina un domicilio en nuestra base de datos"
+ *    description: "Se elimina un estado en nuestra base de datos"
  *    parameters:
  *    - name: authorization
  *      description: token de autorizacion para acceder a la operacion 
@@ -202,7 +202,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
- *      description: Id de producto
+ *      description: Id de estado
  *      in: path
  *      required: true
  *      type: integer
