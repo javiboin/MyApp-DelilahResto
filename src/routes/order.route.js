@@ -1,15 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const functions = require('../controllers/pedidos');
-const functionsUser = require('../controllers/user.controller');
-/* const administradores = require('../controllers/administradores'); */
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
 const OrderController = require("../controllers/order.controller");
+const all = require('../middlewares/all.middleware');
 
-router.get("/", (req, res) => {
+router.get("/", all.isAdmin, (req, res) => {
   OrderController.listValues()
   .then((result) => {
     res.status(200).send({
@@ -45,6 +43,8 @@ router.post("/", (req, res) => {
   });
 });
 
+//`se puede modificar, en un estado solo los usuarios y el admin, en los demas estados lo hace solo admin
+// cuando hacemos modificaciones, tambien sucede este comportamiento, se puede editar todos los campos o solo estados
 router.put("/:id",(req, res) => {
   OrderController.updateOrder(req)
   .then(() => {
@@ -97,28 +97,6 @@ router.get("/:id", (req, res) => {
   });
 });
 
-/**
- * @swagger
- * /orders/all/{idSession}:
- *  get:
- *    tags:
- *    - "Pedidos" 
- *    summary: "Listado de todos los Pedidos"
- *    description: Devuelve todos los pedidos realizados solo para Usuarios Administradores
- *    parameters:
- *    - name: idSession
- *      description: Id del Usuario que inicio la session
- *      in: path
- *      required: true
- *      type: integer
- *    responses:
- *      200:
- *        description: Success
- *      401:
- *        description: Unauthorized
- *      404:
- *        description: Not found
- */
 router.get('/all/:idSession', function (req, res){
   if (administradores.isAdmin(req.params.idSession)){
     let respuesta = {};
@@ -129,6 +107,115 @@ router.get('/all/:idSession', function (req, res){
   };
 });
 
+router.get('/byuser/:idUser', function (req, res){
+  let respuesta = {};
+  let resultado = functions.filterOrdersxId(req.params.idUser);
+
+  if (resultado.length === 0){ resultado = 'El usuario no ha realizado pedidos aún'}
+  respuesta.msg = resultado;
+
+  res.json(respuesta);
+});
+
+router.get('/:id', function (req, res){
+  let respuesta = {};
+  let resultado = functions.traerPedido(req.params.id);
+
+  if (resultado === undefined){ resultado = 'El pedido no existe'}
+  respuesta.msg = resultado;
+
+  res.json(respuesta);
+});
+
+router.post('/', function (req, res){
+  let respuesta = {};
+  respuesta.msg = functions.crearOrder(req.body);
+  res.json(respuesta);
+});
+
+router.put('/confirmar-pedido/:id', function (req, res){ 
+  let pedido = functions.traerPedido(req.params.id);
+  let respuesta = {};
+  if (pedido.state == 0 && req.body.idUser_Session == pedido.idUser){
+    respuesta.msg = functions.confirmarPedido(req.params.id, req.body.address);
+    res.json(respuesta); 
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción"); 
+}});
+
+router.put('/estado-byadmin/:id', function (req, res){
+  /* 
+  verifico la existencia del pedido
+  verifico que le usuario es administrador, para realizar el cambio de estado
+   */
+  let pedido = functions.traerPedido(req.params.id);
+  let respuesta = {};
+
+  if (administradores.isAdmin(req.body.idUser_Session)){
+    if (pedido.state > 0){
+      respuesta.msg = functions.modificarEstadoDePedido(req.params.id, req.body.state);
+      res.json(respuesta); 
+    } else {  
+      res.json("Operación anulada. No cuenta con los permisos para realizar esta acción")};
+    } else {  
+      res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+    };
+});
+
+router.put('/modificar-pedido', function (req, res){
+  const idOrders = req.body.id;
+  let respuesta = {};
+
+  /* 
+  Validamos que se pueda modificar un pedido en los siguientes casos:
+    - Un Usuario que quiera modificar su pedido, SOLO si éste no esta confirmado
+    - Un Administrador pueda realizar cambios al pedido SOLO si esta confirmado por el usuario que creo el pedido
+   */
+  if ((req.body.state == 0 && req.body.idSession == req.body.idUser) || (req.body.state > 0 && administradores.isAdmin(req.body.idSession))){
+    respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "El pedido no existe";
+    
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
+});
+
+router.delete('/:id', function (req, res){
+  const idOrders = req.params.id;
+  let respuesta = {};
+
+  if (administradores.isAdmin(req.body.idUser_Session)){
+    respuesta.msg = functions.filterOrders ? functions.borrarOrder(idOrders) : "no es correcto";
+    res.json(respuesta);
+  } else {  
+    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
+  };
+});
+
+/**
+ * @swagger
+ * /orders:
+ *  get:
+ *    tags:
+ *    - "Pedidos" 
+ *    summary: "Listado de todos los Pedidos - SOLO ADMINS"
+ *    description: Devuelve todos los pedidos realizados solo para Usuarios Administradores
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *    responses:
+ *      200:
+ *        description: Success
+ *      401:
+ *        description: Unauthorized
+ *      404:
+ *        description: Not found
+ */
+
 /**
  * @swagger
  * /orders/byuser/{idUser}:
@@ -138,6 +225,12 @@ router.get('/all/:idSession', function (req, res){
  *    summary: Listado de todos los pedidos que realizo un usuario
  *    description: Encuentra tu historial de pedidos realizados
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: idUser
  *      description: ID de usuario 
  *      in: path
@@ -149,15 +242,6 @@ router.get('/all/:idSession', function (req, res){
  *      404:
  *        description: Not found
  */
-router.get('/byuser/:idUser', function (req, res){
-  let respuesta = {};
-  let resultado = functions.filterOrdersxId(req.params.idUser);
-
-  if (resultado.length === 0){ resultado = 'El usuario no ha realizado pedidos aún'}
-  respuesta.msg = resultado;
-
-  res.json(respuesta);
-});
 
 /**
  * @swagger
@@ -168,6 +252,12 @@ router.get('/byuser/:idUser', function (req, res){
  *    summary: "Ver info de pedidos por ID"
  *    description: Todos los datos de un pedido
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: ID del pedido
  *      in: path
@@ -179,16 +269,6 @@ router.get('/byuser/:idUser', function (req, res){
  *      404:
  *        description: Not found
  */
-
-router.get('/:id', function (req, res){
-  let respuesta = {};
-  let resultado = functions.traerPedido(req.params.id);
-
-  if (resultado === undefined){ resultado = 'El pedido no existe'}
-  respuesta.msg = resultado;
-
-  res.json(respuesta);
-});
 
 /**
  * @swagger
@@ -234,29 +314,24 @@ router.get('/:id', function (req, res){
  *        description: Not found
  */
 
-router.post('/', function (req, res){
-  let respuesta = {};
-  respuesta.msg = functions.crearOrder(req.body);
-  res.json(respuesta);
-});
-
 /**
  * @swagger
  * /orders/confirmar-pedido/{id}:
  *  put:
  *    tags:
  *    - "Pedidos"
- *    summary: "Confirmar Pedido por ID"
- *    description: "Se realiza la modificación en uno o mas campos de un usuario"
+ *    summary: "USUARIO Confirma Pedido "
+ *    description: "Se confirma el pedido, a partir de aqui, el usuario no puede modificar el pedido"
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: ID del Pedido
  *      in: path
- *      required: true
- *      type: integer
- *    - name: idUser_Session
- *      description: ID de usuario o administrador que realiza el cambio de estado
- *      in: formData
  *      required: true
  *      type: integer
  *    - name: address
@@ -272,15 +347,6 @@ router.post('/', function (req, res){
  *      404:
  *        description: Not found
  */
-router.put('/confirmar-pedido/:id', function (req, res){ 
-  let pedido = functions.traerPedido(req.params.id);
-  let respuesta = {};
-  if (pedido.state == 0 && req.body.idUser_Session == pedido.idUser){
-    respuesta.msg = functions.confirmarPedido(req.params.id, req.body.address);
-    res.json(respuesta); 
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción"); 
-}});
 
 /**
  * @swagger
@@ -289,19 +355,20 @@ router.put('/confirmar-pedido/:id', function (req, res){
  *    tags:
  *    - "Pedidos"
  *    summary: "Modifica Estados del pedido "
- *    description: "Se realiza la modificación del estado del pedido por administradores"
+ *    description: "Se realiza la actualización del estado del pedido SOLO administradores"
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: ID del pedido
  *      in: path
  *      required: true
  *      type: integer
- *    - name: idUser_Session
- *      description: ID del administrador que realiza el cambio de estado 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: state
+ *    - name: id_state
  *      description: Actualiza el Estado del pedido
  *      in: formData
  *      required: true
@@ -314,24 +381,6 @@ router.put('/confirmar-pedido/:id', function (req, res){
  *      404:
  *        description: Not found
  */
-router.put('/estado-byadmin/:id', function (req, res){
-  /* 
-  verifico la existencia del pedido
-  verifico que le usuario es administrador, para realizar el cambio de estado
-   */
-  let pedido = functions.traerPedido(req.params.id);
-  let respuesta = {};
-
-  if (administradores.isAdmin(req.body.idUser_Session)){
-    if (pedido.state > 0){
-      respuesta.msg = functions.modificarEstadoDePedido(req.params.id, req.body.state);
-      res.json(respuesta); 
-    } else {  
-      res.json("Operación anulada. No cuenta con los permisos para realizar esta acción")};
-    } else {  
-      res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-    };
-});
 
 /**
  * @swagger
@@ -340,7 +389,7 @@ router.put('/estado-byadmin/:id', function (req, res){
  *    tags:
  *    - "Pedidos"
  *    summary: "Modifica Pedido"
- *    description: Modificar varios campos de un pedido. Operacion para administradores
+ *    description: El usuario puede realizar modificaciones al pedido antes de confirmarlo
  *    parameters: 
  *    - in: body
  *      name: orders
@@ -386,24 +435,6 @@ router.put('/estado-byadmin/:id', function (req, res){
  *        description: Not found
  */
 
-router.put('/modificar-pedido', function (req, res){
-  const idOrders = req.body.id;
-  let respuesta = {};
-
-  /* 
-  Validamos que se pueda modificar un pedido en los siguientes casos:
-    - Un Usuario que quiera modificar su pedido, SOLO si éste no esta confirmado
-    - Un Administrador pueda realizar cambios al pedido SOLO si esta confirmado por el usuario que creo el pedido
-   */
-  if ((req.body.state == 0 && req.body.idSession == req.body.idUser) || (req.body.state > 0 && administradores.isAdmin(req.body.idSession))){
-    respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "El pedido no existe";
-    
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
-
 /**
  * @swagger
  * /orders/{id}:
@@ -413,15 +444,16 @@ router.put('/modificar-pedido', function (req, res){
  *    summary: "Elimina por ID"
  *    description: "Se elimina un pedido en nuestra base de datos"
  *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
  *    - name: id
  *      description: Id de pedido
  *      in: path
  *      required: false
- *      type: integer
- *    - name: idUser_Session
- *      description: ID de Usuario que realizo el pedido 
- *      in: formData
- *      required: true
  *      type: integer
  *    responses:
  *      200:
@@ -431,17 +463,5 @@ router.put('/modificar-pedido', function (req, res){
  *      404:
  *        description: Not found
  */
-
-router.delete('/:id', function (req, res){
-  const idOrders = req.params.id;
-  let respuesta = {};
-
-  if (administradores.isAdmin(req.body.idUser_Session)){
-    respuesta.msg = functions.filterOrders ? functions.borrarOrder(idOrders) : "no es correcto";
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
 
 module.exports = router;

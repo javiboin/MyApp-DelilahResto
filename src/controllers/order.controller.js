@@ -5,7 +5,11 @@ const connection = require("../config/db.config");
 const OrderModel = require('../models/order.model')(connection, Sequelize);
 const OrderDetailModel = require('../models/orderDetail.model')(connection, Sequelize);
 
-const listValues = async () => await OrderModel.findAll();
+
+// agregar por iteracion los productos que estaban en el pedido
+const listValues = async () => {
+  await OrderModel.findAll()
+};
 
 const createOrder = async (req) => {
   const newOrder = await OrderModel.build({
