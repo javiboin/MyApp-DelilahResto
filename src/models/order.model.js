@@ -1,3 +1,7 @@
+const Sequelize = require('sequelize');
+const connection = require("../config/db.config");
+const Address = require('../models/address.model')(connection, Sequelize);
+
 const OrderModel = (connection, Sequelize) => {
   const Order = connection.define('orders', {
     id: {
@@ -8,8 +12,11 @@ const OrderModel = (connection, Sequelize) => {
       type: Sequelize.FLOAT(6, 2)
     },
     id_user: {
-      type: Sequelize.INTEGER
-    },
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'users', 
+        key: 'id'
+      }},
     id_address: {
       type: Sequelize.INTEGER,
       references: 'addresses', 
@@ -29,6 +36,10 @@ const OrderModel = (connection, Sequelize) => {
   {
     timestamps: false
   });
+
+  Order.hasOne(Address, {as: 'domicilios', foreignKey: "domicilios_id"})
+
+  console.log(Order);
   return Order
 };
 

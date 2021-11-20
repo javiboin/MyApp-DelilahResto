@@ -8,7 +8,10 @@ const OrderDetailModel = require('../models/orderDetail.model')(connection, Sequ
 
 // agregar por iteracion los productos que estaban en el pedido
 const listValues = async () => {
-  await OrderModel.findAll()
+  const result = await OrderModel.findAll(/* { 
+    include: 'users'
+  } */);
+  return result;
 };
 
 const createOrder = async (req) => {

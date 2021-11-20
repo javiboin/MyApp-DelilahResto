@@ -26,7 +26,6 @@ router.get("/", all.isAdmin, (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  //OrderController.createOrder(req)
   OrderController.createOrderTransaction(req)
   .then(() => {
     res.status(200).send({
