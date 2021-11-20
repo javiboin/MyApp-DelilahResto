@@ -75,6 +75,9 @@ const createUser = async (req) => {
   return result;
 }
 
+// en update agregar si el email o el usuario existe, o no dejar cambiar el nombre de usuario
+// llas nuevas apps permiten el cambiio, xq no hacerlo...
+
 const updateUser = async (req) => {
   const id_user = parseInt(req.params.id);
   const result = await UsersModel.update({

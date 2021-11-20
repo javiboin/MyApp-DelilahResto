@@ -19,13 +19,13 @@ router.use(express.json());
  *      in: formData
  *      required: true
  *      type: string
- *      example: fulanito33
+ *      example: daveG
  *    - name: password
  *      description: Contraseña de Usuario 
  *      in: formData
  *      required: true
  *      type: string
- *      example: miContrasenniaSecreta! 
+ *      example: 146bea927a6743c026f4084b061d3c1c
  *    responses:
  *      200:
  *        description: Success

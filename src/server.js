@@ -115,23 +115,21 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 try {
-
-app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerDocs)); 
+  app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerDocs)); 
 } catch(error) {
   console.log(error);
 }
 
-
 /* -------------- ENDPOINT GENERAL -------------------- */
-/* app.use(function(req, res, next) {
+app.use(function(req, res, next) {
   console.log(req.params);
-  const respuesta = `${moment().format('DD-MM-YYYY, hh:mm:ss a')} ${req.method} ${req.url} path: ${req.path} ${req.statusCode} ${req.statusMessage}}`;
+  const respuesta = `${req.method} ${req.url} path: ${req.path} ${req.statusCode} ${req.statusMessage}}`;
   
   res.json(respuesta);
   console.log(respuesta);
 
   next();
-}); */
+});
 
 //app.use('/', express.static('/backend/public/index.html')); /* no funciona */
 

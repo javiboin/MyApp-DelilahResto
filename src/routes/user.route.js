@@ -58,9 +58,6 @@ router.put("/:id",(req, res) => {
   });
 });
 
-// en update agregar si el email o el usuario existe, o no dejar cambiar el nombre de usuario
-// llas nuevas apps permiten el cambiio, xq no hacerlo...
-
 router.delete("/:id", (req, res) => {
   functions.deleteUser(req)
   .then(() => {
@@ -134,7 +131,7 @@ router.get("/:id", (req, res) => {
  *      in: formData
  *      required: true
  *      type: string
- *      example: fulanito33
+ *      example: daveG
  *    - name: completeName
  *      description: Nombre del propietario de la cuenta 
  *      in: formData
@@ -164,7 +161,7 @@ router.get("/:id", (req, res) => {
  *      in: formData
  *      required: true
  *      type: string
- *      example: contraseñasecreta 
+ *      example: 146bea927a6743c026f4084b061d3c1c 
  *    responses:
  *      200:
  *        description: Success
