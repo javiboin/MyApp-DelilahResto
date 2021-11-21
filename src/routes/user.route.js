@@ -25,7 +25,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", middlewareUser.searchUser , (req, res) => {
-  functions.createUser(req)
+  functions.createUserTransaction(req)
   .then(() => {
     res.status(200).send({
       status: 200,
@@ -104,11 +104,12 @@ router.get("/:id", (req, res) => {
  *    description: Devuelve todos los usuarios dados de alta en nuestra app
  *    parameters:
  *    - name: authorization
- *      description: token de autorizacion para acceder a la operacion 
+ *      description: token de autorizacion para acceder a la operacion. bearer {hash}
  *      in: header
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer 
  *    responses:
  *      200:
  *        description: Success
@@ -126,42 +127,49 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer [hash]
  *    - name: nickname
  *      description: Nombre de Usuario 
  *      in: formData
  *      required: true
  *      type: string
- *      example: daveG
+ *      default: usuario1
  *    - name: completeName
  *      description: Nombre del propietario de la cuenta 
  *      in: formData
  *      required: true
  *      type: string
- *      example: Fulanito Gomez
+ *      default: fulanito
  *    - name: email
  *      description: Correo electronico de Usuario 
  *      in: formData
  *      required: true
  *      type: string
- *      example: fulanito1@gmail.com
+ *      default: fulanito123@gmail.com
  *    - name: phone
  *      description: Numero de telefono de Usuario 
  *      in: formData
  *      required: true
  *      type: integer
- *      example: 542964444111
- *    - name: address
- *      description: Domicilio de Usuario 
- *      in: formData
- *      required: true
- *      type: string
- *      example: Calle False 123
+ *      default: 542964444111
  *    - name: password
- *      description: Contraseña de Usuario 
+ *      description: Contraseña de Usuario
  *      in: formData
  *      required: true
  *      type: string
- *      example: 146bea927a6743c026f4084b061d3c1c 
+ *      default: 12345
+ *    - name: name
+ *      description: Nombre del Domicilio del Usuario 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *      default: Calle False
+ *    - name: number
+ *      description: Altura del Domicilio del Usuario 
+ *      in: formData
+ *      required: true
+ *      type: string
+ *      default: 123
  *    responses:
  *      200:
  *        description: Success
@@ -184,21 +192,13 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: Id de Usuario
  *      in: path
  *      required: true
  *      type: integer
- *    - name: idUser_Session
- *      description: ID de usuario que realiza el cambio 
- *      in: formData
- *      required: true
- *      type: integer
- *    - name: nickname
- *      description: Nombre de Usuario 
- *      in: formData
- *      required: false
- *      type: string
+ *      default: 2
  *    - name: completeName
  *      description: Nombre del propietario de la cuenta 
  *      in: formData
@@ -214,16 +214,16 @@ router.get("/:id", (req, res) => {
  *      in: formData
  *      required: false
  *      type: integer
- *    - name: address
- *      description: Domicilio de Usuario 
- *      in: formData
- *      required: false
- *      type: string
  *    - name: password
- *      description: Contraseña de Usuario 
+ *      description: Contraseña de Usuario. En esta API de pruebas, todas las contraseñas son "12345"
  *      in: formData
  *      required: false
  *      type: string
+ *    - name: id_user_state
+ *      description: Id del estado del Usuario 
+ *      in: formData
+ *      required: false
+ *      type: integer
  *    responses:
  *      200:
  *        description: Success
@@ -249,11 +249,13 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: Id de Usuario
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 10
  *    responses:
  *      200:
  *        description: Success
@@ -276,11 +278,13 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: Id de Usuario
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 10
  *    responses:
  *      200:
  *        description: Success

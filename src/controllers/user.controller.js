@@ -1,59 +1,49 @@
-/* 
-const searchIndex = (id) => {
-  return users.findIndex(x => x.id == id);
-};
-
-function obtenerNickname(id){
-  let nickname = users[searchIndex(id)].nickname;
-  return nickname;
-};
-
-function obtenerNombre(id){
-  let name = users[searchIndex(id)].completeName;
-  return name;
-};
-
-function obtenerDireccion(id){
-  let address = users[searchIndex(id)].address;
-  return address;
-};
-
-function emailrepetido(email){
-  return users.find(user => user.email === email) ? true : false;
-};
-
-function filterUsers(id){
-  const datosFiltrados = users.find(usuario => usuario.id == Number(id));
-  return datosFiltrados;
-};
- */ 
-
 require("dotenv").config();
 const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const UsersModel = require('../models/user.model')(connection, Sequelize);
-
+const AddressModel = require('../models/address.model')(connection, Sequelize);
+const UserAddressModel = require('../models/userAddress.model')(connection, Sequelize);
 const jwt = require('jsonwebtoken');
+const bcryptjs = require('bcryptjs');
 
-const bcrypt = require('bcrypt');
+const createHash = async (passwordToConvert) => {
+  const newHash = await bcryptjs.hash(passwordToConvert, 8);
+  return newHash;
+};
+
+const compareHash = async (password, hashToConvert) => {
+  const compare = await bcryptjs.compare(password, hashToConvert);
+  return compare;
+}
+
+/*
+  const passwordEncrypted = await createHash(password);
+    console.log(passwordEncrypted); 
+  
+  const passwordDesencrypted = await compareHash(password, passwordEncrypted);
+    console.log(passwordDesencrypted); 
+*/
 
 const login = async (info) => {
   const username = info.nickname;
   const password = info.password;
 
   const usuarioEncontrado = await UsersModel.findOne({ where: { 
-    nickname : username,
-    password : password
+    nickname : username
   } });
 
-  if (usuarioEncontrado) {
-    const token = jwt.sign({ 
-      nickname: usuarioEncontrado.nickname ,
-      password: usuarioEncontrado.password ,
-      id_user_state : usuarioEncontrado.id_user_state
-    }, process.env.JWT_SECRET, { expiresIn : '1h' });
+  const passwordDesencrypted = await compareHash(password, usuarioEncontrado.password);
 
-    return { yourToken : token };
+  if (usuarioEncontrado && passwordDesencrypted){ 
+    
+      const token = jwt.sign({ 
+        nickname: usuarioEncontrado.nickname ,
+        password: usuarioEncontrado.password ,
+        id_user_state : usuarioEncontrado.id_user_state
+      }, process.env.JWT_SECRET, { expiresIn : '1h' });
+
+      return { yourToken : token };
   } else {
     throw new Error
   }
@@ -61,28 +51,63 @@ const login = async (info) => {
 
 const listValues = async () => await UsersModel.findAll();
 
-const createUser = async (req) => {
-  const newUser = await UsersModel.build({
-    nickname: req.body.nickname,
+const searchAddress = async (req) => {
+  const direccionEncontrada = await AddressModel.findOne({ where: { 
     name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    password: req.body.password,
-    id_user_state: 2
-  });
+    number: req.body.number
+  } });
 
-  const result = await newUser.save();
-  return result;
+  if (!direccionEncontrada) {
+    
+    const newAddress = await AddressModel.create({
+      name: req.body.name,
+      number: req.body.number
+    }, { transaction: t });
+
+    return newAddress.null;
+
+  } else {
+    return direccionEncontrada.id;
+  }
 }
 
-// en update agregar si el email o el usuario existe, o no dejar cambiar el nombre de usuario
-// llas nuevas apps permiten el cambiio, xq no hacerlo...
+const createUserTransaction = async (req) => {
+  const t = await connection.transaction();
+  try {
+    const passwordEncrypted = await createHash(req.body.password);
+
+    const newUser = await UsersModel.create({
+      nickname: req.body.nickname,
+      name: req.body.completeName,
+      email: req.body.email,
+      phone: req.body.phone,
+      password: passwordEncrypted,
+      id_user_state: 2
+    }, { transaction: t });
+
+    const idUserToUse = newUser.null;
+
+    // Si no existe direccion, creo una nueva direccion
+    const idAddressToUse = await searchAddress(req);
+
+    // crear relacion
+    await UserAddressModel.create({
+      id_user: idUserToUse,
+      id_address: idAddressToUse
+    }, { transaction: t });
+
+    t.commit();
+  } catch (error) {
+    console.log('Error en el guardado, Operacion Fallida');
+    console.log(error);
+    t.rollback();
+  }
+}
 
 const updateUser = async (req) => {
   const id_user = parseInt(req.params.id);
   const result = await UsersModel.update({
-    nickname: req.body.nickname,
-    name: req.body.name,
+    name: req.body.completeName,
     email: req.body.email,
     phone: req.body.phone,
     password: req.body.password,
@@ -90,12 +115,7 @@ const updateUser = async (req) => {
     },
     { where: { id: id_user } }
   );
-  console.log('nickname', req.body.nickname);
-  console.log('name', req.body.name);
-  console.log('email', req.body.email);
-  console.log('phone', req.body.phone);
-  console.log('password', req.body.password);
-  console.log('state user', req.body.id_user_state);
+
   return result;
 }
 
@@ -116,7 +136,7 @@ const listUserById = async (req) => {
 module.exports = {
   login,
   listValues,
-  createUser,
+  createUserTransaction,
   updateUser,
   deleteUser,
   listUserById

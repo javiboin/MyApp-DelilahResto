@@ -19,13 +19,13 @@ router.use(express.json());
  *      in: formData
  *      required: true
  *      type: string
- *      example: daveG
+ *      default: daveG
  *    - name: password
- *      description: Contraseña de Usuario 
+ *      description: Contraseña de Usuario. En esta API de pruebas, todas las contraseñas son "12345"
  *      in: formData
  *      required: true
  *      type: string
- *      example: 146bea927a6743c026f4084b061d3c1c
+ *      default: 12345
  *    responses:
  *      200:
  *        description: Success
