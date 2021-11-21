@@ -1,4 +1,3 @@
-// llamar al model users states
 const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const { UserState } = require('../models/userStates.model')(connection, Sequelize);
@@ -43,34 +42,8 @@ const UserModel = (connection, Sequelize) => {
     timestamps: false
   });
 
-  // relacion 1:1 Father.hasMany(Child); // Set one to many relationship
-  // los 2 define
 
-  /*  MainClient.hasOne(MainDashboard, { foreignKey: 'clientId' })
-      MainDashboard.belongsTo(MainClient, { foreignKey: 'clientId' })
-
-      class User extends Model {}
-      User.init({
-        name: Sequelize.STRING,
-        email: Sequelize.STRING
-      }, {
-      sequelize,
-      modelName: 'user'
-      });
-
-class Project extends Model {}
-Project.init({
-  name: Sequelize.STRING
-}, {
-  sequelize,
-  modelName: 'project'
-});
-
-User.hasOne(Project);
- */
   return User
 };
-
-// users.belongsTo(user_state)
 
 module.exports = UserModel;

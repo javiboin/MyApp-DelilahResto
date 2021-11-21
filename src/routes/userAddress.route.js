@@ -105,6 +105,7 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer 
  *    responses:
  *      200:
  *        description: Success
@@ -129,16 +130,19 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer 
  *    - name: id_user
  *      description: Usuario
  *      in: formData
  *      required: true
  *      type: integer
+ *      default: 1
  *    - name: id_address
  *      description: direccion
  *      in: formData
  *      required: true
  *      type: integer
+*      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -163,11 +167,13 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer 
  *    - name: id
  *      description: Id de Direccion de usuario
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -190,26 +196,19 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
- *    - name: id
- *      description: Id de producto
+ *      default: bearer 
+ *    - name: id_user
+ *      description: ID del usuario
  *      in: path
  *      required: true
  *      type: integer
- *    - name: name
- *      description: Nombre del producto
+ *      default: 1
+ *    - name: id_address
+ *      description: ID de la direccion
  *      in: formData
  *      required: false
- *      type: string
- *    - name: price
- *      description: Precio del producto
- *      in: formData
- *      required: false
- *      type: number
- *    - name: pic
- *      description: Imagen de referencia
- *      in: formData
- *      required: false
- *      type: string
+ *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -234,11 +233,13 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer 
  *    - name: id
- *      description: Id de direccion
+ *      description: Id de la relacion
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
