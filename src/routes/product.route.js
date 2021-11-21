@@ -151,6 +151,7 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    responses:
  *      200:
  *        description: Success
@@ -173,21 +174,25 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer 
  *    - name: name
  *      description: Nombre del producto
  *      in: formData
  *      required: true
  *      type: string
+ *      example: Lomo Completo
  *    - name: price
  *      description: Precio del producto
  *      in: formData
  *      required: true
  *      type: number
+ *      example: 100.00
  *    - name: pic
  *      description: Imagen de referencia
  *      in: formData
  *      required: true
  *      type: string
+ *      default: https://i.imgur.com/oFVYR34.jpeg
  *    responses:
  *      200:
  *        description: Success
@@ -212,16 +217,13 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
- *    - name: idUser_Session
- *      description: ID de usuario que realiza el cambio 
- *      in: formData
- *      required: true
- *      type: integer
+ *      default: bearer
  *    - name: id
  *      description: Id de producto
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    - name: name
  *      description: Nombre del producto
  *      in: formData
@@ -231,7 +233,7 @@ router.delete('/:id', function (req, res){
  *      description: Precio del producto
  *      in: formData
  *      required: false
- *      type: integer
+ *      type: number
  *    - name: pic
  *      description: Imagen de referencia
  *      in: formData
@@ -261,11 +263,13 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: Id de producto
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -288,11 +292,13 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: Id de producto
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 2
  *    responses:
  *      200:
  *        description: Success
