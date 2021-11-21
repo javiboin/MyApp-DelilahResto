@@ -2,25 +2,33 @@
 
 ## Install Libraries:
 ```
-npm i express -S
-npm i moment -S
-npm i swagger-ui-express swagger-jsdoc
+npm i 
+```
+## Install Database:
+```
+import file db/dellilah.db in MySQL Databases Location (C:\xampp\mysql\data) 
 ```
 ## Start Server:
+
 ```bash
-npm start 
+npm run start
+node src/index.js
+nodemon src/index.js
 ```
 
-or go to 
+## View Redis:
+```Redis
+npm run redis
+```
 
-```bash
-cd backend
-node index.js
+## View Mocha:
+```MochaJs
+npm run rest
 ```
 
 ## Swagger:
 ```
-http://localhost:3001/api-docs
+http://localhost:3030/api-docs
 ```
 ## GitHub:
 ```

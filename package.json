@@ -4,9 +4,10 @@
   "description": "App para la gestion de pedidos de comidas en Delilah Resto",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "nodemon src/index.js",
     "test": "mocha src/test/user.spec.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "redis": "redis-commander"
   },
   "repository": {
     "type": "git",
