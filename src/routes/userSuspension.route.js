@@ -22,8 +22,6 @@ router.get("/", all.isAdmin, (req, res) => {
   });
 });
 
-// cambiar el estado del usuarios
-// verificar si ya esta suspendido o si existe
 router.post("/", all.isAdmin, (req, res) => {
   userSuspensionController.createUserSuspension(req)
   .then(() => {
@@ -75,7 +73,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
   });
 });
 
-router.get("/:id", all.isAdmin, (req, res) => {
+router.get("/:iduser", all.isAdmin, (req, res) => {
   userSuspensionController.listUserSupensionById(req)
   .then((result) => {
     res.status(200).send({
@@ -108,6 +106,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    responses:
  *      200:
  *        description: Success
@@ -132,16 +131,19 @@ router.get("/:id", all.isAdmin, (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: reason
  *      description: Razon de la Suspension
  *      in: formData
  *      required: true
  *      type: string
+ *      default: Envio un pedido a una direccion falsa
  *    - name: id_user
  *      description: ID del usuario suspendido
  *      in: formData
  *      required: true
- *      type: integer   
+ *      type: integer 
+ *      default: 2  
  *    responses:
  *      200:
  *        description: Success
@@ -166,11 +168,13 @@ router.get("/:id", all.isAdmin, (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
- *    - name: id
- *      description: Id de la suspension
+ *      default: bearer
+ *    - name: iduser
+ *      description: Id del usuario con suspensiones
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -193,26 +197,25 @@ router.get("/:id", all.isAdmin, (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
- *      description: Id de producto
+ *      description: Id de la suspension
  *      in: path
  *      required: true
  *      type: integer
- *    - name: name
- *      description: Nombre del producto
+ *      default: 1
+ *    - name: reason
+ *      description: Descripcion de la suspension
  *      in: formData
  *      required: false
  *      type: string
- *    - name: price
- *      description: Precio del producto
+ *      default: Envio un pedido a una direccion falsa
+ *    - name: id_user
+ *      description: ID del usuario suspendido
  *      in: formData
  *      required: false
  *      type: number
- *    - name: pic
- *      description: Imagen de referencia
- *      in: formData
- *      required: false
- *      type: string
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -237,11 +240,13 @@ router.get("/:id", all.isAdmin, (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: Id de Suspension
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
