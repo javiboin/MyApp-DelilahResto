@@ -22,10 +22,7 @@ router.get("/", (req, res) => {
 });
 
 router.post("/", (req, res) => {
-  const bearer = req.headers.authorization.split(" ");
-  const token = bearer[1];
-  console.log(token);
-  addressController.createAddress(req.body, token)
+  addressController.createAddress(req)
   .then(() => {
     res.status(200).send({
       status: 200,
@@ -93,6 +90,24 @@ router.get("/:id", (req, res) => {
   });
 });
 
+router.get("/byuser/:id_user", (req, res) => {
+  addressController.listAddressByUser(req)
+  .then((result) => {
+    res.status(200).send({
+      status: 200,
+      message: "Data find Successfully",
+      data: result
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to find data",
+      errors: error,
+      status: 400
+    });
+  });
+});
+
 /**
  * @swagger
  * /addresses:
@@ -108,6 +123,7 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    responses:
  *      200:
  *        description: Success
@@ -132,11 +148,42 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: Id de domicilio
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
+ *    responses:
+ *      200:
+ *        description: Success
+ *      404:
+ *        description: Not found
+ */
+
+/**
+ * @swagger
+ * /addresses/byuser/{id_user}:
+ *  get:
+ *    tags:
+ *    - "Domicilios"
+ *    summary: "Ver info por ID"
+ *    description: Todos los datos de un domicilio
+ *    parameters:
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
+ *    - name: id_user
+ *      description: Id de domicilio
+ *      in: path
+ *      required: true
+ *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -159,26 +206,23 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
- *      description: Id de producto
+ *      description: Id de la direccion
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    - name: name
- *      description: Nombre del producto
+ *      description: Nombre de la calle
  *      in: formData
  *      required: false
  *      type: string
- *    - name: price
- *      description: Precio del producto
+ *    - name: number
+ *      description: Altura de la calle
  *      in: formData
  *      required: false
- *      type: number
- *    - name: pic
- *      description: Imagen de referencia
- *      in: formData
- *      required: false
- *      type: string
+ *      type: integer
  *    responses:
  *      200:
  *        description: Success
@@ -203,8 +247,9 @@ router.get("/:id", (req, res) => {
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
- *      description: Id de producto
+ *      description: Id de la direccion
  *      in: path
  *      required: true
  *      type: integer

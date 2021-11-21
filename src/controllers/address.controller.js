@@ -2,27 +2,18 @@ require("dotenv").config();
 const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const AddressModel = require('../models/address.model')(connection, Sequelize);
-
-const jwt = require('jsonwebtoken');
+const UserAddressModel = require('../models/userAddress.model')(connection, Sequelize);
 
 const listValues = async () => await AddressModel.findAll();
 
-const   createAddress = async (address, token) => {
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  console.log(decoded.user);
-
-  if (decoded.user === 'admin') {
-    return 'no autorizado';
-  }
-
-/*   const newAddress = await AddressModel.build({
-    name: address.name,
-    number: address.number,
+const   createAddress = async (req) => {
+  const newAddress = await AddressModel.build({
+    name: req.body.name,
+    number: req.body.number,
   });
 
   const result = await newAddress.save();
-  return result; */
+  return result;
 }
 
 const updateAddress = async (req) => {
@@ -50,10 +41,18 @@ const listAddressById = async (req) => {
   return result;
 }
 
+const listAddressByUser = async (req) => {
+  const id_address_user = parseInt(req.params.id_user);
+  console.log(req);
+  const result = await UserAddressModel.findAll({ where: { id_user: id_address_user } });
+  return result;
+}
+
 module.exports = {
   listValues,
   createAddress,
   updateAddress,
   deleteAddress,
-  listAddressById
+  listAddressById,
+  listAddressByUser
 };
