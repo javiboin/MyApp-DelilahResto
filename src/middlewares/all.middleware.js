@@ -2,11 +2,6 @@ require("dotenv").config();
 const jwt = require('jsonwebtoken');
 
 const access = (req, res, next) => {
-    /* tareas
-    
-    hacer un middleware que verifique el estado del usuarioEncontrado
-    middleware para detectar que no este suspendido*/
-
   try {
     const bearer = req.headers['authorization'].split(" ");
     const token = bearer[1];

@@ -43,8 +43,11 @@ const listAddressById = async (req) => {
 
 const listAddressByUser = async (req) => {
   const id_address_user = parseInt(req.params.id_user);
-  console.log(req);
-  const result = await UserAddressModel.findAll({ where: { id_user: id_address_user } });
+  const result = await UserAddressModel.findAll({ where: { 
+    id_user: id_address_user 
+    }
+  });
+
   return result;
 }
 

@@ -13,10 +13,9 @@ const OrderModel = (connection, Sequelize) => {
     },
     id_user: {
       type: Sequelize.INTEGER,
-      references: {
-        model: 'users', 
-        key: 'id'
-      }},
+      references: 'users', 
+      referencesKey: 'id'
+    },
     id_address: {
       type: Sequelize.INTEGER,
       references: 'addresses', 
@@ -37,9 +36,8 @@ const OrderModel = (connection, Sequelize) => {
     timestamps: false
   });
 
-  Order.hasOne(Address, {as: 'domicilios', foreignKey: "domicilios_id"})
+ // Order.hasOne(Address, {as: 'domicilios', foreignKey: "domicilios_id"})
 
-  console.log(Order);
   return Order
 };
 

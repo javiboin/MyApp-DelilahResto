@@ -42,42 +42,6 @@ router.post("/", (req, res) => {
   });
 });
 
-//`se puede modificar, en un estado solo los usuarios y el admin, en los demas estados lo hace solo admin
-// cuando hacemos modificaciones, tambien sucede este comportamiento, se puede editar todos los campos o solo estados
-router.put("/:id",(req, res) => {
-  OrderController.updateOrder(req)
-  .then(() => {
-    res.status(200).send({
-      status: 200,
-      message: "Data Update Successfully",
-    });
-  })
-  .catch(error => {
-    res.status(400).send({
-      message: "Unable to Update data",
-      errors: error,
-      status: 400
-    });
-  });
-});
-
-router.delete("/:id", (req, res) => {
-  OrderController.deleteOrder(req)
-  .then(() => {
-    res.status(200).send({
-      status: 200,
-      message: "Data Delete Successfully",
-    });
-  })
-  .catch(error => {
-    res.status(400).send({
-      message: "Unable to Delete data",
-      errors: error,
-      status: 400
-    });
-  });
-});
-
 router.get("/:id", (req, res) => {
   OrderController.listOrderById(req)
   .then((result) => {
@@ -96,99 +60,90 @@ router.get("/:id", (req, res) => {
   });
 });
 
-router.get('/all/:idSession', function (req, res){
-  if (administradores.isAdmin(req.params.idSession)){
-    let respuesta = {};
-    respuesta.msg = functions.listOrders();
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
+router.get("/byuser/:id_user", (req, res) => {
+  OrderController.listOrderByUser(req)
+  .then((result) => {
+    res.status(200).send({
+      status: 200,
+      message: "Data find Successfully",
+      data: result
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to find data",
+      errors: error,
+      status: 400
+    });
+  });
 });
 
-router.get('/byuser/:idUser', function (req, res){
-  let respuesta = {};
-  let resultado = functions.filterOrdersxId(req.params.idUser);
-
-  if (resultado.length === 0){ resultado = 'El usuario no ha realizado pedidos aún'}
-  respuesta.msg = resultado;
-
-  res.json(respuesta);
+router.put('/confirmar-pedido/:id',(req, res) => {
+  OrderController.confirmOrder(req)
+  .then(() => {
+    res.status(200).send({
+      status: 200,
+      message: "Data Update Successfully",
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to Update data",
+      errors: error,
+      status: 400
+    });
+  });
 });
 
-router.get('/:id', function (req, res){
-  let respuesta = {};
-  let resultado = functions.traerPedido(req.params.id);
-
-  if (resultado === undefined){ resultado = 'El pedido no existe'}
-  respuesta.msg = resultado;
-
-  res.json(respuesta);
+router.put('/state-byadmin/:id', all.isAdmin, (req, res) => {
+  OrderController.changeStateByAdmin(req)
+  .then(() => {
+    res.status(200).send({
+      status: 200,
+      message: "Data Update Successfully",
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to Update data",
+      errors: error,
+      status: 400
+    });
+  });
 });
 
-router.post('/', function (req, res){
-  let respuesta = {};
-  respuesta.msg = functions.crearOrder(req.body);
-  res.json(respuesta);
+router.put('/modificar-pedido/:id', (req, res) => {
+  OrderController.updateOrderTransaction(req)
+  .then(() => {
+    res.status(200).send({
+      status: 200,
+      message: "Data Update Successfully",
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to Update data",
+      errors: error,
+      status: 400
+    });
+  });
 });
 
-router.put('/confirmar-pedido/:id', function (req, res){ 
-  let pedido = functions.traerPedido(req.params.id);
-  let respuesta = {};
-  if (pedido.state == 0 && req.body.idUser_Session == pedido.idUser){
-    respuesta.msg = functions.confirmarPedido(req.params.id, req.body.address);
-    res.json(respuesta); 
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción"); 
-}});
-
-router.put('/estado-byadmin/:id', function (req, res){
-  /* 
-  verifico la existencia del pedido
-  verifico que le usuario es administrador, para realizar el cambio de estado
-   */
-  let pedido = functions.traerPedido(req.params.id);
-  let respuesta = {};
-
-  if (administradores.isAdmin(req.body.idUser_Session)){
-    if (pedido.state > 0){
-      respuesta.msg = functions.modificarEstadoDePedido(req.params.id, req.body.state);
-      res.json(respuesta); 
-    } else {  
-      res.json("Operación anulada. No cuenta con los permisos para realizar esta acción")};
-    } else {  
-      res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-    };
-});
-
-router.put('/modificar-pedido', function (req, res){
-  const idOrders = req.body.id;
-  let respuesta = {};
-
-  /* 
-  Validamos que se pueda modificar un pedido en los siguientes casos:
-    - Un Usuario que quiera modificar su pedido, SOLO si éste no esta confirmado
-    - Un Administrador pueda realizar cambios al pedido SOLO si esta confirmado por el usuario que creo el pedido
-   */
-  if ((req.body.state == 0 && req.body.idSession == req.body.idUser) || (req.body.state > 0 && administradores.isAdmin(req.body.idSession))){
-    respuesta.msg = functions.filterOrders(idOrders) ? functions.modificarOrder(idOrders ,req.body) : "El pedido no existe";
-    
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
-});
-
-router.delete('/:id', function (req, res){
-  const idOrders = req.params.id;
-  let respuesta = {};
-
-  if (administradores.isAdmin(req.body.idUser_Session)){
-    respuesta.msg = functions.filterOrders ? functions.borrarOrder(idOrders) : "no es correcto";
-    res.json(respuesta);
-  } else {  
-    res.json("Operación anulada. No cuenta con los permisos para realizar esta acción");
-  };
+router.delete('/:id', (req, res) => {
+  OrderController.deleteOrderTransaction(req)
+  .then(() => {
+    res.status(200).send({
+      status: 200,
+      message: "Data Delete Successfully",
+    });
+  })
+  .catch(error => {
+    res.status(400).send({
+      message: "Unable to Delete data",
+      errors: error,
+      status: 400
+    });
+  });
 });
 
 /**
@@ -206,6 +161,7 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    responses:
  *      200:
  *        description: Success
@@ -230,11 +186,13 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: idUser
  *      description: ID de usuario 
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -257,11 +215,13 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: ID del pedido
  *      in: path
  *      required: false
  *      type: integer
+ *      default: 1
  *    responses:
  *      200:
  *        description: Success
@@ -278,6 +238,13 @@ router.delete('/:id', function (req, res){
  *    summary: "Agrega Pedido"
  *    description: Guarda un nuevo pedido de comida en nuestra app
  *    parameters: 
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - in: body
  *      name: orders
  *      required: false
@@ -285,23 +252,33 @@ router.delete('/:id', function (req, res){
  *      schema:
  *        type: object
  *        properties:
- *          idUser:
+ *          total:
  *            type: number
- *            example: 1 
+ *            example: 150.00 
+ *            default: 150.00
+ *          id_user:
+ *            type: integer
+ *            default: 1
+ *          id_address:
+ *            type: integer
+ *            default: 1
+ *          id_order_state:
+ *            type: integer
+ *            default: 1
+ *          id_payment_method:
+ *            type: integer
+ *            default: 1
  *          products:
  *            type: array
  *            items:
  *              type: object
  *              properties:
- *                id:
- *                  type: number
+ *                id_product:
+ *                  type: integer
  *                  example: 1
- *                cant: 
- *                  type: number
- *                  example: 1
- *          payment:
- *            type: number
- *            example: 1 
+ *                amount: 
+ *                  type: integer
+ *                  example: 2
  *    consumes:
  *    - application/json
  *    produces:
@@ -328,16 +305,19 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: ID del Pedido
  *      in: path
  *      required: true
  *      type: integer
- *    - name: address
- *      description: Direccion alternativa, si se deja vacio se guardara la direccion que guardaste en tu perfil
+ *      default: 3
+ *    - name: id_address
+ *      description: Id de Direccion 
  *      in: formData
  *      required: false
- *      type: string
+ *      type: integer
+ *      default: 3
  *    responses:
  *      200:
  *        description: Success
@@ -349,7 +329,7 @@ router.delete('/:id', function (req, res){
 
 /**
  * @swagger
- * /orders/estado-byadmin/{id}:
+ * /orders/state-byadmin/{id}:
  *  put:
  *    tags:
  *    - "Pedidos"
@@ -362,16 +342,19 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: ID del pedido
  *      in: path
  *      required: true
  *      type: integer
+ *      default: 1
  *    - name: id_state
  *      description: Actualiza el Estado del pedido
  *      in: formData
  *      required: true
  *      type: integer
+ *      default: 3
  *    responses:
  *      200:
  *        description: Success
@@ -383,13 +366,26 @@ router.delete('/:id', function (req, res){
 
 /**
  * @swagger
- * /orders/modificar-pedido:
+ * /orders/modificar-pedido/{id}:
  *  put:
  *    tags:
  *    - "Pedidos"
  *    summary: "Modifica Pedido"
  *    description: El usuario puede realizar modificaciones al pedido antes de confirmarlo
  *    parameters: 
+ *    - name: authorization
+ *      description: token de autorizacion para acceder a la operacion 
+ *      in: header
+ *      required: false
+ *      type: string
+ *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
+ *    - name: id
+ *      description: Id de pedido
+ *      in: path
+ *      required: true
+ *      type: integer
+ *      default: 1
  *    - in: body
  *      name: orders
  *      required: false
@@ -397,32 +393,33 @@ router.delete('/:id', function (req, res){
  *      schema:
  *        type: object
  *        properties:
- *          idSession:
+ *          total:
  *            type: number
- *            example: 1 
- *          id:
- *            type: number
- *            example: 1 
- *          idUser:
- *            type: number
- *            example: 2 
- *          state:
- *            type: number
- *            example: 2 
+ *            example: 150.00 
+ *            default: 150.00
+ *          id_user:
+ *            type: integer
+ *            default: 1
+ *          id_address:
+ *            type: integer
+ *            default: 1
+ *          id_order_state:
+ *            type: integer
+ *            default: 1
+ *          id_payment_method:
+ *            type: integer
+ *            default: 1
  *          products:
  *            type: array
  *            items:
  *              type: object
  *              properties:
- *                id:
- *                  type: number
- *                  example: 3
- *                cant: 
- *                  type: number
- *                  example: 3
- *          payment:
- *            type: number
- *            example: 1 
+ *                id_product:
+ *                  type: integer
+ *                  example: 1
+ *                amount: 
+ *                  type: integer
+ *                  example: 2
  *    consumes:
  *    - application/json
  *    produces:
@@ -449,6 +446,7 @@ router.delete('/:id', function (req, res){
  *      required: false
  *      type: string
  *      example: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImRhdmVHIiwicGFzc3dvcmQiOiIxNDZiZWE5MjdhNjc0M2MwMjZmNDA4NGIwNjFkM2MxYyIsImlkX3VzZXJfc3RhdGUiOjEsImlhdCI6MTYzNjA3OTA4MCwiZXhwIjoxNjM2MDgyNjgwfQ.s-y0FRh4ebdMAhgAsb7mW7Bt1UQ1UZ09z0-t9QYpYPA
+ *      default: bearer
  *    - name: id
  *      description: Id de pedido
  *      in: path
