@@ -30,7 +30,7 @@ npm i
 npm run start
 ```
 ## 4.Swagger:
-Al iniciar servidor entrar al endpoint para usar la API
+Al iniciar el servidor, entrar al siguiente endpoint para usar la API
 ```
 http://localhost:3030/api-docs
 ```
