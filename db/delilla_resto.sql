@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2021 a las 23:47:22
+-- Tiempo de generación: 27-11-2021 a las 23:03:50
 -- Versión del servidor: 10.4.21-MariaDB
 -- Versión de PHP: 8.0.10
 
@@ -210,7 +210,6 @@ INSERT INTO `products` (`id`, `name`, `price`, `pic`, `id_product_state`) VALUES
 (3, 'Papas con Cheddar y ', 600.00, 'https://i.imgur.com/5BKqHkv.jpeg', 1),
 (5, 'Hamburguesa completa', 750.00, 'https://i.imgur.com/0p1Njec.jpeg', 1),
 (6, 'Hamburguesa Vegana', 600.00, 'https://i.imgur.com/QnI5jFM.jpeg', 1),
-(12, 'poko', 130.00, '123', 1),
 (13, 'Bondiolin', 100.00, 'https://i.imgur.com/oFVYR34.jpeg', 1);
 
 -- --------------------------------------------------------
@@ -260,13 +259,8 @@ INSERT INTO `users` (`id`, `nickname`, `name`, `email`, `phone`, `password`, `id
 (6, 'caosf', 'Cosme Fulanito', 'nuevo@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 1),
 (7, 'ramiJ', 'Rami Jaffee', 'ramithebest2020@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 3),
 (8, 'caosf', 'Cosme Fulanito', 'nuevo@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 1),
-(9, 'caosf', 'Cosme Fulanito', 'nuevo@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 1),
-(10, 'daveG', 'Cosme Fulanito', 'nuevo@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 1),
-(11, 'daveG', 'Cosme Fulanito', 'nuevo@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 1),
-(12, 'daveG', 'Cosme Fulanito', 'nuevo@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 1),
-(13, 'daveG', 'Cosme Fulanito', 'nuevo@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 1),
 (14, 'patS', 'Cosme Fulanito', 'nuevo@gmail.com', 1234567, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 1),
-(16, 'JaviDev', '', 'javijavijavi@gmail.com', 2147483647, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 2),
+(16, 'JaviDev', 'Javier Oyarzo', 'javijavijavi@gmail.com', 2147483647, '$2a$08$d3dMOaVtYiCLMNQlr7fG8euZOX432GkHjpsa6ZWuqF3bekOY.heEW', 2),
 (17, 'usuario12', 'Calle False', 'fulanito123@gmail.com', 2147483647, '$2a$08$zBtSAIBL6GFir21SGbVRQuWYE9nyWFDA2MREMgEmDGqGcz8nCZqCi', 2),
 (18, 'usuario1xxx', 'Calle False', 'fulanitoxxxx@gmail.com', 2147483647, '$2a$08$MnTDjpHxlKiZRAkOS7WedOl8FXosywFj.mFSfncReSCiVBhs08iJC', 2),
 (24, 'usuario1744', 'Calle False', 'fulanito123vww@gmail.com', 2147483647, '$2a$08$ubquDoBUolEG8d4KCadHPeHdjJj6xUgEaByEMHFzusJWSJw6Leg9O', 2),

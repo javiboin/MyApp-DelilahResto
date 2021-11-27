@@ -1,16 +1,14 @@
 # My App - Delilah Resto
 
-## Install Libraries:
-```
-npm i 
-```
-## Install Database:
+## 1.Install Database:
 
-Importar archivo db/dellilah.db in MySQL Databases Location (C:\xampp\mysql\data) 
+1) Importar archivo db/dellilah.db en su administrador de base de datos 
+```
+db\delilla_resto.sql
+```
 
-En el Archivo .env definir el nombre de las base de datos. 
+2) En el Archivo .env definir el nombre de las base de datos. 
 Por defecto su nombre es delilla_resto
-
 ```
 
 DB_HOST=localhost
@@ -23,29 +21,35 @@ MYSQL_DELILAH_DB_NAME=delilla_resto
 JWT_SECRET=clavesegura
 
 ```
-## Start Server:
-
+## 2.Install Libraries:
+```
+npm i 
+```
+## 3.Start Server:
 ```bash
 npm run start
-node src/index.js
-nodemon src/index.js
 ```
-
-## View Redis:
-```Redis
-npm run redis
-```
-
-## View Mocha:
-```MochaJs
-npm run rest
-```
-
-## Swagger:
+## 4.Swagger:
 ```
 http://localhost:3030/api-docs
 ```
+## 5.View Redis Commander:
+Para ver la memoria cache del sistema
+Utilizar el comando para inicializar:
+```Redis
+npm run redis
+```
+Luego, entrar al endpoint:
+```
+http://127.0.0.1:8081
+```
+## 6.View Mocha:
+Ver pruebas unitarias
+```MochaJs
+npm run rest
+```
 ## GitHub:
+Repositorio en GitHub
 ```
 https://github.com/javiboin
 ```
