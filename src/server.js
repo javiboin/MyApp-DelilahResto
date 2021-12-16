@@ -31,8 +31,8 @@ app.use('/order-states', all.access, orderStates);
 const paymentMethods = require('./routes/paymentMethod.route');
 app.use('/payment-methods', all.access, paymentMethods);
 
-const products = require('./routes/product.route');
-app.use('/products', all.access, products);
+/* const products = require('./routes/product.route');
+app.use('/products', all.access, products); */
 
 const productStates = require('./routes/productState.route');
 app.use('/product-states', all.access, productStates);
