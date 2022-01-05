@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const app = require('./server');
 const connection = require("./config/db.config");
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3000;
 const host = 'http://localhost'
 const URL = `${host}:${PORT}`;
 
