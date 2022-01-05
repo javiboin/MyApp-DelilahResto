@@ -7,6 +7,9 @@ const host = 'http://localhost'
 const URL = `${host}:${PORT}`;
 
 app.set('apiname', 'Delilah Resto API');
+app.get('/', (req, res) => {
+  res.send("Hello World");
+});
 
 (async () =>{
   await app.listen(PORT, () => {
