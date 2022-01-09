@@ -8,11 +8,12 @@ const URL = `${host}:${PORT}`;
 
 app.set('apiname', 'Delilah Resto API');
 app.get('/', (req, res) => {
+  console.log("hola");
   res.send("Hello World");
 });
 
 (async () =>{
-  await app.listen(PORT, () => {
+   app.listen(PORT, () => {
     console.log(app.get('apiname'));
     console.log(`Server is running on port ${URL}.`);
     connection.authenticate().then(() => {

@@ -83,8 +83,8 @@ try {
 app.use(function(req, res, next) {
   console.log(req.params);
   const respuesta = `${req.method} ${req.url} path: ${req.path} ${req.statusCode} ${req.statusMessage}}`;
-  
-  res.json(respuesta);
+
+//  res.json('esto funciona');
   console.log(respuesta);
 
   next();
