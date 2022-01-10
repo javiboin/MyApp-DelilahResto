@@ -74,7 +74,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 try {
-  app.use('/api-docs/', swaggerUI.serve, swaggerUI.setup(swaggerDocs)); 
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs)); 
 } catch(error) {
   console.log(error);
 }

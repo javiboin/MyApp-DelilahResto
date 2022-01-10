@@ -29,6 +29,8 @@ const login = async (info) => {
   const username = info.nickname;
   const password = info.password;
 
+  console.log(username, password);
+
   const usuarioEncontrado = await UsersModel.findOne({ where: { 
     nickname : username
   } });
