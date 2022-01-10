@@ -8,8 +8,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
 
-app.use(helmet());
-
 /* -------------- IMPORTAR RUTAS -------------------- */
 const all = require('./middlewares/all.middleware');
 
@@ -78,6 +76,8 @@ try {
 } catch(error) {
   console.log(error);
 }
+
+app.use(helmet());
 
 /* -------------- ENDPOINT GENERAL -------------------- */
 app.use(function(req, res, next) {

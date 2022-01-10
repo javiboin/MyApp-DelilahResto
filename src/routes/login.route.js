@@ -35,10 +35,6 @@ router.use(express.json());
  *        description: Not found
  */
 
-  router.get('/', (req, res) => {
-    res.send('llego el get para quedarse');
-  };
-
   router.post('/', (req, res) => {
     functions.login(req.body)
     .then((result) => {
