@@ -60,10 +60,10 @@ const swaggerOptions = {
     }
   },
   apis: [
-    './src/routes/login.route.js', './src/routes/user.route.js',
-    './src/routes/userAddress.route.js', './src/routes/userState.route.js', './src/routes/userSuspension.route.js', 
+    './src/routes/login.route.js' , './src/routes/user.route.js' ,
+    './src/routes/userAddress.route.js', './src/routes/userState.route.js', './src/routes/userSuspension.route.js',
     './src/routes/product.route.js', './src/routes/productState.route.js',
-    './src/routes/paymentMethod.route.js', './src/routes/address.route.js', 
+    './src/routes/paymentMethod.route.js', './src/routes/address.route.js',
     './src/routes/order.route.js', './src/routes/orderDetail.route.js',
     './src/routes/orderState.route.js'
   ]
@@ -71,13 +71,9 @@ const swaggerOptions = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-try {
-  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs)); 
-} catch(error) {
-  console.log(error);
-}
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
-app.use(helmet());
+  app.use(helmet());
 
 /* -------------- ENDPOINT GENERAL -------------------- */
 app.use(function(req, res, next) {

@@ -5,8 +5,13 @@ const ProductModel = require('../models/product.model')(connection, Sequelize);
 
 const redis = require('redis');
 const bluebird = require('bluebird');
+
 bluebird.promisifyAll(redis);
-const redisClient = redis.createClient();
+
+const redisClient = redis.createClient({
+  host: process.env.ELASTICACHE_URL,
+  port: 6379
+});
 
 redisClient.on('err', err => { console.log(err) });
 
