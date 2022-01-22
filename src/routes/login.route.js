@@ -7,7 +7,7 @@ router.use(express.json());
 
 /**
  * @swagger
- * /login:
+ * /api/login:
  *  post:
  *    tags:
  *    - "Login"

@@ -93,7 +93,7 @@ router.get("/:iduser", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-suspensions:
+ * /api/user-suspensions:
  *  get:
  *    tags:
  *    - "Suspension de Usuarios" 
@@ -118,7 +118,7 @@ router.get("/:iduser", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-suspensions:
+ * /api/user-suspensions:
  *  post:
  *    tags:
  *    - "Suspension de Usuarios"
@@ -155,7 +155,7 @@ router.get("/:iduser", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-suspensions/{id}:
+ * /api/user-suspensions/{id}:
  *  get:
  *    tags:
  *    - "Suspension de Usuarios"
@@ -184,7 +184,7 @@ router.get("/:iduser", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-suspensions/{id}:
+ * /api/user-suspensions/{id}:
  *  put:
  *    tags:
  *    - "Suspension de Usuarios"
@@ -227,7 +227,7 @@ router.get("/:iduser", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-suspensions/{id}:
+ * /api/user-suspensions/{id}:
  *  delete:
  *    tags:
  *    - "Suspension de Usuarios"

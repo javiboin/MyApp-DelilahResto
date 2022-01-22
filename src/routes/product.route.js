@@ -137,7 +137,7 @@ router.delete('/:id', function (req, res){
 
 /**
  * @swagger
- * /products:
+ * /api/products:
  *  get:
  *    tags:
  *    - "Productos"
@@ -160,7 +160,7 @@ router.delete('/:id', function (req, res){
 
 /**
  * @swagger
- * /products:
+ * /api/products:
  *  post:
  *    tags:
  *    - "Productos"
@@ -203,7 +203,7 @@ router.delete('/:id', function (req, res){
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *  put:
  *    tags:
  *    - "Productos"
@@ -249,7 +249,7 @@ router.delete('/:id', function (req, res){
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *  get:
  *    tags:
  *    - Productos
@@ -278,7 +278,7 @@ router.delete('/:id', function (req, res){
 
 /**
  * @swagger
- * /products/{id}:
+ * /api/products/{id}:
  *  delete:
  *    tags:
  *    - "Productos"

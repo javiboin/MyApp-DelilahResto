@@ -96,7 +96,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /payment-methods:
+ * /api/payment-methods:
  *  get:
  *    tags:
  *    - "Medios de Pago" 
@@ -122,7 +122,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /payment-methods:
+ * /api/payment-methods:
  *  post:
  *    tags:
  *    - "Medios de Pago" 
@@ -153,7 +153,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /payment-methods/{id}:
+ * /api/payment-methods/{id}:
  *  put:
  *    tags:
  *    - "Medios de Pago" 
@@ -189,7 +189,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /payment-methods/{id}:
+ * /api/payment-methods/{id}:
  *  delete:
  *    tags:
  *    - "Medios de Pago"

@@ -93,7 +93,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-states:
+ * /api/user-states:
  *  get:
  *    tags:
  *    - "Estado de Usuarios" 
@@ -118,7 +118,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-states/{id}:
+ * /api/user-states/{id}:
  *  get:
  *    tags:
  *    - "Estado de Usuarios"
@@ -147,7 +147,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-states/{id}:
+ * /api/user-states/{id}:
  *  put:
  *    tags:
  *    - "Estado de Usuarios"
@@ -184,7 +184,7 @@ router.delete("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /user-states/{id}:
+ * /api/user-states/{id}:
  *  delete:
  *    tags:
  *    - "Estado de Usuarios"

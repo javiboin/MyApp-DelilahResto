@@ -92,7 +92,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /user-address:
+ * /api/user-address:
  *  get:
  *    tags:
  *    - "Direcciones de Usuarios" 
@@ -117,7 +117,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /user-address:
+ * /api/user-address:
  *  post:
  *    tags:
  *    - "Direcciones de Usuarios"
@@ -154,7 +154,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /user-address/{id}:
+ * /api/user-address/{id}:
  *  get:
  *    tags:
  *    - "Direcciones de Usuarios"
@@ -183,7 +183,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /user-address/{id}:
+ * /api/user-address/{id}:
  *  put:
  *    tags:
  *    - "Direcciones de Usuarios"
@@ -220,7 +220,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /user-address/{id}:
+ * /api/user-address/{id}:
  *  delete:
  *    tags:
  *    - "Direcciones de Usuarios"

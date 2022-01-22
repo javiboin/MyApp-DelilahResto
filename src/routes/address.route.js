@@ -110,7 +110,7 @@ router.get("/byuser/:id_user", (req, res) => {
 
 /**
  * @swagger
- * /addresses:
+ * /api/addresses:
  *  get:
  *    tags:
  *    - "Domicilios" 
@@ -135,7 +135,7 @@ router.get("/byuser/:id_user", (req, res) => {
 
 /**
  * @swagger
- * /addresses/{id}:
+ * /api/addresses/{id}:
  *  get:
  *    tags:
  *    - "Domicilios"
@@ -164,7 +164,7 @@ router.get("/byuser/:id_user", (req, res) => {
 
 /**
  * @swagger
- * /addresses/byuser/{id_user}:
+ * /api/addresses/byuser/{id_user}:
  *  get:
  *    tags:
  *    - "Domicilios"
@@ -193,7 +193,7 @@ router.get("/byuser/:id_user", (req, res) => {
 
 /**
  * @swagger
- * /addresses/{id}:
+ * /api/addresses/{id}:
  *  put:
  *    tags:
  *    - "Domicilios"
@@ -234,7 +234,7 @@ router.get("/byuser/:id_user", (req, res) => {
 
 /**
  * @swagger
- * /addresses/{id}:
+ * /api/addresses/{id}:
  *  delete:
  *    tags:
  *    - "Domicilios"

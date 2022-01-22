@@ -93,7 +93,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /product-states:
+ * /api/product-states:
  *  get:
  *    tags:
  *    - "Estado de los Productos" 
@@ -118,7 +118,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /product-states/{id}:
+ * /api/product-states/{id}:
  *  get:
  *    tags:
  *    - "Estado de los Productos"
@@ -147,7 +147,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /product-states:
+ * /api/product-states:
  *  post:
  *    tags:
  *    - "Estado de los Productos"
@@ -178,7 +178,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /product-states/{id}:
+ * /api/product-states/{id}:
  *  put:
  *    tags:
  *    - "Estado de los Productos"
@@ -215,7 +215,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /product-states/{id}:
+ * /api/product-states/{id}:
  *  delete:
  *    tags:
  *    - "Estado de los Productos"

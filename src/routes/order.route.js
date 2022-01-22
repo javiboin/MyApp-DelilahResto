@@ -148,7 +148,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @swagger
- * /orders:
+ * /api/orders:
  *  get:
  *    tags:
  *    - "Pedidos" 
@@ -173,7 +173,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @swagger
- * /orders/byuser/{idUser}:
+ * /api/orders/byuser/{idUser}:
  *  get:
  *    tags:
  *    - "Pedidos"
@@ -202,7 +202,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @swagger
- * /orders/{id}:
+ * /api/orders/{id}:
  *  get:
  *    tags:
  *    - "Pedidos"
@@ -231,7 +231,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @swagger
- * /orders:
+ * /api/orders:
  *  post:
  *    tags:
  *    - "Pedidos"
@@ -292,7 +292,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @swagger
- * /orders/confirmar-pedido/{id}:
+ * /api/orders/confirmar-pedido/{id}:
  *  put:
  *    tags:
  *    - "Pedidos"
@@ -329,7 +329,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @swagger
- * /orders/state-byadmin/{id}:
+ * /api/orders/state-byadmin/{id}:
  *  put:
  *    tags:
  *    - "Pedidos"
@@ -366,7 +366,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @swagger
- * /orders/modificar-pedido/{id}:
+ * /api/orders/modificar-pedido/{id}:
  *  put:
  *    tags:
  *    - "Pedidos"
@@ -433,7 +433,7 @@ router.delete('/:id', (req, res) => {
 
 /**
  * @swagger
- * /orders/{id}:
+ * /api/orders/{id}:
  *  delete:
  *    tags:
  *    - "Pedidos"

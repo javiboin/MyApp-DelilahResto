@@ -96,7 +96,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /users:
+ * /api/users:
  *  get:
  *    tags:
  *    - "Usuarios" 
@@ -179,7 +179,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *  put:
  *    tags:
  *    - "Usuarios"
@@ -236,7 +236,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *  get:
  *    tags:
  *    - "Usuarios"
@@ -265,7 +265,7 @@ router.get("/:id", (req, res) => {
 
 /**
  * @swagger
- * /users/{id}:
+ * /api/users/{id}:
  *  delete:
  *    tags:
  *    - "Usuarios"

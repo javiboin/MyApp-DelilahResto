@@ -93,7 +93,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /order-states:
+ * /api/order-states:
  *  get:
  *    tags:
  *    - "Estados de los Pedidos" 
@@ -118,7 +118,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /order-states:
+ * /api/order-states:
  *  post:
  *    tags:
  *    - "Estados de los Pedidos"
@@ -149,7 +149,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /order-states/{id}:
+ * /api/order-states/{id}:
  *  get:
  *    tags:
  *    - "Estados de los Pedidos"
@@ -177,7 +177,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /order-states/{id}:
+ * /api/order-states/{id}:
  *  put:
  *    tags:
  *    - "Estados de los Pedidos"
@@ -212,7 +212,7 @@ router.get("/:id", all.isAdmin, (req, res) => {
 
 /**
  * @swagger
- * /order-states/{id}:
+ * /api/order-states/{id}:
  *  delete:
  *    tags:
  *    - "Estados de los Pedidos"
