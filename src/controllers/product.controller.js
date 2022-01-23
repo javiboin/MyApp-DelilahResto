@@ -34,7 +34,7 @@ const redisClient = redis.createClient({
 
 const getProducts = async() => {
   const productsRedisKey = "products";
-  redisClient.get(productRedisKey, async (error, result) => {
+  redisClient.get(productsRedisKey, async (error, result) => {
     if(error) {
       return error;
     }
@@ -43,10 +43,10 @@ const getProducts = async() => {
       return result
     } else {
       const product = await ProductModel.findAll();
-      redisClient.set(productRedisKey, JSON.stringify(product));
+      redisClient.set(productsRedisKey, JSON.stringify(product));
       return product
     }
-  }
+  })
 }
 
 const createProduct = async (req) => {
