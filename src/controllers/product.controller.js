@@ -13,60 +13,41 @@ const redisClient = redis.createClient({
   port: 6379
 });
 
-//redisClient.on('err', err => { console.log(err) });
+redisClient.on('err', err => { console.log(err) });
 
-//const getProducts = async() => {
-//  const productsOnRedis = await redisClient.getAsync('all-products');
-//
-//  if (productsOnRedis !== null) {
-//    return JSON.parse(productsOnRedis);
-//  } else {
-//    const result = await ProductModel.findAll()
-//      .then((res) => {
-//        redisClient.set('all-products', JSON.stringify(res), 'EX', 60 * 20);
-//        return res;
-//      })
-//      .catch((err) => {
-//        return err});
-//      return result;
-//      }
-//}
+const getProducts = async() => {
+  const productsOnRedis = await redisClient.getAsync('all-products');
 
-const getProducts007 = async() => {
-  const productsRedisKey = "products";
-  redisClient.get(productsRedisKey, async (error, result) => {
-    if(error) {
-      return error;
-    }
-
-    if (result) {
-      return result;
-    } else {
-      const product = await ProductModel.findAll();
-      redisClient.set(productsRedisKey, JSON.stringify(product));
-      return { product }
-    }
-  })
-}
-
-const getproducts = async() => {
-  const productsRedisKey = await redisClient.getAsync('all-products');
-
-  if (productsRedisKey !== null) {
-    return JSON.parse(productsRedisKey);
+  if (productsOnRedis !== null) {
+    return JSON.parse(productsOnRedis);
   } else {
-    const result = await ProductModel.findeAll();
-    .then((res) => {
-     redisClient.set('all-products', JSON.stringify(res), 'EX', 60 * 20);
-     return res;
-    })
-    .catch((err) => {
-      return err
-    });
-  return result;
-  }
-
+    const result = await ProductModel.findAll()
+      .then((res) => {
+        redisClient.set('all-products', JSON.stringify(res), 'EX', 60 * 20);
+        return res;
+      })
+      .catch((err) => {
+        return err});
+      return result;
+      }
 }
+
+//const getProducts007 = async() => {
+//  const productsRedisKey = "products";
+//  redisClient.get(productsRedisKey, async (error, result) => {
+//    if(error) {
+//      return error;
+//    }
+//
+//    if (result) {
+//      return result;
+//    } else {
+//      const product = await ProductModel.findAll();
+//      redisClient.set(productsRedisKey, JSON.stringify(product));
+//      return { product }
+//    }
+//  })
+//}
 
 const createProduct = async (req) => {
   const newProduct = await ProductModel.build({
