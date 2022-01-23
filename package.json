@@ -40,6 +40,7 @@
     "node-fetch": "^2.6.1",
     "nodemon": "^2.0.12",
     "redis": "^3.1.2",
+    "redis-commander": "^0.7.2",
     "sequelize": "^6.6.5",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6"
