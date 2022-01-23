@@ -32,7 +32,7 @@ const redisClient = redis.createClient({
 //      }
 //}
 
-const getProducts = async() => {
+const getProducts007 = async() => {
   const productsRedisKey = "products";
   redisClient.get(productsRedisKey, async (error, result) => {
     if(error) {
@@ -40,13 +40,32 @@ const getProducts = async() => {
     }
 
     if (result) {
-      return result
+      return result;
     } else {
       const product = await ProductModel.findAll();
       redisClient.set(productsRedisKey, JSON.stringify(product));
-      return product
+      return { product }
     }
   })
+}
+
+const getproducts = async() => {
+  const productsRedisKey = await redisClient.getAsync('all-products');
+
+  if (productsRedisKey !== null) {
+    return JSON.parse(productsRedisKey);
+  } else {
+    const result = await ProductModel.findeAll();
+    .then((res) => {
+     redisClient.set('all-products', JSON.stringify(res), 'EX', 60 * 20);
+     return res;
+    })
+    .catch((err) => {
+      return err
+    });
+  return result;
+  }
+
 }
 
 const createProduct = async (req) => {

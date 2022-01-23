@@ -19,10 +19,10 @@ const compareHash = async (password, hashToConvert) => {
 
 /*
   const passwordEncrypted = await createHash(password);
-    console.log(passwordEncrypted); 
-  
+    console.log(passwordEncrypted);
+
   const passwordDesencrypted = await compareHash(password, passwordEncrypted);
-    console.log(passwordDesencrypted); 
+    console.log(passwordDesencrypted);
 */
 
 const login = async (info) => {
