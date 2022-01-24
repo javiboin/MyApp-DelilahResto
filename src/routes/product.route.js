@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     res.status(200).send({
       status: 200,
       message: "Data find Successfully",
-      data: "result"
+      data: result
     });
   })
   .catch(error => {
