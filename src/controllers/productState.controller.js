@@ -3,8 +3,10 @@ const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const ProductStateModel = require('../models/productState.model')(connection, Sequelize);
 
+// MOSTRAR LOS ESTADOS DE LOS PRODUCTOS, SI ESTAN EN DISPONIBILIDAD O NO
 const listValues = async () => await ProductStateModel.findAll();
 
+// CREAR EL ESTADO DE LOS PRODUCTOS
 const createProductState = async (req) => {
   const newProductState = await ProductStateModel.build({
     name: req.body.name
@@ -14,6 +16,7 @@ const createProductState = async (req) => {
   return result;
 }
 
+// MODIFICAR EL ESTADO DE LOS PRODUCTOS
 const updateProductState = async (req) => {
   const id_product_state = parseInt(req.params.id);
   const result = await ProductStateModel.update({
@@ -24,6 +27,7 @@ const updateProductState = async (req) => {
   return result;
 }
 
+// BORRAR EL ESTADO DE LOS PRODUCTOS
 const deleteProductState = async (req) => {
   const id_product_state = parseInt(req.params.id);
   const result = await ProductStateModel.destroy({
@@ -32,6 +36,7 @@ const deleteProductState = async (req) => {
   return result;
 }
 
+// MOSTRAR UN ESTADO DE PRODUCTOS SEGUN ID
 const listProductStateById = async (req) => {
   const id_product_state = parseInt(req.params.id);
   const result = await ProductStateModel.findOne({ where: { id: id_product_state } });

@@ -5,11 +5,13 @@ const connection = require("../config/db.config");
 const OrderModel = require('../models/order.model')(connection, Sequelize);
 const OrderDetailModel = require('../models/orderDetail.model')(connection, Sequelize);
 
+// MOSTRAR TODOS LOS PEDIDOS
 const listValues = async () => {
   const result = await OrderModel.findAll();
   return result;
 };
 
+// CREAR UN PEDIDO
 const createOrder = async (req) => {
   const newOrder = await OrderModel.build({
     total: req.body.total,
@@ -23,6 +25,7 @@ const createOrder = async (req) => {
   return result;
 }
 
+// CREAR PEDIDO CON LA TRANSACCION Y LA CREACION DEL DETALLE DEL PEDIDO
 const createOrderTransaction = async (req) => {
   const t =  await connection.transaction();
   try {
@@ -64,8 +67,7 @@ const createOrderTransaction = async (req) => {
   }
 }
 
-// con transaccion
-// guardar nuevos 
+// MODIFICAR PEDIDO
 const updateOrderTransaction = async (req) => {
   const idOrder = parseInt(req.params.id)
   console.log('empezar con la transaccion');
@@ -152,6 +154,7 @@ const updateOrderTransaction = async (req) => {
   return result;
 } */
 
+// CONFIRMAR PEDIDO, CAMBIAR EL VALOR DEL ESTADO EN 1
 const confirmOrder = async (req) => {
   const id_order = parseInt(req.params.id);
 
@@ -177,6 +180,7 @@ const changeStateByAdmin = async (req) => {
   return result;
 }
 
+// BORRAR UN PEDIDO CON EL DETALLE DEL PEDIDO
 const deleteOrderTransaction = async (req) => {
   const t =  await connection.transaction();
   try {
@@ -198,12 +202,14 @@ const deleteOrderTransaction = async (req) => {
   }
 }
 
+// MOSTRAR PEDIDO SEGUN ID
 const listOrderById = async (req) => {
   const id_order = parseInt(req.params.id);
   const result = await OrderModel.findOne({ where: { id: id_order } });
   return result;
 }
 
+// MOSTRAR PEDIDO SEGUN USUARIO
 const listOrderByUser = async (req) => {
   const idUser = req.params.id_user;
   const result = await OrderModel.findAll({ where: { id_user: idUser } });

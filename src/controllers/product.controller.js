@@ -8,13 +8,16 @@ const bluebird = require('bluebird');
 
 bluebird.promisifyAll(redis);
 
+// CONEXION CON REDIS, PORT HARDCODEADO, ESTA MAL, MODIFICAR MOSTRO
 const redisClient = redis.createClient({
   host: process.env.ELASTICACHE_URL,
   port: 6379
 });
 
+// PRENDER SERVIDOR REDIS, YA SE ENCUENTRA PRENDIDO DESDE AWS
 redisClient.on('err', err => { console.log(err) });
 
+// MOSTRAR TODOS LOS PRODUCTOS, DESDE EL CACHE, SI NO EXISTE TOMAR DESDE LA BASE DE DATOS
 const getProducts = async() => {
   const productsOnRedis = await redisClient.getAsync('all-products');
 
@@ -49,6 +52,7 @@ const getProducts = async() => {
 //  })
 //}
 
+// CREAR UN PRODUCTO, REVISAR CAMPOS
 const createProduct = async (req) => {
   const newProduct = await ProductModel.build({
     name: req.body.name,
@@ -61,6 +65,7 @@ const createProduct = async (req) => {
   return result;
 }
 
+// MODIFICAR UN PRODUCTO
 const updateProduct = async (req) => {
   const id_product = parseInt(req.params.id);
   const result = await ProductModel.update({
@@ -71,7 +76,7 @@ const updateProduct = async (req) => {
     { where: { id: id_product } }
   );
 
-  // actualizar redis  !!!!!!!!!!!!!
+  // actualizar redis  !!!!!!!!!!!!! REVISAR ESTA SENTENCIA
   if (req.body.price !== undefined) { 
     await ProductModel.findAll()
     .then((res) => {
@@ -85,6 +90,7 @@ const updateProduct = async (req) => {
   return result;
 }
 
+// BORRAR PRODUCTO
 const deleteProduct = async (req) => {
   const id_product = parseInt(req.params.id);
   const result = await ProductModel.destroy({
@@ -93,6 +99,7 @@ const deleteProduct = async (req) => {
   return result;
 }
 
+// LISTAR PRODUCTOS SEGUN ID
 const listProductById = async (req) => {
   const id_product = parseInt(req.params.id);
   const result = await ProductModel.findOne({ where: { id: id_product } });

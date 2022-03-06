@@ -1,6 +1,7 @@
 require('dotenv').config()
 const Sequelize = require('sequelize');
 
+// Conexion con Sequelize a la Base de Datos, utilizando variables de entorno
 const connection = new Sequelize(
   process.env.MYSQL_DELILAH_DB_NAME,
   process.env.DB_USER,

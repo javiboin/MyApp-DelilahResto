@@ -4,14 +4,18 @@ const connection = require("../config/db.config");
 const UsersModel = require('../models/user.model')(connection, Sequelize);
 const AddressModel = require('../models/address.model')(connection, Sequelize);
 const UserAddressModel = require('../models/userAddress.model')(connection, Sequelize);
+
+// METODOS DE ENCRIPTACION, UTILIZAR EN TODA LA APP, POR SEGURIDAD, ANOTAR
 const jwt = require('jsonwebtoken');
 const bcryptjs = require('bcryptjs');
 
+// CREAR UN HASH PARA ENCRIPTAR
 const createHash = async (passwordToConvert) => {
   const newHash = await bcryptjs.hash(passwordToConvert, 8);
   return newHash;
 };
 
+// DESENCRIPTAR MENSAJE
 const compareHash = async (password, hashToConvert) => {
   const compare = await bcryptjs.compare(password, hashToConvert);
   return compare;
@@ -25,6 +29,7 @@ const compareHash = async (password, hashToConvert) => {
     console.log(passwordDesencrypted);
 */
 
+// FUNCION LOGIN, UTILIZAR ACA LOS METODOS DE AUTENTICACION? USO DE ENCRIPTACION
 const login = async (info) => {
   const username = info.nickname;
   const password = info.password;
@@ -51,8 +56,10 @@ const login = async (info) => {
   }
 };
 
+// MOSTRAR LOS USUARIOS DEL SISTEMA
 const listValues = async () => await UsersModel.findAll();
 
+// BUSCAR UNA DOMICILIO
 const searchAddress = async (req) => {
   const direccionEncontrada = await AddressModel.findOne({ where: { 
     name: req.body.name,
@@ -73,6 +80,7 @@ const searchAddress = async (req) => {
   }
 }
 
+// CREAR UN USUARIO CON LAS TRANSACCIONES, OK
 const createUserTransaction = async (req) => {
   const t = await connection.transaction();
   try {
@@ -106,6 +114,7 @@ const createUserTransaction = async (req) => {
   }
 }
 
+// MODIFICAR USUARIOS, TENER CUIDADO CON LAS INTEGRACIONES, QUE HACER EN ESTE CASO DE USO
 const updateUser = async (req) => {
   const id_user = parseInt(req.params.id);
   const result = await UsersModel.update({
@@ -121,6 +130,7 @@ const updateUser = async (req) => {
   return result;
 }
 
+// BORRAR USUARIOS
 const deleteUser = async (req) => {
   const id_user = parseInt(req.params.id);
   const result = await UsersModel.destroy({
@@ -129,6 +139,7 @@ const deleteUser = async (req) => {
   return result;
 }
 
+// MOSTRAR USUARIO SEGUN ID
 const listUserById = async (req) => {
   const id_user = parseInt(req.params.id);
   const result = await UsersModel.findOne({ where: { id: id_user } });

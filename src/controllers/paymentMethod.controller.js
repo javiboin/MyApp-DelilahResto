@@ -3,8 +3,10 @@ const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const paymentMethodModel = require('../models/paymentMethod.model')(connection, Sequelize);
 
+// LISTAR TODOS LOS METODOS DE PAGO
 const listValues = async () => await paymentMethodModel.findAll();
 
+// CREAR UN METODO DE PAGO
 const createPaymentMethod = async (req) => {
   const newPaymentMethod = await paymentMethodModel.build({
     name: req.body.name
@@ -14,6 +16,7 @@ const createPaymentMethod = async (req) => {
   return result;
 }
 
+// MODIFICAR UN METODO DE PAGO
 const updatePaymentMethod = async (req) => {
   const id_payment_method = parseInt(req.params.id);
   const result = await paymentMethodModel.update({
@@ -24,6 +27,7 @@ const updatePaymentMethod = async (req) => {
   return result;
 }
 
+// BORRAR UN METODO DE PAGO
 const deletePaymentMethod = async (req) => {
   const id_payment_method = parseInt(req.params.id);
   const result = await paymentMethodModel.destroy({
@@ -32,6 +36,7 @@ const deletePaymentMethod = async (req) => {
   return result;
 }
 
+// MOSTAR UN METODO DE PAGO SEGUN ID
 const listPaymentMethodById = async (req) => {
   const id_payment_method = parseInt(req.params.id);
   const result = await paymentMethodModel.findOne({ where: { id: id_payment_method } });

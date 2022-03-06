@@ -4,8 +4,10 @@ const connection = require("../config/db.config");
 const orderStateModel = require('../models/orderState.model')(connection, Sequelize);
 const all = require('../middlewares/all.middleware');
 
+// MOSTAR ESTADO DE UN PEDIDO
 const listValues = async () => await orderStateModel.findAll();
 
+// CREAR ESTADO DE LOS PRODUCTOS
 const createOrderState = async (req) => {
   const newOrderState = await orderStateModel.build({
     name: req.body.name
@@ -15,6 +17,7 @@ const createOrderState = async (req) => {
   return result;
 }
 
+// MODIFICAR ESTADO DE LOS PEDIDOS
 const updateOrderState = async (req) => {
   const id_order_state = parseInt(req.params.id);
     const result = await orderStateModel.update({
@@ -25,6 +28,7 @@ const updateOrderState = async (req) => {
     return result;
 }
 
+// BORRAR ESTADO DE LOS PEDIDOS
 const deleteOrderState = async (req) => {
   const id_order_state = parseInt(req.params.id);
   const result = await orderStateModel.destroy({
@@ -33,6 +37,7 @@ const deleteOrderState = async (req) => {
   return result;
 }
 
+// MOSTAR EL ESTADO DEL PEDIDO SEGUN ID
 const listOrderStateById = async (req) => {
   const id_order_state = parseInt(req.params.id);
   const result = await orderStateModel.findOne({ where: { id: id_order_state } });
