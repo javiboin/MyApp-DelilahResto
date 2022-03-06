@@ -2,10 +2,11 @@ require('dotenv').config();
 
 const app = require('./server');
 const connection = require("./config/db.config");
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 const host = 'http://localhost'
 const URL = `${host}:${PORT}`;
 
+// SETEAR CABECERAS, REVISAR SI ESTE COMPORTAMIENTO SUCEDE EN CADA ENDPOINT
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -14,11 +15,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// SETEAR EL NOMBRE DEL SERVIDOR
 app.set('apiname', 'Delilah Resto API');
 app.get('/', (req, res) => {
   res.send("Delilah Resto papa!");
 });
 
+// PRENDER SERVIDOR Y CONECTAR BASE DE DATOS
 (async () =>{
    app.listen(PORT, () => {
     console.log(app.get('apiname'));
@@ -30,5 +33,3 @@ app.get('/', (req, res) => {
     })
   });
 })();
-
-// probando conexion desde VSCode

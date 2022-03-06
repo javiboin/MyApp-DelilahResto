@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const express = require('express');
 const app = express();
 
+// PARA PODER COMUNICARNOS CON EL BACKEND
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan('dev'));
@@ -47,6 +48,9 @@ app.use('/user-states', all.access, userStates);
 const userSuspensions = require('./routes/userSuspension.route');
 app.use('/user-suspensions', all.access, userSuspensions);
 
+const userSuspensions1 = require('./public/index');
+app.use('/frontend', userSuspensions1);
+
 /* -------------- SWAGGER CONFIGURATION -------------------- */
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
@@ -73,6 +77,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
+  // IMPLEMENTAR HELMET PARA LAS CABECERAS POR DEFAULT
   app.use(helmet());
 
 /* -------------- ENDPOINT GENERAL -------------------- */
@@ -80,7 +85,6 @@ app.use(function(req, res, next) {
   console.log(req.params);
   const respuesta = `${req.method} ${req.url} path: ${req.path} ${req.statusCode} ${req.statusMessage}}`;
 
-//  res.json('esto funciona');
   console.log(respuesta);
 
   next();

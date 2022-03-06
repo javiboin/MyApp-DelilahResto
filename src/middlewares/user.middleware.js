@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const connection = require("../config/db.config");
 const UsersModel = require('../models/user.model')(connection, Sequelize);
 
+// BUSCAR UN USUARIO
 const searchUser = async (req, res, next) => {
   const usuarioEncontrado = await UsersModel.findOne({ where: { 
     nickname : req.body.nickname

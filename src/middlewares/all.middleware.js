@@ -1,6 +1,7 @@
 require("dotenv").config();
 const jwt = require('jsonwebtoken');
 
+// ACCESO A LOS ENDPOINTS
 const access = (req, res, next) => {
   try {
     const bearer = req.headers['authorization'].split(" ");
@@ -14,6 +15,7 @@ const access = (req, res, next) => {
   }
 };
 
+// VERIFICAR SI TIENE EL PERMISO DE ADMINISTRADOR
 const isAdmin = (req, res, next) => {
   const bearer = req.headers['authorization'].split(" ");
   const token = bearer[1];
@@ -27,6 +29,7 @@ const isAdmin = (req, res, next) => {
   }
 }
 
+// VERIFICA QUE EL USUARIO QUE ACCESA AL ENDPOINT ES EL USUARIO LOGEADO
 const isCurrentUser = (req, res, next) => {
   const bearer = req.headers['authorization'].split(" ");
   const token = bearer[1];
