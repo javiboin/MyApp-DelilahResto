@@ -25,4 +25,5 @@ formElement.addEventListener("submit", (event) => {
         body   : transactionJson
     })
     .then(response => response.json())
-    .then(data => console.log(data));
+    .then(data => console.log(data))
+    });
