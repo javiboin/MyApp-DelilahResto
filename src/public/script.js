@@ -24,10 +24,5 @@ formElement.addEventListener("submit", (event) => {
         method : 'POST',
         body   : transactionJson
     })
-<<<<<<< HEAD
-})
-=======
     .then(response => response.json())
     .then(data => console.log(data));
-})
->>>>>>> 7d760dfc86e8e9d848e3e2e22f18497a88679ca1
