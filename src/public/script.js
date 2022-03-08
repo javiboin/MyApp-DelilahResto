@@ -19,6 +19,6 @@ formElement.addEventListener("submit", (event) => {
 
     fetch('https://www.delilah-resto.ga/api/login', {
         method : 'POST',
-        body   : transactionJson
+        body   : transaction
     })
 })
