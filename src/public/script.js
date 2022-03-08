@@ -19,7 +19,7 @@ formElement.addEventListener("submit", (event) => {
 
     fetch('https://www.delilah-resto.ga/api/login', {
         method : 'POST',
-        body   : transaction
+        body   : transactionJson
     })
 <<<<<<< HEAD
 })
