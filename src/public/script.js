@@ -17,7 +17,7 @@ formElement.addEventListener("submit", (event) => {
     console.log(transaction);
     console.log(transactionJson);
 
-    fetch('https://www.delilah-resto.ga/login', {
+    fetch('https://www.delilah-resto.ga/api/login', {
         method : 'POST',
         body   : transactionJson
     })
