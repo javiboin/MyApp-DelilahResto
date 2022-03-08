@@ -47,7 +47,8 @@ router.use(express.json());
     .catch(() => {
       res.status(404).send({
         message: "El usuario y/o la contraseña son incorrectos",
-        status: 404
+        status: 404,
+        rta: req.body
       });
     });
   });
