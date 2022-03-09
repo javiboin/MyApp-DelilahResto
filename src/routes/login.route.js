@@ -37,7 +37,6 @@ router.use(express.json());
 
   router.post('/', (req, res) => {
     functions.login(req.body)
-    console.log("holaaaa")
     .then((result) => {
       res.status(200).send({
         status: 200,
