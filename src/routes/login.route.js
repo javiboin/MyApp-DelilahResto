@@ -43,6 +43,7 @@ router.use(express.json());
         message: "Login OK",
         data: result
       });
+      console.log(result);
     })
     .catch(() => {
       res.status(404).send({
