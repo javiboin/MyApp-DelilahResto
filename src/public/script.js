@@ -31,8 +31,8 @@ formElement.addEventListener("submit", (event) => {
     let user = document.getElementById('user').value;
     let password = document.getElementById('password').value;
 
-    user = "hola1";
-    password = "hola2";
+    user = "daveG";
+    password = "12345";
 
     let transaction = {
         user: user,
