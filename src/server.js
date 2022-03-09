@@ -48,9 +48,6 @@ app.use('/user-states', all.access, userStates);
 const userSuspensions = require('./routes/userSuspension.route');
 app.use('/user-suspensions', all.access, userSuspensions);
 
-const userSuspensions1 = require('./public/index');
-app.use('/frontend', userSuspensions1);
-
 /* -------------- SWAGGER CONFIGURATION -------------------- */
 const swaggerUI = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
