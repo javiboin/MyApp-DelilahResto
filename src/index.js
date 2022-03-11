@@ -15,6 +15,8 @@ app.use((req, res, next) => {
   next();
 });
 
+// Por ahi sacando esto, no modifique el comportamiento del backend
+
 // SETEAR EL NOMBRE DEL SERVIDOR
 app.set('apiname', 'Delilah Resto API');
 app.get('/', (req, res) => {
