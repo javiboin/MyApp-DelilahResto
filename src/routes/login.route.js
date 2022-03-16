@@ -36,6 +36,9 @@ router.use(express.json());
  */
 
   router.post('/', (req, res) => {
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+    console.log('Antes de Verificar el login en el servidor');
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
     functions.login(req.body)
     .then((result) => {
       res.status(200).send({

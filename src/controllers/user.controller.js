@@ -5,43 +5,24 @@ const UsersModel = require('../models/user.model')(connection, Sequelize);
 const AddressModel = require('../models/address.model')(connection, Sequelize);
 const UserAddressModel = require('../models/userAddress.model')(connection, Sequelize);
 
+// CODIFICAR COMUNICACIONES
+const encoded = require('../middlewares/encoded.middleware');
+
 // METODOS DE ENCRIPTACION, UTILIZAR EN TODA LA APP, POR SEGURIDAD, ANOTAR
-const jwt = require('jsonwebtoken');
-const bcryptjs = require('bcryptjs');
-
-// CREAR UN HASH PARA ENCRIPTAR
-const createHash = async (passwordToConvert) => {
-  const newHash = await bcryptjs.hash(passwordToConvert, 8);
-  return newHash;
-};
-
-// DESENCRIPTAR MENSAJE
-const compareHash = async (password, hashToConvert) => {
-  const compare = await bcryptjs.compare(password, hashToConvert);
-  return compare;
-}
-
-/*
-  const passwordEncrypted = await createHash(password);
-    console.log(passwordEncrypted);
-
-  const passwordDesencrypted = await compareHash(password, passwordEncrypted);
-    console.log(passwordDesencrypted);
-*/
+const jwt = require('jsonwebtoken');  // VERIFICAR SI ES ALGO QUE DETIENE LA EJECUCIO DEL SERVIDOR
 
 // FUNCION LOGIN, UTILIZAR ACA LOS METODOS DE AUTENTICACION? USO DE ENCRIPTACION
 const login = async (info) => {
   const username = info.nickname;
   const password = info.password;
 
-  console.log(username, password);
-
   const usuarioEncontrado = await UsersModel.findOne({ where: { 
     nickname : username
   } });
 
-  const passwordDesencrypted = await compareHash(password, usuarioEncontrado.password);
+  const passwordDesencrypted = await encoded.compareHash(password, usuarioEncontrado.password);
 
+  // UTILIZAR ESTA RUTINA EN CADA ENDPOINT, DEBERIA CAMBIARLO POR UN MIDDLEWAR PERO ESPERA
   if (usuarioEncontrado && passwordDesencrypted){ 
     
       const token = jwt.sign({ 
@@ -56,35 +37,11 @@ const login = async (info) => {
   }
 };
 
-// MOSTRAR LOS USUARIOS DEL SISTEMA
-const listValues = async () => await UsersModel.findAll();
-
-// BUSCAR UNA DOMICILIO
-const searchAddress = async (req) => {
-  const direccionEncontrada = await AddressModel.findOne({ where: { 
-    name: req.body.name,
-    number: req.body.number
-  } });
-
-  if (!direccionEncontrada) {
-    
-    const newAddress = await AddressModel.create({
-      name: req.body.name,
-      number: req.body.number
-    }, { transaction: t });
-
-    return newAddress.null;
-
-  } else {
-    return direccionEncontrada.id;
-  }
-}
-
 // CREAR UN USUARIO CON LAS TRANSACCIONES, OK
 const createUserTransaction = async (req) => {
   const t = await connection.transaction();
   try {
-    const passwordEncrypted = await createHash(req.body.password);
+    const passwordEncrypted = await encoded.createHash(req.body.password);
 
     const newUser = await UsersModel.create({
       nickname: req.body.nickname,
@@ -111,6 +68,30 @@ const createUserTransaction = async (req) => {
     console.log('Error en el guardado, Operacion Fallida');
     console.log(error);
     t.rollback();
+  }
+}
+
+// MOSTRAR LOS USUARIOS DEL SISTEMA
+const listValues = async () => await UsersModel.findAll();
+
+// BUSCAR UNA DOMICILIO
+const searchAddress = async (req) => {
+  const direccionEncontrada = await AddressModel.findOne({ where: { 
+    name: req.body.name,
+    number: req.body.number
+  } });
+
+  if (!direccionEncontrada) {
+    
+    const newAddress = await AddressModel.create({
+      name: req.body.name,
+      number: req.body.number
+    }, { transaction: t });
+
+    return newAddress.null;
+
+  } else {
+    return direccionEncontrada.id;
   }
 }
 
