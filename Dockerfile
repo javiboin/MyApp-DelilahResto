@@ -1,15 +1,17 @@
 # Ubicacion de los directorios antes de arrancar
-mkdir /data
-cd /data
+
+# mkdir /data
+# cd /data
 
 # Comando Docker para arrancar la imagen creadad anteriormente
-docker pull keymetrics/pm2:latest-alpine　
+
+# docker pull keymetrics/pm2:latest-alpine　
 
 # clonar repositorio GitHub 
-https://github.com/javiboin/MyApp-DelilahResto.git
+# https://github.com/javiboin/MyApp-DelilahResto.git
 
 # Direccion a la cual dirigirse dentro de mi repo para prender el PM2
-cd /data/pm2-docker-alpine/example-app
+# cd /data/pm2-docker-alpine/example-app
 
 # [root@localhost example-app]# more Dockerfile
 FROM keymetrics/pm2:latest-alpine
@@ -32,20 +34,20 @@ EXPOSE 3000
 CMD [ "pm2-docker", "start", "pm2.json" ]
 
 # docker-compose.yml
-version: '2'
+# version: '2'
 
-services:
-  web:
-    build: .
-    # build from Dockerfile
-    context: ./Path
-    dockerfile: Dockerfile
-    ports:
-     - "5000:5000"
-    volumes:
-     - .:/code
-  redis:
-    image: redis
+# services:
+#   web:
+#    build: .
+#    # build from Dockerfile
+#    context: ./Path
+#    dockerfile: Dockerfile
+#    ports:
+#     - "5000:5000"
+#    volumes:
+#     - .:/code
+#  redis:
+#    image: redis
 
 # ESTO NO ES DOCKER COMPOSE, ES EL DOCKER FILE, 
 # HAY POR LO MENOS VARIAS LINEAS QUE ESTAN MAL, 
