@@ -25,6 +25,9 @@ passport.use(new FacebookStrategy({
 ));
 // ---------------------------  HASTA ACA COPIADO Y FALTA LA PRUEBA
 
+// ACA TENGO QUE IMPLEMENTAR LOS PASSPORT Y CASI TODO LO QUE ES ESTE FIUCKIN  SPRINT, NO VA EN COMMITS ESTA SECCION
+// EN LA OTRA SECCION VA LO QUE ES DOCKER, Y DOCKER COMPOSE
+
 formElement.addEventListener("submit", (event) => {
     event.preventDefault();
 
